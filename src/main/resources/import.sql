@@ -5,7 +5,7 @@
 -- insert into myentity (id, field) values(3, 'field-3');
 -- alter sequence myentity_seq restart with 4;
 
-insert into quartoHotel (numero, descricao) values(01, 'Quarto Simples');
-insert into quartoHotel (numero, descricao) values(02, 'Quarto Casal');
-insert into quartoHotel (numero, descricao) values(15, 'Quarto Suíte');
-insert into quartoHotel (numero, descricao) values(45, 'Quarto Presidencial');
+insert into quartoHotel (numero, tipo, preco, diponivel) values(01, 'Quarto Simples', 85.00, true);
+insert into quartoHotel (numero, tipo, preco, diponivel) values(02, 'Quarto Casal', 100.00, false);
+insert into quartoHotel (numero, tipo, preco, diponivel) values(15, 'Quarto Suíte', 150.00, false);
+insert into quartoHotel (numero, tipo, preco, diponivel) values(45, 'Quarto Presidencial', 250.00, true);

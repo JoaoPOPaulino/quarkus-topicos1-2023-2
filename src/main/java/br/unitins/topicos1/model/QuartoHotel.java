@@ -1,41 +1,52 @@
 package br.unitins.topicos1.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
 @Entity
-public class QuartoHotel {
+public class QuartoHotel extends DefaultEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private Integer numero;
-    private String descricao;
+    @Column(length = 3)
+    private int numero;
 
-    public Long getId() {
-        return id;
-    }
+    @Column(length = 60)
+    private String tipo;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Column(length = 5)
+    private double preco;
 
-    public Integer getNumero() {
+    @Column(length = 10)
+    private Boolean disponivel;
+
+    public int getNumero() {
         return numero;
     }
 
-    public void setNumero(Integer numero) {
+    public void setNumero(int numero) {
         this.numero = numero;
     }
 
     public String getDescricao() {
-        return descricao;
+        return tipo;
     }
 
     public void setDescricao(String descricao) {
-        this.descricao = descricao;
+        this.tipo = descricao;
     }
 
+    public double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(double preco) {
+        this.preco = preco;
+    }
+
+    public Boolean getDisponivel() {
+        return disponivel;
+    }
+
+    public void setDisponivel(Boolean disponivel) {
+        this.disponivel = disponivel;
+    }
 }
