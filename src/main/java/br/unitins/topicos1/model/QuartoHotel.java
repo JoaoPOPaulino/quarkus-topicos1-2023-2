@@ -26,11 +26,11 @@ public class QuartoHotel extends DefaultEntity {
         this.numero = numero;
     }
 
-    public String getDescricao() {
+    public String getTipo() {
         return tipo;
     }
 
-    public void setDescricao(String descricao) {
+    public void setTipo(String descricao) {
         this.tipo = descricao;
     }
 
