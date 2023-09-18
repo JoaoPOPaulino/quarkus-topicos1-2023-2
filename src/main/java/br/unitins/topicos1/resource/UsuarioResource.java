@@ -2,8 +2,11 @@ package br.unitins.topicos1.resource;
 
 import java.util.List;
 
-import br.unitins.topicos1.model.QuartoHotel;
-import br.unitins.topicos1.repository.QuartoRepository;
+import br.unitins.topicos1.dto.UsuarioDTO;
+import br.unitins.topicos1.dto.UsuarioResponseDTO;
+import br.unitins.topicos1.model.Usuario;
+import br.unitins.topicos1.repository.UsuarioRepository;
+import br.unitins.topicos1.service.UsuarioService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
@@ -17,67 +20,47 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
-@Path("/quartoHotel")
+@Path("/usuarios")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class UsuarioResource {
 
     @Inject
-    QuartoRepository repository;
+    UsuarioService service;
 
     @POST
-    @Transactional
-    public QuartoHotel insert(QuartoHotel quartoHotel) {
-        QuartoHotel novoQuarto = new QuartoHotel();
-        novoQuarto.setNumero(quartoHotel.getNumero());
-        novoQuarto.setTipo(quartoHotel.getTipo());
+    public UsuarioResponseDTO insert(UsuarioDTO dto) {
+        return service.insert(dto);
+    }
 
-        repository.persist(novoQuarto);
-        return novoQuarto;
+    @PUT
+    @Transactional
+    @Path("/{id}")
+    public UsuarioResponseDTO update(UsuarioDTO dto, @PathParam("id") Long id) {
+        return service.update(dto, id);
+    }
+
+    @DELETE
+    @Transactional
+    @Path("/{id}")
+    public void delete(@PathParam("id") Long id) {
+        service.delete(id);
     }
 
     @GET
-    public List<QuartoHotel> findAll() {
-        return repository.listAll();
+    public List<UsuarioResponseDTO> findAll() {
+        return service.findByAll();
     }
 
     @GET
     @Path("/{id}")
-    public QuartoHotel findbyId(@PathParam("id") Long id) {
-        return repository.findById(id);
+    public UsuarioResponseDTO findById(@PathParam("id") Long id) {
+        return service.findById(id);
     }
 
     @GET
-    @Path("/search/descricao/{descricao}")
-    public List<QuartoHotel> findById(@PathParam("descricao") String descricao) {
-        return repository.findByDescricao(descricao);
+    @Path("/search/nome/{nome}")
+    public List<UsuarioResponseDTO> findByNome(@PathParam("nome") String nome) {
+        return service.findByNome(nome);
     }
-
-    @PUT
-    @Path("/update/quarto/{id}")
-    @Transactional
-    public QuartoHotel update(@PathParam("id") Long id, QuartoHotel quartoAtt) {
-        QuartoHotel quartoExiste = repository.findById(id);
-        if (quartoExiste == null)
-            throw new NotFoundException("Quarto não encontrado");
-
-        quartoExiste.setNumero(quartoAtt.getNumero());
-        quartoExiste.setTipo(quartoAtt.getTipo());
-
-        repository.persist(quartoExiste);
-        return quartoExiste;
-    }
-
-    @DELETE
-    @Path("/delete/quarto/{id}")
-    @Transactional
-    public QuartoHotel delete(@PathParam("id") Long id) {
-        QuartoHotel quartoDelete = repository.findById(id);
-        if (quartoDelete == null)
-            throw new NotFoundException("Quarto não encontrado");
-
-        repository.delete(quartoDelete);
-        return quartoDelete;
-    }
-
 }

@@ -48,9 +48,9 @@ public class QuartorResource {
     }
 
     @GET
-    @Path("/search/descricao/{descricao}")
-    public List<QuartoHotel> findById(@PathParam("descricao") String descricao) {
-        return repository.findByDescricao(descricao);
+    @Path("/search/tipo/{tipo}")
+    public List<QuartoHotel> findById(@PathParam("tipo") String tipo) {
+        return repository.findByTipo(tipo);
     }
 
     @PUT

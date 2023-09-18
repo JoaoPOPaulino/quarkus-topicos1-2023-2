@@ -1,73 +1,74 @@
 package br.unitins.topicos1.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import br.unitins.topicos1.dto.QuartoHotelDTO;
-import br.unitins.topicos1.dto.QuartoHotelResponseDTO;
-import br.unitins.topicos1.model.QuartoHotel;
-import br.unitins.topicos1.repository.QuartoRepository;
+import br.unitins.topicos1.dto.TelefoneDTO;
+import br.unitins.topicos1.dto.UsuarioDTO;
+import br.unitins.topicos1.dto.UsuarioResponseDTO;
+import br.unitins.topicos1.model.Telefone;
+import br.unitins.topicos1.model.Usuario;
+import br.unitins.topicos1.repository.UsuarioRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.NotFoundException;
 
 @ApplicationScoped
 public class UsuarioServiceImpl implements UsuarioService {
 
     @Inject
-    QuartoRepository repository;
+    UsuarioRepository repository;
 
     @Override
     @Transactional
-    public QuartoHotelResponseDTO insert(QuartoHotelDTO dto) {
-        QuartoHotel novoQuarto = new QuartoHotel();
-        novoQuarto.setNumero(dto.getNumero());
-        novoQuarto.setTipo(dto.getTipo());
-        novoQuarto.setPreco(dto.getPreco());
-        novoQuarto.setDisponivel(dto.getDisponivel());
+    public UsuarioResponseDTO insert(UsuarioDTO dto) {
+        Usuario novoUsuario = new Usuario();
+        novoUsuario.setNome(dto.nome());
+        novoUsuario.setLogin(dto.login());
+        novoUsuario.setSenha(dto.senha());
 
-        repository.persist(novoQuarto);
+        if (dto.listaTelefone() != null &&
+                !dto.listaTelefone().isEmpty()) {
+            novoUsuario.setListaTelefone(new ArrayList<Telefone>());
+            for (TelefoneDTO tel : dto.listaTelefone()) {
+                Telefone telefone = new Telefone();
+                telefone.setCodigoArea(tel.codigoArea());
+                telefone.setNumero(tel.numero());
+                novoUsuario.getListaTelefone().add(telefone);
+            }
+        }
 
-        return QuartoHotelResponseDTO.valueOf(novoQuarto);
+        repository.persist(novoUsuario);
+
+        return UsuarioResponseDTO.valueOf(novoUsuario);
     }
 
     @Override
     @Transactional
-    public QuartoHotelResponseDTO update(QuartoHotelDTO dto, Long id) {
-        QuartoHotel quartoHotel = repository.findById(id);
+    public UsuarioResponseDTO update(UsuarioDTO dto, Long id) {
+        return null;
 
-        if (quartoHotel != null) {
-            quartoHotel.setNumero(dto.getNumero());
-            quartoHotel.setTipo(dto.getTipo());
-            quartoHotel.setPreco(dto.getPreco());
-            quartoHotel.setDisponivel(dto.getDisponivel());
-        } else
-            throw new NotFoundException();
-
-        return QuartoHotelResponseDTO.valueOf(quartoHotel);
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-        if (!repository.deleteById(id))
-            throw new NotFoundException();
     }
 
     @Override
-    public QuartoHotelResponseDTO findById(Long id) {
-        return QuartoHotelResponseDTO.valueOf(repository.findById(id));
+    public UsuarioResponseDTO findById(Long id) {
+        return null;
     }
 
     @Override
-    public List<QuartoHotelResponseDTO> findByTipo(String tipo) {
-        return repository.findByTipo(tipo).stream()
-                .map(e -> QuartoHotelResponseDTO.valueOf(e)).toList();
+    public List<UsuarioResponseDTO> findByNome(String nome) {
+        return null;
     }
 
     @Override
-    public List<QuartoHotelResponseDTO> findByAll() {
+    public List<UsuarioResponseDTO> findByAll() {
         return repository.listAll().stream()
-                .map(e -> QuartoHotelResponseDTO.valueOf(e)).toList();
+                .map(e -> UsuarioResponseDTO.valueOf(e)).toList();
     }
+
 }

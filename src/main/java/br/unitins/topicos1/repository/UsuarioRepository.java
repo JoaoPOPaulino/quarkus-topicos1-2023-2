@@ -8,9 +8,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class UsuarioRepository implements PanacheRepository<Usuario> {
-
-    public List<Usuario> findByDescricao(String descricao) {
-        return find("UPPER(descricao) LIKE UPPER(?1) ", "%" + descricao + "%").list();
+    public List<Usuario> findByNome(String nome) {
+        return find("UPPER(nome) LIKE UPPER(?1) ", "%" + nome + "%").list();
     }
-
 }

@@ -12,23 +12,23 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;
 
 @ApplicationScoped
-public class QuartoServiceImpl implements UsuarioService {
+public class QuartoServiceImpl implements QuartoService {
 
     @Inject
-    QuartoRepository repository;
+    public QuartoRepository repository;
 
     @Override
     @Transactional
     public QuartoHotelResponseDTO insert(QuartoHotelDTO dto) {
-        QuartoHotel novoQuarto = new QuartoHotel();
-        novoQuarto.setNumero(dto.getNumero());
-        novoQuarto.setTipo(dto.getTipo());
-        novoQuarto.setPreco(dto.getPreco());
-        novoQuarto.setDisponivel(dto.getDisponivel());
+        QuartoHotel novQuartoHotel = new QuartoHotel();
+        novQuartoHotel.setNumero(dto.getNumero());
+        novQuartoHotel.setTipo(dto.getTipo());
+        novQuartoHotel.setPreco(dto.getPreco());
+        novQuartoHotel.setDisponivel(dto.getDisponivel());
 
-        repository.persist(novoQuarto);
+        repository.persist(novQuartoHotel);
 
-        return QuartoHotelResponseDTO.valueOf(novoQuarto);
+        return QuartoHotelResponseDTO.valueOf(novQuartoHotel);
     }
 
     @Override
