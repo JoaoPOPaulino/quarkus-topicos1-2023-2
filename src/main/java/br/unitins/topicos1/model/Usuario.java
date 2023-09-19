@@ -18,6 +18,11 @@ public class Usuario extends DefaultEntity {
     @JoinTable(name = "usuario_telefone", joinColumns = @JoinColumn(name = "id_usuario"), inverseJoinColumns = @JoinColumn(name = "id_telefone"))
     private List<Telefone> listaTelefone;
 
+
+    @ManyToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(name = "usuario_endereco", joinColumns = @JoinColumn(name = "id_usuario"), inverseJoinColumns = @JoinColumn(name = "id_endereco"))
+    private Endereco endereco;
+
     public String getNome() {
         return nome;
     }
@@ -48,6 +53,14 @@ public class Usuario extends DefaultEntity {
 
     public void setListaTelefone(List<Telefone> listaTelefone) {
         this.listaTelefone = listaTelefone;
+    }
+
+    public Endereco getEndereco(){
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco){
+        this.endereco = endereco;
     }
 
 }
