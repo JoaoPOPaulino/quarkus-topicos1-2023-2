@@ -54,7 +54,7 @@ public class QuartoResource {
     }
 
     @PUT
-    @Path("/update/quarto/{id}")
+    @Path("/{id}")
     @Transactional
     public QuartoHotel update(@PathParam("id") Long id, QuartoHotel quartoAtt) {
         QuartoHotel quartoExiste = repository.findById(id);
@@ -69,7 +69,7 @@ public class QuartoResource {
     }
 
     @DELETE
-    @Path("/delete/quarto/{id}")
+    @Path("/{id}")
     @Transactional
     public QuartoHotel delete(@PathParam("id") Long id) {
         QuartoHotel quartoDelete = repository.findById(id);

@@ -6,7 +6,7 @@ import br.unitins.topicos1.dto.QuartoHotelDTO;
 import br.unitins.topicos1.dto.QuartoHotelResponseDTO;
 
 public interface QuartoService {
-    public QuartoHotelResponseDTO insert(QuartoHotelDTO dto);
+    QuartoHotelResponseDTO insert(QuartoHotelDTO dto);
 
     public QuartoHotelResponseDTO update(QuartoHotelDTO dto, Long id);
 
