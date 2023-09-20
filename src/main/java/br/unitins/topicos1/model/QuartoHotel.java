@@ -30,8 +30,8 @@ public class QuartoHotel extends DefaultEntity {
         return tipo;
     }
 
-    public void setTipo(String descricao) {
-        this.tipo = descricao;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public double getPreco() {
