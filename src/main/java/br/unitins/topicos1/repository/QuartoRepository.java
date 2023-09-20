@@ -10,7 +10,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 public class QuartoRepository implements PanacheRepository<QuartoHotel> {
 
     public List<QuartoHotel> findByTipo(String tipo) {
-        return find("UPPER(descricao) LIKE UPPER(?1) ", "%" + tipo + "%").list();
+        return find("UPPER(tipo) LIKE UPPER(?1) ", "%" + tipo + "%").list();
     }
 
 }
