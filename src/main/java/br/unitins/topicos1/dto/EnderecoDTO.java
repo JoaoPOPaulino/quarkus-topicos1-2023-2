@@ -1,17 +1,19 @@
 package br.unitins.topicos1.dto;
 
-public record Endereco(
-    String estado,
-    String cidade,
-    String quadra,
-    String rua,
-    String numero){
-        public static EstadoDTO valueOf(Estado estado){
-            return new EstadoDTO(
-                estado.getEstado(),
-                estado.getCidade(),
-                estado.getQuadra(),
-                estado.getRua(),
-                estado.getNumer());
-        }
+import br.unitins.topicos1.model.Endereco;
+
+public record EnderecoDTO(
+        String Endereco,
+        String cidade,
+        String quadra,
+        String rua,
+        String numero) {
+    public static EnderecoDTO valueOf(Endereco endereco) {
+        return new EnderecoDTO(
+                endereco.getEstado(),
+                endereco.getCidade(),
+                endereco.getQuadra(),
+                endereco.getRua(),
+                endereco.getNumero());
+    }
 }

@@ -1,14 +1,17 @@
 package br.unitins.topicos1.service;
 
 import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import br.unitins.topicos1.dto.ReservaDTO;
 import br.unitins.topicos1.dto.ReservaResponseDTO;
+import br.unitins.topicos1.model.Quarto;
 import br.unitins.topicos1.model.Reserva;
 import br.unitins.topicos1.model.Usuario;
-import br.unitins.topicos1.model.QuartoHotel;
+import br.unitins.topicos1.repository.QuartoRepository;
 import br.unitins.topicos1.repository.ReservaRepository;
 import br.unitins.topicos1.repository.UsuarioRepository;
-import br.unitins.topicos1.repository.QuartoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -31,17 +34,17 @@ public class ReservaServiceImpl implements ReservaService {
     public ReservaResponseDTO insert(ReservaDTO dto) {
         Reserva novaReserva = new Reserva();
         Usuario usuario = usuarioRepository.findById(dto.getUsuarioId());
-        QuartoHotel quarto = quartoRepository.findById(dto.getQuartoId());
-        
+        Quarto quarto = quartoRepository.findById(dto.getQuartoId());
+
         if (usuario == null || quarto == null)
             throw new NotFoundException("Usuário ou Quarto não encontrado.");
-        
+
         novaReserva.setUsuario(usuario);
         novaReserva.setQuarto(quarto);
         novaReserva.setDataInicio(dto.getDataInicio());
-        novaReserva.setDataFim(dto.getDataFim());
-        
-        long numeroDias = ChronoUnit.DAYS.between(dto.getDataInicio(), dto.getDataFim());
+        novaReserva.setDataFinal(dto.getDataFinal());
+
+        long numeroDias = ChronoUnit.DAYS.between(dto.getDataInicio(), dto.getDataFinal());
         double precoTotal = numeroDias * quarto.getPreco();
         novaReserva.setPrecoTotal(precoTotal);
 
@@ -58,7 +61,7 @@ public class ReservaServiceImpl implements ReservaService {
             throw new NotFoundException("Reserva não encontrada.");
 
         Usuario usuario = usuarioRepository.findById(dto.getUsuarioId());
-        QuartoHotel quarto = quartoRepository.findById(dto.getQuartoId());
+        Quarto quarto = quartoRepository.findById(dto.getQuartoId());
 
         if (usuario == null || quarto == null)
             throw new NotFoundException("Usuário ou Quarto não encontrado.");
@@ -66,9 +69,9 @@ public class ReservaServiceImpl implements ReservaService {
         reservaExistente.setUsuario(usuario);
         reservaExistente.setQuarto(quarto);
         reservaExistente.setDataInicio(dto.getDataInicio());
-        reservaExistente.setDataFim(dto.getDataFim());
+        reservaExistente.setDataFinal(dto.getDataFinal());
 
-        long numeroDias = ChronoUnit.DAYS.between(dto.getDataInicio(), dto.getDataFim());
+        long numeroDias = ChronoUnit.DAYS.between(dto.getDataInicio(), dto.getDataFinal());
         double precoTotal = numeroDias * quarto.getPreco();
         reservaExistente.setPrecoTotal(precoTotal);
 

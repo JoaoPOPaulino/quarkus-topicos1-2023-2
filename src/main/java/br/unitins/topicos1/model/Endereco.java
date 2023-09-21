@@ -4,50 +4,50 @@ import jakarta.persistence.Entity;
 
 @Entity
 public class Endereco extends DefaultEntity {
-    
+
     private String estado;
-    private String cidade;    
+    private String cidade;
     private String quadra;
     private String rua;
     private String numero;
 
-    public String getEstado (){
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado){
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 
-    public String getCidade (){
+    public String getCidade() {
         return cidade;
     }
 
-    public void setCidade(String cidade){
+    public void setCidade(String cidade) {
         this.cidade = cidade;
     }
 
-    public String getQuadra (){
+    public String getQuadra() {
         return quadra;
     }
 
-    public void setQuadra(String quadra){
-        this.quadra = quadra0;
+    public void setQuadra(String quadra) {
+        this.quadra = quadra;
     }
 
-    public String getRua (){
+    public String getRua() {
         return rua;
     }
 
-    public void setRua(String rua){
+    public void setRua(String rua) {
         this.rua = rua;
     }
 
-    public String getNumero (){
+    public String getNumero() {
         return numero;
     }
 
-    public void setNumero(String numero){
+    public void setNumero(String numero) {
         this.numero = numero;
     }
 

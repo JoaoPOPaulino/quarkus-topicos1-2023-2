@@ -2,20 +2,21 @@ package br.unitins.topicos1.service;
 
 import java.util.List;
 
-import br.unitins.topicos1.dto.QuartoHotelDTO;
-import br.unitins.topicos1.dto.QuartoHotelResponseDTO;
+import br.unitins.topicos1.dto.QuartoDTO;
+import br.unitins.topicos1.dto.QuartoResponseDTO;
+import br.unitins.topicos1.model.TipoQuarto;
 
 public interface QuartoService {
-    QuartoHotelResponseDTO insert(QuartoHotelDTO dto);
+    QuartoResponseDTO insert(QuartoDTO dto);
 
-    public QuartoHotelResponseDTO update(QuartoHotelDTO dto, Long id);
+    public QuartoResponseDTO update(QuartoDTO dto, Long id);
 
     public void delete(Long id);
 
-    public QuartoHotelResponseDTO findById(Long id);
+    public QuartoResponseDTO findById(Long id);
 
-    public List<QuartoHotelResponseDTO> findByTipo(String tipo);
+    public List<QuartoResponseDTO> findByTipo(TipoQuarto tipo);
 
-    public List<QuartoHotelResponseDTO> findByAll();
+    public List<QuartoResponseDTO> findByAll();
 
 }

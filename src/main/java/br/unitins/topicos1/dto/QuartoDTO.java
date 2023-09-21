@@ -2,13 +2,15 @@ package br.unitins.topicos1.dto;
 
 import java.util.Objects;
 
-public class QuartoHotelDTO {
+import br.unitins.topicos1.model.TipoQuarto;
+
+public class QuartoDTO {
     private final int numero;
-    private final String tipo;
+    private final TipoQuarto tipo;
     private final double preco;
     private final Boolean disponivel;
 
-    public QuartoHotelDTO(int numero, String tipo, double preco, Boolean disponivel) {
+    public QuartoDTO(int numero, TipoQuarto tipo, double preco, Boolean disponivel) {
         this.numero = numero;
         this.tipo = tipo;
         this.preco = preco;
@@ -19,7 +21,7 @@ public class QuartoHotelDTO {
         return numero;
     }
 
-    public String getTipo() {
+    public TipoQuarto getTipo() {
         return tipo;
     }
 
@@ -48,7 +50,7 @@ public class QuartoHotelDTO {
             return true;
         if (obj == null || getClass() != obj.getClass())
             return false;
-        QuartoHotelDTO other = (QuartoHotelDTO) obj;
+        QuartoDTO other = (QuartoDTO) obj;
         return numero == other.numero &&
                 Double.compare(other.preco, preco) == 0 &&
                 Objects.equals(tipo, other.tipo) &&

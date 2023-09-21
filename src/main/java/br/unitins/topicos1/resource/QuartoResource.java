@@ -2,7 +2,8 @@ package br.unitins.topicos1.resource;
 
 import java.util.List;
 
-import br.unitins.topicos1.model.QuartoHotel;
+import br.unitins.topicos1.model.Quarto;
+import br.unitins.topicos1.model.TipoQuarto;
 import br.unitins.topicos1.repository.QuartoRepository;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -17,7 +18,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
-@Path("/quartoHotel")
+@Path("/Quarto")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class QuartoResource {
@@ -27,37 +28,37 @@ public class QuartoResource {
 
     @POST
     @Transactional
-    public QuartoHotel insert(QuartoHotel quartoHotel) {
-        QuartoHotel novoQuarto = new QuartoHotel();
-        novoQuarto.setNumero(quartoHotel.getNumero());
-        novoQuarto.setTipo(quartoHotel.getTipo());
+    public Quarto insert(Quarto Quarto) {
+        Quarto novoQuarto = new Quarto();
+        novoQuarto.setNumero(Quarto.getNumero());
+        novoQuarto.setTipo(Quarto.getTipo());
 
         repository.persist(novoQuarto);
         return novoQuarto;
     }
 
     @GET
-    public List<QuartoHotel> findAll() {
+    public List<Quarto> findAll() {
         return repository.listAll();
     }
 
     @GET
     @Path("/{id}")
-    public QuartoHotel findbyId(@PathParam("id") Long id) {
+    public Quarto findbyId(@PathParam("id") Long id) {
         return repository.findById(id);
     }
 
     @GET
     @Path("/search/tipo/{tipo}")
-    public List<QuartoHotel> findById(@PathParam("tipo") String tipo) {
+    public List<Quarto> findById(@PathParam("tipo") TipoQuarto tipo) {
         return repository.findByTipo(tipo);
     }
 
     @PUT
     @Path("/{id}")
     @Transactional
-    public QuartoHotel update(@PathParam("id") Long id, QuartoHotel quartoAtt) {
-        QuartoHotel quartoExiste = repository.findById(id);
+    public Quarto update(@PathParam("id") Long id, Quarto quartoAtt) {
+        Quarto quartoExiste = repository.findById(id);
         if (quartoExiste == null)
             throw new NotFoundException("Quarto não encontrado");
 
@@ -71,8 +72,8 @@ public class QuartoResource {
     @DELETE
     @Path("/{id}")
     @Transactional
-    public QuartoHotel delete(@PathParam("id") Long id) {
-        QuartoHotel quartoDelete = repository.findById(id);
+    public Quarto delete(@PathParam("id") Long id) {
+        Quarto quartoDelete = repository.findById(id);
         if (quartoDelete == null)
             throw new NotFoundException("Quarto não encontrado");
 

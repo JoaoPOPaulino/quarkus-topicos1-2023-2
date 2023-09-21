@@ -2,15 +2,17 @@ package br.unitins.topicos1.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 @Entity
-public class QuartoHotel extends DefaultEntity {
+public class Quarto extends DefaultEntity {
 
     @Column(length = 3)
     private int numero;
 
-    @Column(length = 60)
-    private String tipo;
+    @Enumerated(EnumType.STRING)
+    private TipoQuarto tipo;
 
     @Column(length = 5)
     private double preco;
@@ -26,11 +28,11 @@ public class QuartoHotel extends DefaultEntity {
         this.numero = numero;
     }
 
-    public String getTipo() {
+    public TipoQuarto getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(TipoQuarto tipo) {
         this.tipo = tipo;
     }
 

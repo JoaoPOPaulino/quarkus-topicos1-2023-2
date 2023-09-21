@@ -2,9 +2,10 @@ package br.unitins.topicos1.service;
 
 import java.util.List;
 
-import br.unitins.topicos1.dto.QuartoHotelDTO;
-import br.unitins.topicos1.dto.QuartoHotelResponseDTO;
-import br.unitins.topicos1.model.QuartoHotel;
+import br.unitins.topicos1.dto.QuartoDTO;
+import br.unitins.topicos1.dto.QuartoResponseDTO;
+import br.unitins.topicos1.model.Quarto;
+import br.unitins.topicos1.model.TipoQuarto;
 import br.unitins.topicos1.repository.QuartoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -19,32 +20,32 @@ public class QuartoServiceImpl implements QuartoService {
 
     @Override
     @Transactional
-    public QuartoHotelResponseDTO insert(QuartoHotelDTO dto) {
-        QuartoHotel novQuartoHotel = new QuartoHotel();
-        novQuartoHotel.setNumero(dto.getNumero());
-        novQuartoHotel.setTipo(dto.getTipo());
-        novQuartoHotel.setPreco(dto.getPreco());
-        novQuartoHotel.setDisponivel(dto.getDisponivel());
+    public QuartoResponseDTO insert(QuartoDTO dto) {
+        Quarto novQuarto = new Quarto();
+        novQuarto.setNumero(dto.getNumero());
+        novQuarto.setTipo(dto.getTipo());
+        novQuarto.setPreco(dto.getPreco());
+        novQuarto.setDisponivel(dto.getDisponivel());
 
-        repository.persist(novQuartoHotel);
+        repository.persist(novQuarto);
 
-        return QuartoHotelResponseDTO.valueOf(novQuartoHotel);
+        return QuartoResponseDTO.valueOf(novQuarto);
     }
 
     @Override
     @Transactional
-    public QuartoHotelResponseDTO update(QuartoHotelDTO dto, Long id) {
-        QuartoHotel quartoHotel = repository.findById(id);
+    public QuartoResponseDTO update(QuartoDTO dto, Long id) {
+        Quarto quarto = repository.findById(id);
 
-        if (quartoHotel != null) {
-            quartoHotel.setNumero(dto.getNumero());
-            quartoHotel.setTipo(dto.getTipo());
-            quartoHotel.setPreco(dto.getPreco());
-            quartoHotel.setDisponivel(dto.getDisponivel());
+        if (quarto != null) {
+            quarto.setNumero(dto.getNumero());
+            quarto.setTipo(dto.getTipo());
+            quarto.setPreco(dto.getPreco());
+            quarto.setDisponivel(dto.getDisponivel());
         } else
             throw new NotFoundException();
 
-        return QuartoHotelResponseDTO.valueOf(quartoHotel);
+        return QuartoResponseDTO.valueOf(quarto);
     }
 
     @Override
@@ -55,19 +56,19 @@ public class QuartoServiceImpl implements QuartoService {
     }
 
     @Override
-    public QuartoHotelResponseDTO findById(Long id) {
-        return QuartoHotelResponseDTO.valueOf(repository.findById(id));
+    public QuartoResponseDTO findById(Long id) {
+        return QuartoResponseDTO.valueOf(repository.findById(id));
     }
 
     @Override
-    public List<QuartoHotelResponseDTO> findByTipo(String tipo) {
+    public List<QuartoResponseDTO> findByTipo(TipoQuarto tipo) {
         return repository.findByTipo(tipo).stream()
-                .map(e -> QuartoHotelResponseDTO.valueOf(e)).toList();
+                .map(e -> QuartoResponseDTO.valueOf(e)).toList();
     }
 
     @Override
-    public List<QuartoHotelResponseDTO> findByAll() {
+    public List<QuartoResponseDTO> findByAll() {
         return repository.listAll().stream()
-                .map(e -> QuartoHotelResponseDTO.valueOf(e)).toList();
+                .map(e -> QuartoResponseDTO.valueOf(e)).toList();
     }
 }

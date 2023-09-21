@@ -6,6 +6,7 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -18,11 +19,9 @@ public class Usuario extends DefaultEntity {
     @JoinTable(name = "usuario_telefone", joinColumns = @JoinColumn(name = "id_usuario"), inverseJoinColumns = @JoinColumn(name = "id_telefone"))
     private List<Telefone> listaTelefone;
 
-
-    @ManyToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinTable(name = "usuario_endereco", joinColumns = @JoinColumn(name = "id_usuario"), inverseJoinColumns = @JoinColumn(name = "id_endereco"))
     private Endereco endereco;
-
 
     @OneToMany(mappedBy = "usuario")
     private List<Reserva> reservas;
@@ -59,11 +58,11 @@ public class Usuario extends DefaultEntity {
         this.listaTelefone = listaTelefone;
     }
 
-    public Endereco getEndereco(){
+    public Endereco getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(Endereco endereco){
+    public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
 
