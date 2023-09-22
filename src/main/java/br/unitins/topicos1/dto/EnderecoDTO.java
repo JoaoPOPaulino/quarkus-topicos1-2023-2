@@ -3,7 +3,7 @@ package br.unitins.topicos1.dto;
 import br.unitins.topicos1.model.Endereco;
 
 public record EnderecoDTO(
-        String Endereco,
+        String estado,
         String cidade,
         String quadra,
         String rua,

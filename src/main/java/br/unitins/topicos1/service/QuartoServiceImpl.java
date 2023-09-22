@@ -5,7 +5,6 @@ import java.util.List;
 import br.unitins.topicos1.dto.QuartoDTO;
 import br.unitins.topicos1.dto.QuartoResponseDTO;
 import br.unitins.topicos1.model.Quarto;
-import br.unitins.topicos1.model.TipoQuarto;
 import br.unitins.topicos1.repository.QuartoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -23,7 +22,7 @@ public class QuartoServiceImpl implements QuartoService {
     public QuartoResponseDTO insert(QuartoDTO dto) {
         Quarto novQuarto = new Quarto();
         novQuarto.setNumero(dto.getNumero());
-        novQuarto.setTipo(dto.getTipo());
+        novQuarto.setTipo(Quarto.TipoQuarto.valueOf(dto.getTipo()));
         novQuarto.setPreco(dto.getPreco());
         novQuarto.setDisponivel(dto.getDisponivel());
 
@@ -39,7 +38,7 @@ public class QuartoServiceImpl implements QuartoService {
 
         if (quarto != null) {
             quarto.setNumero(dto.getNumero());
-            quarto.setTipo(dto.getTipo());
+            quarto.setTipo(Quarto.TipoQuarto.valueOf(dto.getTipo()));
             quarto.setPreco(dto.getPreco());
             quarto.setDisponivel(dto.getDisponivel());
         } else
@@ -61,7 +60,7 @@ public class QuartoServiceImpl implements QuartoService {
     }
 
     @Override
-    public List<QuartoResponseDTO> findByTipo(TipoQuarto tipo) {
+    public List<QuartoResponseDTO> findByTipo(Quarto.TipoQuarto tipo) {
         return repository.findByTipo(tipo).stream()
                 .map(e -> QuartoResponseDTO.valueOf(e)).toList();
     }

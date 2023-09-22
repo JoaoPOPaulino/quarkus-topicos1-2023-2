@@ -8,16 +8,22 @@ import br.unitins.topicos1.dto.UsuarioDTO;
 import br.unitins.topicos1.dto.UsuarioResponseDTO;
 import br.unitins.topicos1.model.Telefone;
 import br.unitins.topicos1.model.Usuario;
+import br.unitins.topicos1.repository.TelefoneRepository;
 import br.unitins.topicos1.repository.UsuarioRepository;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 
 @ApplicationScoped
 public class UsuarioServiceImpl implements UsuarioService {
 
     @Inject
     UsuarioRepository repository;
+
+    @Inject
+    TelefoneRepository telefoneRepository;
 
     @Override
     @Transactional
@@ -27,48 +33,80 @@ public class UsuarioServiceImpl implements UsuarioService {
         novoUsuario.setLogin(dto.login());
         novoUsuario.setSenha(dto.senha());
 
-        if (dto.listaTelefone() != null &&
-                !dto.listaTelefone().isEmpty()) {
-            novoUsuario.setListaTelefone(new ArrayList<Telefone>());
-            for (TelefoneDTO tel : dto.listaTelefone()) {
+        if (dto.listaTelefone() != null && !dto.listaTelefone().isEmpty()) {
+            novoUsuario.setListaTelefone(new ArrayList<>());
+            for (TelefoneDTO telDto : dto.listaTelefone()) {
                 Telefone telefone = new Telefone();
-                telefone.setCodigoArea(tel.codigoArea());
-                telefone.setNumero(tel.numero());
+                telefone.setCodigoArea(telDto.codigoArea());
+                telefone.setNumero(telDto.numero());
                 novoUsuario.getListaTelefone().add(telefone);
             }
         }
 
         repository.persist(novoUsuario);
-
         return UsuarioResponseDTO.valueOf(novoUsuario);
     }
 
     @Override
     @Transactional
     public UsuarioResponseDTO update(UsuarioDTO dto, Long id) {
-        return null;
+        Usuario usuarioExistente = repository.findById(id);
+        if (usuarioExistente == null) {
+            throw new NotFoundException("Usuário não encontrado.");
+        }
 
+        usuarioExistente.setNome(dto.nome());
+        usuarioExistente.setLogin(dto.login());
+        usuarioExistente.setSenha(dto.senha());
+
+        // Atualizar a lista de telefones
+        usuarioExistente.getListaTelefone().clear();
+        for (TelefoneDTO telDto : dto.listaTelefone()) {
+            Telefone telefone = new Telefone();
+            telefone.setCodigoArea(telDto.codigoArea());
+            telefone.setNumero(telDto.numero());
+            usuarioExistente.getListaTelefone().add(telefone);
+        }
+
+        repository.persist(usuarioExistente);
+
+        return UsuarioResponseDTO.valueOf(usuarioExistente);
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
+        if (!repository.deleteById(id)) {
+            throw new NotFoundException("Usuário não encontrado.");
+        }
     }
 
     @Override
     public UsuarioResponseDTO findById(Long id) {
-        return null;
+        Usuario usuario = repository.findById(id);
+        if (usuario == null) {
+            throw new NotFoundException("Usuário não encontrado.");
+        }
+        return UsuarioResponseDTO.valueOf(usuario);
     }
 
     @Override
     public List<UsuarioResponseDTO> findByNome(String nome) {
-        return null;
+        List<Usuario> usuarios = repository.findByNome(nome);
+        List<UsuarioResponseDTO> dtos = new ArrayList<>();
+        for (Usuario usuario : usuarios) {
+            dtos.add(UsuarioResponseDTO.valueOf(usuario));
+        }
+        return dtos;
     }
 
     @Override
     public List<UsuarioResponseDTO> findByAll() {
-        return repository.listAll().stream()
-                .map(e -> UsuarioResponseDTO.valueOf(e)).toList();
+        List<Usuario> usuarios = repository.listAll();
+        List<UsuarioResponseDTO> dtos = new ArrayList<>();
+        for (Usuario usuario : usuarios) {
+            dtos.add(UsuarioResponseDTO.valueOf(usuario));
+        }
+        return dtos;
     }
-
 }

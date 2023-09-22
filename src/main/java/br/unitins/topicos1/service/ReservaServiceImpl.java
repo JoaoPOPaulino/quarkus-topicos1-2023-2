@@ -1,6 +1,5 @@
 package br.unitins.topicos1.service;
 
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,20 +32,22 @@ public class ReservaServiceImpl implements ReservaService {
     @Transactional
     public ReservaResponseDTO insert(ReservaDTO dto) {
         Reserva novaReserva = new Reserva();
-        Usuario usuario = usuarioRepository.findById(dto.getUsuarioId());
-        Quarto quarto = quartoRepository.findById(dto.getQuartoId());
 
-        if (usuario == null || quarto == null)
-            throw new NotFoundException("Usuário ou Quarto não encontrado.");
+        Usuario usuario = usuarioRepository.findById(dto.getUsuarioId());
+        if (usuario == null) {
+            throw new NotFoundException("Usuário não encontrado");
+        }
+
+        Quarto quarto = quartoRepository.findById(dto.getQuartoId());
+        if (quarto == null) {
+            throw new NotFoundException("Quarto não encontrado");
+        }
 
         novaReserva.setUsuario(usuario);
         novaReserva.setQuarto(quarto);
         novaReserva.setDataInicio(dto.getDataInicio());
-        novaReserva.setDataFinal(dto.getDataFinal());
-
-        long numeroDias = ChronoUnit.DAYS.between(dto.getDataInicio(), dto.getDataFinal());
-        double precoTotal = numeroDias * quarto.getPreco();
-        novaReserva.setPrecoTotal(precoTotal);
+        novaReserva.setDataFinal(dto.getDataFim()); // Note que aqui corrigi para setDataFinal
+        novaReserva.setPrecoTotal(dto.getPrecoTotal());
 
         repository.persist(novaReserva);
 
@@ -57,23 +58,27 @@ public class ReservaServiceImpl implements ReservaService {
     @Transactional
     public ReservaResponseDTO update(ReservaDTO dto, Long id) {
         Reserva reservaExistente = repository.findById(id);
-        if (reservaExistente == null)
-            throw new NotFoundException("Reserva não encontrada.");
+        if (reservaExistente == null) {
+            throw new NotFoundException("Reserva não encontrada");
+        }
 
         Usuario usuario = usuarioRepository.findById(dto.getUsuarioId());
-        Quarto quarto = quartoRepository.findById(dto.getQuartoId());
+        if (usuario == null) {
+            throw new NotFoundException("Usuário não encontrado");
+        }
 
-        if (usuario == null || quarto == null)
-            throw new NotFoundException("Usuário ou Quarto não encontrado.");
+        Quarto quarto = quartoRepository.findById(dto.getQuartoId());
+        if (quarto == null) {
+            throw new NotFoundException("Quarto não encontrado");
+        }
 
         reservaExistente.setUsuario(usuario);
         reservaExistente.setQuarto(quarto);
         reservaExistente.setDataInicio(dto.getDataInicio());
-        reservaExistente.setDataFinal(dto.getDataFinal());
+        reservaExistente.setDataFinal(dto.getDataFim()); // Note que aqui corrigi para setDataFinal
+        reservaExistente.setPrecoTotal(dto.getPrecoTotal());
 
-        long numeroDias = ChronoUnit.DAYS.between(dto.getDataInicio(), dto.getDataFinal());
-        double precoTotal = numeroDias * quarto.getPreco();
-        reservaExistente.setPrecoTotal(precoTotal);
+        repository.persist(reservaExistente);
 
         return ReservaResponseDTO.valueOf(reservaExistente);
     }
@@ -81,22 +86,27 @@ public class ReservaServiceImpl implements ReservaService {
     @Override
     @Transactional
     public void delete(Long id) {
-        if (!repository.deleteById(id))
-            throw new NotFoundException("Reserva não encontrada.");
+        Reserva reserva = repository.findById(id);
+        if (reserva == null) {
+            throw new NotFoundException("Reserva não encontrada");
+        }
+        repository.delete(reserva);
     }
 
     @Override
     public ReservaResponseDTO findById(Long id) {
         Reserva reserva = repository.findById(id);
-        if (reserva == null)
-            throw new NotFoundException("Reserva não encontrada.");
+        if (reserva == null) {
+            throw new NotFoundException("Reserva não encontrada");
+        }
         return ReservaResponseDTO.valueOf(reserva);
     }
 
     @Override
     public List<ReservaResponseDTO> findByAll() {
-        return repository.listAll().stream()
-                .map(ReservaResponseDTO::valueOf).collect(Collectors.toList());
+        List<Reserva> reservas = repository.listAll();
+        return reservas.stream()
+                .map(ReservaResponseDTO::valueOf)
+                .collect(Collectors.toList());
     }
-
 }

@@ -4,24 +4,25 @@ import java.time.LocalDate;
 
 public class ReservaDTO {
 
+    private final Long id;
     private final Long usuarioId;
     private final Long quartoId;
     private final LocalDate dataInicio;
-    private final LocalDate dataFinal;
+    private final LocalDate dataFim;
+    private final Double precoTotal;
 
-    public ReservaDTO(Long usuarioId, Long quartoId, LocalDate dataInicio, LocalDate dataFinal) {
+    public ReservaDTO(Long id, Long usuarioId, Long quartoId, LocalDate dataInicio, LocalDate dataFim,
+            Double precoTotal) {
+        this.id = id;
         this.usuarioId = usuarioId;
         this.quartoId = quartoId;
         this.dataInicio = dataInicio;
-        this.dataFinal = dataFinal;
+        this.dataFim = dataFim;
+        this.precoTotal = precoTotal;
     }
 
-    public LocalDate getDataInicio() {
-        return dataInicio;
-    }
-
-    public LocalDate getDataFinal() {
-        return dataFinal;
+    public Long getId() {
+        return id;
     }
 
     public Long getUsuarioId() {
@@ -30,6 +31,18 @@ public class ReservaDTO {
 
     public Long getQuartoId() {
         return quartoId;
+    }
+
+    public LocalDate getDataInicio() {
+        return dataInicio;
+    }
+
+    public LocalDate getDataFim() {
+        return dataFim;
+    }
+
+    public Double getPrecoTotal() {
+        return precoTotal;
     }
 
 }

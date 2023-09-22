@@ -9,6 +9,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
@@ -26,12 +27,18 @@ public class ReservaResource {
 
     @POST
     public ReservaResponseDTO insert(ReservaDTO dto) {
+        if (dto.getDataInicio().isAfter(dto.getDataFim())) {
+            throw new NotFoundException("Data de início deve ser antes da data de fim.");
+        }
         return service.insert(dto);
     }
 
     @PUT
     @Path("/{id}")
     public ReservaResponseDTO update(ReservaDTO dto, @PathParam("id") Long id) {
+        if (dto.getDataInicio().isAfter(dto.getDataFim())) {
+            throw new NotFoundException("Data de início deve ser antes da data de fim.");
+        }
         return service.update(dto, id);
     }
 
@@ -49,6 +56,10 @@ public class ReservaResource {
     @GET
     @Path("/{id}")
     public ReservaResponseDTO findById(@PathParam("id") Long id) {
-        return service.findById(id);
+        ReservaResponseDTO dto = service.findById(id);
+        if (dto == null) {
+            throw new NotFoundException("Reserva não encontrada.");
+        }
+        return dto;
     }
 }

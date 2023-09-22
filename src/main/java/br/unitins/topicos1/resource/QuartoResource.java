@@ -3,7 +3,7 @@ package br.unitins.topicos1.resource;
 import java.util.List;
 
 import br.unitins.topicos1.model.Quarto;
-import br.unitins.topicos1.model.TipoQuarto;
+import br.unitins.topicos1.model.Quarto.TipoQuarto;
 import br.unitins.topicos1.repository.QuartoRepository;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -18,7 +18,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
-@Path("/Quarto")
+@Path("/quarto")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class QuartoResource {
@@ -28,10 +28,10 @@ public class QuartoResource {
 
     @POST
     @Transactional
-    public Quarto insert(Quarto Quarto) {
+    public Quarto insert(Quarto quarto) {
         Quarto novoQuarto = new Quarto();
-        novoQuarto.setNumero(Quarto.getNumero());
-        novoQuarto.setTipo(Quarto.getTipo());
+        novoQuarto.setNumero(quarto.getNumero());
+        novoQuarto.setTipo(quarto.getTipo());
 
         repository.persist(novoQuarto);
         return novoQuarto;
@@ -50,7 +50,7 @@ public class QuartoResource {
 
     @GET
     @Path("/search/tipo/{tipo}")
-    public List<Quarto> findById(@PathParam("tipo") TipoQuarto tipo) {
+    public List<Quarto> findByTipo(@PathParam("tipo") TipoQuarto tipo) {
         return repository.findByTipo(tipo);
     }
 

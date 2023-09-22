@@ -12,8 +12,8 @@ public class QuartoDescricao extends DefaultEntity {
     private String descricao;
 
     @ManyToOne
-    @JoinColumn(name = "id_quarto")
-    private Quarto quarto;
+    @JoinColumn(name = "id_quartoHotel")
+    private Quarto quartoHotel;
 
     public String getDescricao() {
         return descricao;
@@ -23,13 +23,12 @@ public class QuartoDescricao extends DefaultEntity {
         this.descricao = descricao;
     }
 
-    public Quarto getQuarto() {
-        return quarto;
+    public Quarto getQuartoHotel() {
+        return quartoHotel;
     }
 
-    public void setQuarto(Quarto quarto) {
-        this.quarto = quarto;
-        
+    public void setQuartoHotel(Quarto quartoHotel) {
+        this.quartoHotel = quartoHotel;
     }
 
 }

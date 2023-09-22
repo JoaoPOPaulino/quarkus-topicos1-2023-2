@@ -1,7 +1,7 @@
 package br.unitins.topicos1.dto;
 
 import br.unitins.topicos1.model.Quarto;
-import br.unitins.topicos1.model.TipoQuarto;
+import br.unitins.topicos1.model.Quarto.TipoQuarto;
 
 public record QuartoResponseDTO(
         Long id,

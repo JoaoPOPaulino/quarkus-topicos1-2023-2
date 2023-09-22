@@ -8,10 +8,18 @@ import jakarta.persistence.Enumerated;
 @Entity
 public class Quarto extends DefaultEntity {
 
+    public enum TipoQuarto {
+        SIMPLES,
+        CASAL,
+        LUXO,
+        PRESIDENCIAL
+    }
+
     @Column(length = 3)
     private int numero;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 60)
     private TipoQuarto tipo;
 
     @Column(length = 5)

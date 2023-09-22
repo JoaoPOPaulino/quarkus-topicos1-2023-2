@@ -2,11 +2,10 @@ package br.unitins.topicos1.resource;
 
 import java.util.List;
 
-import br.unitins.topicos1.dto.UsuarioDTO;
-import br.unitins.topicos1.dto.UsuarioResponseDTO;
-import br.unitins.topicos1.service.UsuarioService;
+import br.unitins.topicos1.dto.TelefoneDTO;
+import br.unitins.topicos1.dto.TelefoneResponseDTO;
+import br.unitins.topicos1.service.TelefoneService;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -17,47 +16,39 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
-@Path("/usuarios")
+@Path("/telefones")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class UsuarioResource {
+public class TelefoneResource {
 
     @Inject
-    UsuarioService service;
+    TelefoneService service;
 
     @POST
-    public UsuarioResponseDTO insert(UsuarioDTO dto) {
+    public TelefoneResponseDTO insert(TelefoneDTO dto) {
         return service.insert(dto);
     }
 
     @PUT
-    @Transactional
     @Path("/{id}")
-    public UsuarioResponseDTO update(UsuarioDTO dto, @PathParam("id") Long id) {
+    public TelefoneResponseDTO update(TelefoneDTO dto, @PathParam("id") Long id) {
         return service.update(dto, id);
     }
 
     @DELETE
-    @Transactional
     @Path("/{id}")
     public void delete(@PathParam("id") Long id) {
         service.delete(id);
     }
 
     @GET
-    public List<UsuarioResponseDTO> findAll() {
+    public List<TelefoneResponseDTO> findAll() {
         return service.findByAll();
     }
 
     @GET
     @Path("/{id}")
-    public UsuarioResponseDTO findById(@PathParam("id") Long id) {
+    public TelefoneResponseDTO findById(@PathParam("id") Long id) {
         return service.findById(id);
-    }
-
-    @GET
-    @Path("/search/nome/{nome}")
-    public List<UsuarioResponseDTO> findByNome(@PathParam("nome") String nome) {
-        return service.findByNome(nome);
     }
 }

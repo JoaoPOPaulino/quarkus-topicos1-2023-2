@@ -2,15 +2,13 @@ package br.unitins.topicos1.dto;
 
 import java.util.Objects;
 
-import br.unitins.topicos1.model.TipoQuarto;
-
 public class QuartoDTO {
     private final int numero;
-    private final TipoQuarto tipo;
+    private final String tipo;
     private final double preco;
     private final Boolean disponivel;
 
-    public QuartoDTO(int numero, TipoQuarto tipo, double preco, Boolean disponivel) {
+    public QuartoDTO(int numero, String tipo, double preco, Boolean disponivel) {
         this.numero = numero;
         this.tipo = tipo;
         this.preco = preco;
@@ -21,7 +19,7 @@ public class QuartoDTO {
         return numero;
     }
 
-    public TipoQuarto getTipo() {
+    public String getTipo() {
         return tipo;
     }
 

@@ -9,14 +9,19 @@ public record ReservaResponseDTO(
         Long usuarioId,
         Long quartoId,
         LocalDate dataInicio,
-        LocalDate dataFim) {
+        LocalDate dataFim,
+        Double precoTotal) {
 
     public static ReservaResponseDTO valueOf(Reserva reserva) {
         return new ReservaResponseDTO(
                 reserva.getId(),
-                reserva.getUsuarioId(),
-                reserva.getQuartoId(),
+                reserva.getUsuario().getId(), // Supondo que getUsuario() retorne um objeto Usuario com um método
+                                              // getId()
+                reserva.getQuarto().getId(), // Supondo que getQuarto() retorne um objeto QuartoHotel com um método
+                                             // getId()
                 reserva.getDataInicio(),
-                reserva.getDataFinal());
+                reserva.getDataFinal(), // Verifique o nome correto desse método na sua classe Reserva
+                reserva.getPrecoTotal());
     }
+
 }
