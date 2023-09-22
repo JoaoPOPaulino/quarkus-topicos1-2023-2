@@ -1,74 +1,126 @@
-@startuml
+@startuml Hotel
 
 class Usuario {
-  - id: Long
+  - nome: String
   - login: String
   - senha: String
-  + construtor()
-  + getters/setters()
-}
-
-class Endereco {
-  + estado: String
-  + cidade: String
-  + quadra: String
-  + rua: String
-  + numero: String
+  - listaTelefone: List<Telefone>
+  - endereco: Endereco
+  + getNome(): String
+  + setNome(nome: String): void
+  + getLogin(): String
+  + setLogin(login: String): void
+  + getSenha(): String
+  + setSenha(senha: String): void
+  + getListaTelefone(): List<Telefone>
+  + setListaTelefone(listaTelefone: List<Telefone>): void
+  + getEndereco(): Endereco
+  + setEndereco(endereco: Endereco): void
+  - reservas: List<Reserva>
+  + getReservas(): List<Reserva>
+  + setReservas(reservas: List<Reserva>): void
 }
 
 class Telefone {
-  + codigoArea: String
-  + numero: String
+  - codigoArea: String
+  - numero: String
+  + getCodigoArea(): String
+  + setCodigoArea(codigoArea: String): void
+  + getNumero(): String
+  + setNumero(numero: String): void
 }
 
-class Quarto {
-  - id: Long
-  - numero: int
-  - tipo: TipoQuarto
-  - preco: double
-  - disponivel: boolean
-  + construtor()
-  + getters/setters()
-}
-
-enum TipoQuarto {
-  SINGLE
-  DUPLO
-  LUXO
-  PRESIDENCIAL
+class Endereco {
+  - estado: String
+  - cidade: String
+  - quadra: String
+  - rua: String
+  - numero: String
+  + getEstado(): String
+  + setEstado(estado: String): void
+  + getCidade(): String
+  + setCidade(cidade: String): void
+  + getQuadra(): String
+  + setQuadra(quadra: String): void
+  + getRua(): String
+  + setRua(rua: String): void
+  + getNumero(): String
+  + setNumero(numero: String): void
 }
 
 class Reserva {
-  - id: Long
-  - usuario: Usuario
-  - quarto: Quarto
   - dataInicio: LocalDate
-  - dataFim: LocalDate
-  + construtor()
-  + getters/setters()
+  - dataFinal: LocalDate
+  - pagamento: Pagamento
+  + getDataInicio(): LocalDate
+  + setDataInicio(dataInicio: LocalDate): void
+  + getDataFinal(): LocalDate
+  + setDataFinal(dataFinal: LocalDate): void
+  + getPagamento(): Pagamento
+  + setPagamento(pagamento: Pagamento): void
 }
 
 class Pagamento {
-  - id: Long
-  - tipo: TipoPagamento
+  - tipoPagamento: TipoPagamento
   - valor: double
-  + construtor()
-  + getters/setters()
+  + getTipoPagamento(): TipoPagamento
+  + setTipoPagamento(tipoPagamento: TipoPagamento): void
+  + getValor(): double
+  + setValor(valor: double): void
+  - reserva: Reserva
+  + getReserva(): Reserva
+  + setReserva(reserva: Reserva): void
+}
+
+class Quarto {
+  - numero: int
+  - tipo: TipoQuarto
+  - preco: double
+  - disponivel: Boolean
+  + getNumero(): int
+  + setNumero(numero: int): void
+  + getTipo(): TipoQuarto
+  + setTipo(tipo: TipoQuarto): void
+  + getPreco(): double
+  + setPreco(preco: double): void
+  + getDisponivel(): Boolean
+  + setDisponivel(disponivel: Boolean): void
+}
+
+class QuartoDescricao {
+  - descricao: String
+  - quartoHotel: Quarto
+  + getDescricao(): String
+  + setDescricao(descricao: String): void
+  + getQuartoHotel(): Quarto
+  + setQuartoHotel(quartoHotel: Quarto): void
+}
+
+enum TipoQuarto {
+  SIMPLES,
+  CASAL,
+  LUXO,
+  PRESIDENCIAL
 }
 
 enum TipoPagamento {
-  CARTAO_CREDITO
-  CARTAO_DEBITO
-  DINHEIRO
+  CARTAO_CREDITO,
+  CARTAO_DEBITO,
+  DINHEIRO,
   TRANSFERENCIA
 }
 
-Usuario -- Reserva : Realiza
-Quarto -- Reserva : ReservadoPor
-Reserva -- Pagamento : Possui
-Quarto --> TipoQuarto : tipo
-Reserva --> TipoPagamento : tipo
-Usuario "1" --> "0..*" Telefone : possui
-Usuario "1" --> "1" Endereco : possui
+Usuario --o Telefone : 1..*
+Usuario --o Endereco : 1
+Usuario --o Reserva : 0..*
+Usuario --o Reserva : 0..*
+Reserva --o Quarto : 1
+Reserva --o Usuario : 1
+Reserva --o Pagamento : 0..1
+Pagamento --o Reserva : 1
+Quarto --o QuartoDescricao : 1..*
+Quarto --o Reserva : 0..*
+TipoQuarto -- Quarto : Contém
+TipoPagamento -- Pagamento : Utiliza
 
 @enduml
