@@ -1,0 +1,55 @@
+@startuml
+
+class Usuario {
+  - id: Long
+  - nome: String
+  - email: String
+  + construtor()
+  + getters/setters()
+}
+
+class Quarto {
+  - id: Long
+  - numero: int
+  - tipo: TipoQuarto
+  - preco: double
+  - disponivel: boolean
+  + construtor()
+  + getters/setters()
+}
+
+enum TipoQuarto {
+  SINGLE
+  DUPLO
+  SUITE
+}
+
+class Reserva {
+  - id: Long
+  - usuario: Usuario
+  - quarto: Quarto
+  - dataInicio: LocalDate
+  - dataFim: LocalDate
+  + construtor()
+  + getters/setters()
+}
+
+class Pagamento {
+  - id: Long
+  - tipo: TipoPagamento
+  - valor: double
+  + construtor()
+  + getters/setters()
+}
+
+enum TipoPagamento {
+  CARTAO_CREDITO
+  CARTAO_DEBITO
+  DINHEIRO
+}
+
+Usuario -- Reserva : Realiza
+Quarto -- Reserva : ReservadoPor
+Reserva -- Pagamento : Possui
+
+@enduml
