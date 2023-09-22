@@ -2,10 +2,23 @@
 
 class Usuario {
   - id: Long
-  - nome: String
-  - email: String
+  - login: String
+  - senha: String
   + construtor()
   + getters/setters()
+}
+
+class Endereco {
+  + estado: String
+  + cidade: String
+  + quadra: String
+  + rua: String
+  + numero: String
+}
+
+class Telefone {
+  + codigoArea: String
+  + numero: String
 }
 
 class Quarto {
@@ -21,7 +34,8 @@ class Quarto {
 enum TipoQuarto {
   SINGLE
   DUPLO
-  SUITE
+  LUXO
+  PRESIDENCIAL
 }
 
 class Reserva {
@@ -46,10 +60,15 @@ enum TipoPagamento {
   CARTAO_CREDITO
   CARTAO_DEBITO
   DINHEIRO
+  TRANSFERENCIA
 }
 
 Usuario -- Reserva : Realiza
 Quarto -- Reserva : ReservadoPor
 Reserva -- Pagamento : Possui
+Quarto --> TipoQuarto : tipo
+Reserva --> TipoPagamento : tipo
+Usuario "1" --> "0..*" Telefone : possui
+Usuario "1" --> "1" Endereco : possui
 
 @enduml
