@@ -5,9 +5,11 @@ import java.util.stream.Collectors;
 
 import br.unitins.topicos1.dto.ReservaDTO;
 import br.unitins.topicos1.dto.ReservaResponseDTO;
-import br.unitins.topicos1.model.Quarto;
+import br.unitins.topicos1.model.Pagamento;
 import br.unitins.topicos1.model.Reserva;
+import br.unitins.topicos1.model.Quarto;
 import br.unitins.topicos1.model.Usuario;
+import br.unitins.topicos1.repository.PagamentoRepository;
 import br.unitins.topicos1.repository.QuartoRepository;
 import br.unitins.topicos1.repository.ReservaRepository;
 import br.unitins.topicos1.repository.UsuarioRepository;
@@ -28,6 +30,9 @@ public class ReservaServiceImpl implements ReservaService {
     @Inject
     QuartoRepository quartoRepository;
 
+    @Inject
+    PagamentoRepository pagamentoRepository;
+
     @Override
     @Transactional
     public ReservaResponseDTO insert(ReservaDTO dto) {
@@ -43,11 +48,16 @@ public class ReservaServiceImpl implements ReservaService {
             throw new NotFoundException("Quarto não encontrado");
         }
 
+        Pagamento pagamento = pagamentoRepository.findById(dto.getPagamentoId());
+        if (pagamento == null) {
+            throw new NotFoundException("Pagamento não encontrado");
+        }
+
         novaReserva.setUsuario(usuario);
         novaReserva.setQuarto(quarto);
         novaReserva.setDataInicio(dto.getDataInicio());
-        novaReserva.setDataFinal(dto.getDataFim()); // Note que aqui corrigi para setDataFinal
-        novaReserva.setPrecoTotal(dto.getPrecoTotal());
+        novaReserva.setDataFinal(dto.getDataFim());
+        novaReserva.setPagamento(pagamento); // Adicione aqui o relacionamento com Pagamento
 
         repository.persist(novaReserva);
 
@@ -72,11 +82,16 @@ public class ReservaServiceImpl implements ReservaService {
             throw new NotFoundException("Quarto não encontrado");
         }
 
+        Pagamento pagamento = pagamentoRepository.findById(dto.getPagamentoId());
+        if (pagamento == null) {
+            throw new NotFoundException("Pagamento não encontrado");
+        }
+
         reservaExistente.setUsuario(usuario);
         reservaExistente.setQuarto(quarto);
         reservaExistente.setDataInicio(dto.getDataInicio());
-        reservaExistente.setDataFinal(dto.getDataFim()); // Note que aqui corrigi para setDataFinal
-        reservaExistente.setPrecoTotal(dto.getPrecoTotal());
+        reservaExistente.setDataFinal(dto.getDataFim());
+        reservaExistente.setPagamento(pagamento); // Atualize o relacionamento com Pagamento
 
         repository.persist(reservaExistente);
 

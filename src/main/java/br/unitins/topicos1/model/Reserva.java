@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Reserva extends DefaultEntity {
@@ -18,7 +19,9 @@ public class Reserva extends DefaultEntity {
     private Usuario usuario;
     private LocalDate dataInicio;
     private LocalDate dataFinal;
-    private Double precoTotal;
+
+    @OneToOne(mappedBy = "reserva")
+    private Pagamento pagamento;
 
     public Quarto getQuarto() {
         return quarto;
@@ -52,12 +55,13 @@ public class Reserva extends DefaultEntity {
         this.dataFinal = dataFinal;
     }
 
-    public Double getPrecoTotal() {
-        return precoTotal;
+    public Pagamento getPagamento() {
+        return pagamento;
     }
 
-    public void setPrecoTotal(Double precoTotal) {
-        this.precoTotal = precoTotal;
+    public void setPagamento(Pagamento pagamento) {
+        this.pagamento = pagamento;
+        pagamento.setReserva(this);
     }
 
 }
