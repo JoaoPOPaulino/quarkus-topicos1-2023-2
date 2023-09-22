@@ -18,7 +18,7 @@ public class PagamentoDTO {
         this.id = id;
     }
 
-    public TipoPagamento getTipo() {
+    public TipoPagamento getTipoPagamento() {
         return tipoPagamento;
     }
 
