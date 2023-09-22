@@ -113,7 +113,6 @@ enum TipoPagamento {
 Usuario --o Telefone : 1..*
 Usuario --o Endereco : 1
 Usuario --o Reserva : 0..*
-Usuario --o Reserva : 0..*
 Reserva --o Quarto : 1
 Reserva --o Usuario : 1
 Reserva --o Pagamento : 0..1
