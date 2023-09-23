@@ -55,7 +55,7 @@ enum TipoQuarto {
 enum TipoPagamento {
   CARTAO_CREDITO,
   CARTAO_DEBITO,
-  DINHEIRO,
+  PIX,
   TRANSFERENCIA
 }
 
