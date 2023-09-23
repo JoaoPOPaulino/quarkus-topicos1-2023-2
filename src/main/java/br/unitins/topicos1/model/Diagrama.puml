@@ -59,16 +59,16 @@ enum TipoPagamento {
   TRANSFERENCIA
 }
 
-Usuario --o Telefone : 1..*
-Usuario --o Endereco : 1
-Usuario --o Reserva : 0..*
-Reserva --o Quarto : 1
-Reserva --o Usuario : 1
-Reserva --o Pagamento : 0..1
-Pagamento --o Reserva : 1
-Quarto --o QuartoDescricao : 1..*
-Quarto --o Reserva : 0..*
-TipoQuarto -- Quarto : Contém
-TipoPagamento -- Pagamento : Utiliza
+Usuario "1" --o "0..*" Telefone
+Usuario "1" --o "1" Endereco
+Usuario "1" --o "0..*" Reserva
+Reserva "1" --o "1" Quarto
+Reserva "1" --o "0..1" Pagamento
+Reserva "1" --o "1" Usuario
+Pagamento "1" --o "1" Reserva
+Quarto "1" --o "1..*" QuartoDescricao
+Quarto "1" --o "0..*" Reserva
+Quarto ..> TipoQuarto
+Pagamento ..> TipoPagamento
 
 @enduml
