@@ -6,28 +6,12 @@ class Usuario {
   - senha: String
   - listaTelefone: List<Telefone>
   - endereco: Endereco
-  + getNome(): String
-  + setNome(nome: String): void
-  + getLogin(): String
-  + setLogin(login: String): void
-  + getSenha(): String
-  + setSenha(senha: String): void
-  + getListaTelefone(): List<Telefone>
-  + setListaTelefone(listaTelefone: List<Telefone>): void
-  + getEndereco(): Endereco
-  + setEndereco(endereco: Endereco): void
   - reservas: List<Reserva>
-  + getReservas(): List<Reserva>
-  + setReservas(reservas: List<Reserva>): void
 }
 
 class Telefone {
   - codigoArea: String
   - numero: String
-  + getCodigoArea(): String
-  + setCodigoArea(codigoArea: String): void
-  + getNumero(): String
-  + setNumero(numero: String): void
 }
 
 class Endereco {
@@ -36,40 +20,17 @@ class Endereco {
   - quadra: String
   - rua: String
   - numero: String
-  + getEstado(): String
-  + setEstado(estado: String): void
-  + getCidade(): String
-  + setCidade(cidade: String): void
-  + getQuadra(): String
-  + setQuadra(quadra: String): void
-  + getRua(): String
-  + setRua(rua: String): void
-  + getNumero(): String
-  + setNumero(numero: String): void
 }
 
 class Reserva {
   - dataInicio: LocalDate
   - dataFinal: LocalDate
   - pagamento: Pagamento
-  + getDataInicio(): LocalDate
-  + setDataInicio(dataInicio: LocalDate): void
-  + getDataFinal(): LocalDate
-  + setDataFinal(dataFinal: LocalDate): void
-  + getPagamento(): Pagamento
-  + setPagamento(pagamento: Pagamento): void
 }
 
 class Pagamento {
   - tipoPagamento: TipoPagamento
   - valor: double
-  + getTipoPagamento(): TipoPagamento
-  + setTipoPagamento(tipoPagamento: TipoPagamento): void
-  + getValor(): double
-  + setValor(valor: double): void
-  - reserva: Reserva
-  + getReserva(): Reserva
-  + setReserva(reserva: Reserva): void
 }
 
 class Quarto {
@@ -77,23 +38,11 @@ class Quarto {
   - tipo: TipoQuarto
   - preco: double
   - disponivel: Boolean
-  + getNumero(): int
-  + setNumero(numero: int): void
-  + getTipo(): TipoQuarto
-  + setTipo(tipo: TipoQuarto): void
-  + getPreco(): double
-  + setPreco(preco: double): void
-  + getDisponivel(): Boolean
-  + setDisponivel(disponivel: Boolean): void
 }
 
 class QuartoDescricao {
   - descricao: String
   - quartoHotel: Quarto
-  + getDescricao(): String
-  + setDescricao(descricao: String): void
-  + getQuartoHotel(): Quarto
-  + setQuartoHotel(quartoHotel: Quarto): void
 }
 
 enum TipoQuarto {
