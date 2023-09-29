@@ -23,8 +23,6 @@ public class Pagamento extends DefaultEntity {
     @OneToOne(mappedBy = "pagamento")
     private Reserva reserva;
 
-    // Getters and setters
-
     public TipoPagamento getTipoPagamento() {
         return tipoPagamento;
     }
