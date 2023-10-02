@@ -20,7 +20,7 @@ public class Reserva extends DefaultEntity {
     private LocalDate dataInicio;
     private LocalDate dataFinal;
 
-    @OneToOne(mappedBy = "reserva")
+    @OneToOne(mappedBy = "reserva") // reserva
     private Pagamento pagamento;
 
     public Quarto getQuarto() {

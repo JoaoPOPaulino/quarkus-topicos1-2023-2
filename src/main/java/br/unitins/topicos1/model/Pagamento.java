@@ -3,6 +3,7 @@ package br.unitins.topicos1.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -20,8 +21,12 @@ public class Pagamento extends DefaultEntity {
 
     private double valor;
 
-    @OneToOne(mappedBy = "pagamento")
+    @OneToOne
+    @JoinColumn(name = "reserva_id")
     private Reserva reserva;
+
+    // @OneToOne(mappedBy = "pagamento") //pagamento
+    // private Reserva reserva;
 
     public TipoPagamento getTipoPagamento() {
         return tipoPagamento;
