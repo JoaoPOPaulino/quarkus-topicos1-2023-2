@@ -2,13 +2,24 @@ package br.unitins.topicos1.dto;
 
 import java.util.Objects;
 
-public class QuartoDTO {
-    private final int numero;
-    private final String tipo;
-    private final double preco;
-    private final Boolean disponivel;
+import br.unitins.topicos1.model.Quarto.TipoQuarto;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
-    public QuartoDTO(int numero, String tipo, double preco, Boolean disponivel) {
+public class QuartoDTO {
+
+    @Min(value = 1, message = "O número do quarto deve ser maior que 0")
+    private final int numero;
+    @NotBlank(message = "O tipo do quarto não pode estar em branco")
+    private final TipoQuarto tipo;
+    @Positive(message = "O preço do quarto deve ser um valor positivo")
+    private final double preco;
+    @NotNull(message = "O campo disponível não pode ser nulo")
+    private final boolean disponivel;
+
+    public QuartoDTO(int numero, TipoQuarto tipo, double preco, boolean disponivel) {
         this.numero = numero;
         this.tipo = tipo;
         this.preco = preco;
@@ -19,7 +30,7 @@ public class QuartoDTO {
         return numero;
     }
 
-    public String getTipo() {
+    public TipoQuarto getTipo() {
         return tipo;
     }
 
@@ -27,7 +38,7 @@ public class QuartoDTO {
         return preco;
     }
 
-    public Boolean getDisponivel() {
+    public boolean isDisponivel() {
         return disponivel;
     }
 
@@ -38,7 +49,7 @@ public class QuartoDTO {
         result = prime * result + numero;
         result = prime * result + ((tipo == null) ? 0 : tipo.hashCode());
         result = prime * result + Double.hashCode(preco);
-        result = prime * result + ((disponivel == null) ? 0 : disponivel.hashCode());
+        result = prime * result + (disponivel ? 1 : 0);
         return result;
     }
 

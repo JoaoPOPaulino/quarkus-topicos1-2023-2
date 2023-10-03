@@ -1,30 +1,25 @@
 package br.unitins.topicos1.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 @Entity
 public class Endereco extends DefaultEntity {
 
-    @NotNull
-    @Size(max = 50)
+    @Column(nullable = false, length = 50)
     private String estado;
 
-    @NotNull
-    @Size(max = 50)
+    @Column(nullable = false, length = 50)
     private String cidade;
 
-    @Size(max = 50)
+    @Column(nullable = false, length = 50)
     private String quadra;
 
-    @NotNull
-    @Size(max = 100)
+    @Column(nullable = false, length = 50)
     private String rua;
 
-    @NotNull
-    @Size(max = 10)
-    private String numero;
+    @Column(nullable = false, length = 50)
+    private Integer numero;
 
     public String getEstado() {
         return estado;
@@ -58,11 +53,11 @@ public class Endereco extends DefaultEntity {
         this.rua = rua;
     }
 
-    public String getNumero() {
+    public Integer getNumero() {
         return numero;
     }
 
-    public void setNumero(String numero) {
+    public void setNumero(Integer numero) {
         this.numero = numero;
     }
 }

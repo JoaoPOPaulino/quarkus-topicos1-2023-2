@@ -20,15 +20,15 @@ public class QuartoServiceImpl implements QuartoService {
     @Override
     @Transactional
     public QuartoResponseDTO insert(QuartoDTO dto) {
-        Quarto novQuarto = new Quarto();
-        novQuarto.setNumero(dto.getNumero());
-        novQuarto.setTipo(Quarto.TipoQuarto.valueOf(dto.getTipo()));
-        novQuarto.setPreco(dto.getPreco());
-        novQuarto.setDisponivel(dto.getDisponivel());
+        Quarto novoQuarto = new Quarto();
+        novoQuarto.setNumero(dto.getNumero());
+        novoQuarto.setTipo(Quarto.TipoQuarto.valueOf(dto.getTipo()));
+        novoQuarto.setPreco(dto.getPreco());
+        novoQuarto.setDisponivel(dto.getDisponivel());
 
-        repository.persist(novQuarto);
+        repository.persist(novoQuarto);
 
-        return QuartoResponseDTO.valueOf(novQuarto);
+        return QuartoResponseDTO.valueOf(novoQuarto);
     }
 
     @Override

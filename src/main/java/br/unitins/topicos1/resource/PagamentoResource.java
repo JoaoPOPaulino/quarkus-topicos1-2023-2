@@ -42,7 +42,7 @@ public class PagamentoResource {
 
     @GET
     public List<PagamentoResponseDTO> findAll() {
-        return service.findAll();
+        return service.findByAll();
     }
 
     @GET

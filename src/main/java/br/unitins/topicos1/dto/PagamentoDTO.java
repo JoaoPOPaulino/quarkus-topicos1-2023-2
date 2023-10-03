@@ -1,36 +1,23 @@
 package br.unitins.topicos1.dto;
 
 import br.unitins.topicos1.model.Pagamento.TipoPagamento;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 
-public class PagamentoDTO {
+public record PagamentoDTO(
+        @NotBlank(message = "O tipo de pagamento não pode estar em branco") @TipoPagamentoValido(allowedTypes = {
+                "Cartão de Crédito", "Cartão de Débito", "Boleto", "Pix" }) TipoPagamento tipoPagamento,
 
-    private Long id;
-    private TipoPagamento tipoPagamento; // você pode trocar para o tipo do Enum, se preferir
-    private Long reservaId;
+        @NotEmpty(message = "O ID não pode estar vazio") Long reservaId
 
-    // Getters and setters
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    ){
 
     public TipoPagamento getTipoPagamento() {
         return tipoPagamento;
-    }
-
-    public void setTipo(TipoPagamento tipoPagamento) {
-        this.tipoPagamento = tipoPagamento;
     }
 
     public Long getReservaId() {
         return reservaId;
     }
 
-    public void setReservaId(Long reservaId) {
-        this.reservaId = reservaId;
-    }
 }

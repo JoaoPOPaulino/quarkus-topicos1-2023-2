@@ -51,13 +51,13 @@ public class QuartoResource {
     @GET
     @Path("/{id}")
     public Response findbyId(@PathParam("id") Long id) {
-        return Response.ok(service.findById()).build();
+        return Response.ok(service.findById(id)).build();
     }
 
     @GET
     @Path("/search/tipo/{tipo}")
     public Response findByTipo(@PathParam("tipo") TipoQuarto tipo) {
-        return Response.ok(service.findByTipo()).build();
+        return Response.ok(service.findByTipo(tipo)).build();
     }
 
     @DELETE

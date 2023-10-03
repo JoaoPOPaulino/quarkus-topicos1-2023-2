@@ -8,7 +8,7 @@ public record EnderecoResponseDTO(
         String cidade,
         String quadra,
         String rua,
-        String numero) {
+        Integer numero) {
 
     public static EnderecoResponseDTO valueOf(Endereco endereco) {
         return new EnderecoResponseDTO(

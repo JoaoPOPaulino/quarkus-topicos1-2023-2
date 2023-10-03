@@ -10,14 +10,6 @@ public class Result {
     private String message;
     private boolean success;
 
-    public String getMessage() {
-        return message;
-    }
-
-    public boolean isSuccess() {
-        return success;
-    }
-
     public Result(String message) {
         this.success = true;
         this.message = message;
@@ -33,6 +25,14 @@ public class Result {
         this.message = violations.stream()
                 .map(cv -> cv.getMessage())
                 .collect(Collectors.joining(", "));
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public boolean isSuccess() {
+        return success;
     }
 
 }
