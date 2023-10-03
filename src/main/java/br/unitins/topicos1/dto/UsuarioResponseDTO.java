@@ -14,14 +14,18 @@ public record UsuarioResponseDTO(
                 @NotBlank(message = "O login não pode estar em branco") String login,
                 @Valid List<TelefoneDTO> listaTelefone,
                 @Valid Endereco endereco) {
+
         public static UsuarioResponseDTO valueOf(Usuario usuario) {
+                List<TelefoneDTO> telefonesDTO = usuario.getListaTelefone()
+                                .stream()
+                                .map(telefone -> TelefoneDTO.valueOf(telefone))
+                                .toList();
+
                 return new UsuarioResponseDTO(
                                 usuario.getId(),
                                 usuario.getNome(),
                                 usuario.getLogin(),
-                                usuario.getListaTelefone()
-                                                .stream()
-                                                .map(t -> TelefoneDTO.valueOf(t)).toList(),
+                                telefonesDTO,
                                 usuario.getEndereco());
         }
 }

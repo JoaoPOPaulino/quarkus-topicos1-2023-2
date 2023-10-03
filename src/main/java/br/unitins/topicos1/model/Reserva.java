@@ -1,11 +1,11 @@
 package br.unitins.topicos1.model;
 
-import java.time.LocalDate;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 public class Reserva extends DefaultEntity {
@@ -17,6 +17,7 @@ public class Reserva extends DefaultEntity {
     @ManyToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
+
     private LocalDate dataInicio;
     private LocalDate dataFinal;
 
@@ -44,6 +45,9 @@ public class Reserva extends DefaultEntity {
     }
 
     public void setDataInicio(LocalDate dataInicio) {
+        if (dataInicio == null || dataFinal == null || dataInicio.isAfter(dataFinal)) {
+            throw new IllegalArgumentException("Datas de reserva inválidas.");
+        }
         this.dataInicio = dataInicio;
     }
 
@@ -52,6 +56,9 @@ public class Reserva extends DefaultEntity {
     }
 
     public void setDataFinal(LocalDate dataFinal) {
+        if (dataInicio == null || dataFinal == null || dataInicio.isAfter(dataFinal)) {
+            throw new IllegalArgumentException("Datas de reserva inválidas.");
+        }
         this.dataFinal = dataFinal;
     }
 
@@ -61,7 +68,27 @@ public class Reserva extends DefaultEntity {
 
     public void setPagamento(Pagamento pagamento) {
         this.pagamento = pagamento;
-        pagamento.setReserva(this);
+        if (pagamento != null) {
+            pagamento.setReserva(this);
+        }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Reserva reserva = (Reserva) o;
+        return Objects.equals(quarto, reserva.quarto) &&
+                Objects.equals(usuario, reserva.usuario) &&
+                Objects.equals(dataInicio, reserva.dataInicio) &&
+                Objects.equals(dataFinal, reserva.dataFinal) &&
+                Objects.equals(pagamento, reserva.pagamento);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(quarto, usuario, dataInicio, dataFinal, pagamento);
+    }
 }

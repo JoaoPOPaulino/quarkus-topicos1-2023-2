@@ -18,7 +18,7 @@ public class Endereco extends DefaultEntity {
     @Column(nullable = false, length = 50)
     private String rua;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false)
     private Integer numero;
 
     public String getEstado() {

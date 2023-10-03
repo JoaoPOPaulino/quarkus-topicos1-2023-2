@@ -9,14 +9,13 @@ import br.unitins.topicos1.model.Quarto;
 public interface QuartoService {
     QuartoResponseDTO insert(QuartoDTO dto);
 
-    public QuartoResponseDTO update(QuartoDTO dto, Long id);
+    QuartoResponseDTO update(QuartoDTO dto, Long id);
 
-    public void delete(Long id);
+    void delete(Long id);
 
-    public QuartoResponseDTO findById(Long id);
+    QuartoResponseDTO findById(Long id);
 
-    public List<QuartoResponseDTO> findByTipo(Quarto.TipoQuarto tipo);
+    List<QuartoResponseDTO> findByTipo(Quarto.TipoQuarto tipo);
 
-    public List<QuartoResponseDTO> findByAll();
-
+    List<QuartoResponseDTO> findByAll();
 }

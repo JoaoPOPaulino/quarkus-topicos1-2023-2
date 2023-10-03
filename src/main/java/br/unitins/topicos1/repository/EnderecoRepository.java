@@ -8,11 +8,16 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class EnderecoRepository implements PanacheRepositoryBase<Endereco, Long> {
+
     public List<Endereco> findByCidade(String cidade) {
-        return find("cidade", cidade).list();
+        return list("cidade = ?1", cidade);
     }
 
     public List<Endereco> findByEstado(String estado) {
-        return find("estado", estado).list();
+        return list("estado = ?1", estado);
+    }
+
+    public List<Endereco> findAllEnderecos() {
+        return listAll();
     }
 }

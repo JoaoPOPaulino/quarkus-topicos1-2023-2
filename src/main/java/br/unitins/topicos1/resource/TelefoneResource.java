@@ -1,11 +1,11 @@
 package br.unitins.topicos1.resource;
 
-import java.util.List;
-
 import br.unitins.topicos1.dto.TelefoneDTO;
 import br.unitins.topicos1.dto.TelefoneResponseDTO;
-import br.unitins.topicos1.service.TelefoneService;
+import br.unitins.topicos1.service.TelefoneServiceImpl;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -15,6 +15,8 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 @Path("/telefones")
 @Produces(MediaType.APPLICATION_JSON)
@@ -22,33 +24,38 @@ import jakarta.ws.rs.core.MediaType;
 public class TelefoneResource {
 
     @Inject
-    TelefoneService service;
+    TelefoneServiceImpl service;
 
     @POST
-    public TelefoneResponseDTO insert(TelefoneDTO dto) {
-        return service.insert(dto);
+    public Response insert(@Valid TelefoneDTO dto) {
+        TelefoneResponseDTO retorno = service.insert(dto);
+        return Response.status(Status.CREATED).entity(retorno).build();
     }
 
     @PUT
+    @Transactional
     @Path("/{id}")
-    public TelefoneResponseDTO update(TelefoneDTO dto, @PathParam("id") Long id) {
-        return service.update(dto, id);
+    public Response update(@PathParam("id") Long id, @Valid TelefoneDTO dto) {
+        service.update(dto, id);
+        return Response.noContent().build();
     }
 
     @DELETE
+    @Transactional
     @Path("/{id}")
-    public void delete(@PathParam("id") Long id) {
+    public Response delete(@PathParam("id") Long id) {
         service.delete(id);
+        return Response.noContent().build();
     }
 
     @GET
-    public List<TelefoneResponseDTO> findAll() {
-        return service.findByAll();
+    public Response findAll() {
+        return Response.ok(service.findByAll()).build();
     }
 
     @GET
     @Path("/{id}")
-    public TelefoneResponseDTO findById(@PathParam("id") Long id) {
-        return service.findById(id);
+    public Response findById(@PathParam("id") Long id) {
+        return Response.ok(service.findById(id)).build();
     }
 }

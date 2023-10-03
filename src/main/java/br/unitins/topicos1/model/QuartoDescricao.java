@@ -20,6 +20,9 @@ public class QuartoDescricao extends DefaultEntity {
     }
 
     public void setDescricao(String descricao) {
+        if (descricao == null || descricao.trim().isEmpty()) {
+            throw new IllegalArgumentException("A descrição do quarto é obrigatória.");
+        }
         this.descricao = descricao;
     }
 

@@ -1,7 +1,7 @@
 package br.unitins.topicos1.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
 import br.unitins.topicos1.dto.TelefoneDTO;
 import br.unitins.topicos1.dto.TelefoneResponseDTO;
 import br.unitins.topicos1.model.Telefone;
@@ -16,53 +16,54 @@ public class TelefoneServiceImpl implements TelefoneService {
     @Inject
     TelefoneRepository repository;
 
-    @Override
     @Transactional
     public TelefoneResponseDTO insert(TelefoneDTO dto) {
         Telefone novoTelefone = new Telefone();
-        novoTelefone.setCodigoArea(dto.codigoArea());
-        novoTelefone.setNumero(dto.numero());
+        novoTelefone.setCodigoArea(dto.getCodigoArea());
+        novoTelefone.setNumero(dto.getNumero());
 
         repository.persist(novoTelefone);
 
         return TelefoneResponseDTO.valueOf(novoTelefone);
     }
 
-    @Override
     @Transactional
     public TelefoneResponseDTO update(TelefoneDTO dto, Long id) {
-        Telefone telefoneExistente = repository.findById(id);
-        if (telefoneExistente == null) {
-            return null; // Ou lançar uma exceção
+        Telefone telefone = repository.findById(id);
+
+        if (telefone != null) {
+            telefone.setCodigoArea(dto.getCodigoArea());
+            telefone.setNumero(dto.getNumero());
+            return TelefoneResponseDTO.valueOf(telefone);
+        } else {
+            return null; // Indica que o telefone não foi encontrado
         }
-
-        telefoneExistente.setCodigoArea(dto.codigoArea());
-        telefoneExistente.setNumero(dto.numero());
-
-        repository.persist(telefoneExistente);
-
-        return TelefoneResponseDTO.valueOf(telefoneExistente);
     }
 
-    @Override
     @Transactional
     public void delete(Long id) {
-        repository.deleteById(id);
+        if (!repository.deleteById(id)) {
+            // Lidar com o caso em que o telefone não foi encontrado, por exemplo, lançar
+            // uma exceção
+            throw new RuntimeException("Telefone não encontrado");
+        }
     }
 
-    @Override
     public TelefoneResponseDTO findById(Long id) {
         Telefone telefone = repository.findById(id);
-        if (telefone == null) {
-            return null; // Ou lançar uma exceção
+
+        if (telefone != null) {
+            return TelefoneResponseDTO.valueOf(telefone);
+        } else {
+            // Lidar com o caso em que o telefone não foi encontrado, por exemplo, lançar
+            // uma exceção
+            throw new RuntimeException("Telefone não encontrado");
         }
-        return TelefoneResponseDTO.valueOf(telefone);
     }
 
-    @Override
     public List<TelefoneResponseDTO> findByAll() {
-        return repository.listAll().stream()
-                .map(TelefoneResponseDTO::valueOf)
-                .collect(Collectors.toList());
+        List<Telefone> telefones = repository.listAll();
+        return TelefoneResponseDTO.mapToList(telefones);
     }
+
 }

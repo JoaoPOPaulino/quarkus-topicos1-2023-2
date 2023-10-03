@@ -6,14 +6,14 @@ import br.unitins.topicos1.dto.ReservaResponseDTO;
 
 public interface ReservaService {
 
-    public ReservaResponseDTO insert(ReservaDTO dto);
+    ReservaResponseDTO insert(ReservaDTO dto);
 
-    public ReservaResponseDTO update(ReservaDTO dto, Long id);
+    ReservaResponseDTO update(ReservaDTO dto, Long id);
 
-    public void delete(Long id);
+    void delete(Long id);
 
-    public ReservaResponseDTO findById(Long id);
+    ReservaResponseDTO findById(Long id);
 
-    public List<ReservaResponseDTO> findByAll();
+    List<ReservaResponseDTO> findByAll();
 
 }

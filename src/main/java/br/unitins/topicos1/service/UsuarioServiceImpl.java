@@ -37,8 +37,8 @@ public class UsuarioServiceImpl implements UsuarioService {
             novoUsuario.setListaTelefone(new ArrayList<>());
             for (TelefoneDTO telDto : dto.listaTelefone()) {
                 Telefone telefone = new Telefone();
-                telefone.setCodigoArea(telDto.codigoArea());
-                telefone.setNumero(telDto.numero());
+                telefone.setCodigoArea(telDto.getCodigoArea());
+                telefone.setNumero(telDto.getNumero());
                 novoUsuario.getListaTelefone().add(telefone);
             }
         }
@@ -59,12 +59,11 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuarioExistente.setLogin(dto.login());
         usuarioExistente.setSenha(dto.senha());
 
-        // Atualizar a lista de telefones
         usuarioExistente.getListaTelefone().clear();
         for (TelefoneDTO telDto : dto.listaTelefone()) {
             Telefone telefone = new Telefone();
-            telefone.setCodigoArea(telDto.codigoArea());
-            telefone.setNumero(telDto.numero());
+            telefone.setCodigoArea(telDto.getCodigoArea());
+            telefone.setNumero(telDto.getNumero());
             usuarioExistente.getListaTelefone().add(telefone);
         }
 

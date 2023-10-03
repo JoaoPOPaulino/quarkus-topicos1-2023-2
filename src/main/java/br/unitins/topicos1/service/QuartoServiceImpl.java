@@ -1,6 +1,7 @@
 package br.unitins.topicos1.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import br.unitins.topicos1.dto.QuartoDTO;
 import br.unitins.topicos1.dto.QuartoResponseDTO;
@@ -15,16 +16,16 @@ import jakarta.ws.rs.NotFoundException;
 public class QuartoServiceImpl implements QuartoService {
 
     @Inject
-    public QuartoRepository repository;
+    QuartoRepository repository;
 
     @Override
     @Transactional
     public QuartoResponseDTO insert(QuartoDTO dto) {
         Quarto novoQuarto = new Quarto();
         novoQuarto.setNumero(dto.getNumero());
-        novoQuarto.setTipo(Quarto.TipoQuarto.valueOf(dto.getTipo()));
+        novoQuarto.setTipo(dto.getTipo());
         novoQuarto.setPreco(dto.getPreco());
-        novoQuarto.setDisponivel(dto.getDisponivel());
+        novoQuarto.setDisponivel(dto.isDisponivel()); // Correção aqui
 
         repository.persist(novoQuarto);
 
@@ -38,11 +39,12 @@ public class QuartoServiceImpl implements QuartoService {
 
         if (quarto != null) {
             quarto.setNumero(dto.getNumero());
-            quarto.setTipo(Quarto.TipoQuarto.valueOf(dto.getTipo()));
+            quarto.setTipo(dto.getTipo());
             quarto.setPreco(dto.getPreco());
-            quarto.setDisponivel(dto.getDisponivel());
-        } else
+            quarto.setDisponivel(dto.isDisponivel()); // Correção aqui
+        } else {
             throw new NotFoundException();
+        }
 
         return QuartoResponseDTO.valueOf(quarto);
     }
@@ -50,24 +52,35 @@ public class QuartoServiceImpl implements QuartoService {
     @Override
     @Transactional
     public void delete(Long id) {
-        if (!repository.deleteById(id))
+        if (!repository.deleteById(id)) {
             throw new NotFoundException();
+        }
     }
 
     @Override
     public QuartoResponseDTO findById(Long id) {
-        return QuartoResponseDTO.valueOf(repository.findById(id));
+        Quarto quarto = repository.findById(id);
+
+        if (quarto == null) {
+            throw new NotFoundException();
+        }
+
+        return QuartoResponseDTO.valueOf(quarto);
     }
 
     @Override
     public List<QuartoResponseDTO> findByTipo(Quarto.TipoQuarto tipo) {
-        return repository.findByTipo(tipo).stream()
-                .map(e -> QuartoResponseDTO.valueOf(e)).toList();
+        List<Quarto> quartos = repository.findByTipo(tipo);
+        return quartos.stream()
+                .map(QuartoResponseDTO::valueOf)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<QuartoResponseDTO> findByAll() {
-        return repository.listAll().stream()
-                .map(e -> QuartoResponseDTO.valueOf(e)).toList();
+        List<Quarto> quartos = repository.listAll();
+        return quartos.stream()
+                .map(QuartoResponseDTO::valueOf)
+                .collect(Collectors.toList());
     }
 }

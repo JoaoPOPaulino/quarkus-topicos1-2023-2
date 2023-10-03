@@ -7,16 +7,16 @@ import br.unitins.topicos1.dto.UsuarioResponseDTO;
 
 public interface UsuarioService {
 
-    public UsuarioResponseDTO insert(UsuarioDTO dto);
+    UsuarioResponseDTO insert(UsuarioDTO dto);
 
-    public UsuarioResponseDTO update(UsuarioDTO dto, Long id);
+    UsuarioResponseDTO update(UsuarioDTO dto, Long id);
 
-    public void delete(Long id);
+    void delete(Long id);
 
-    public UsuarioResponseDTO findById(Long id);
+    UsuarioResponseDTO findById(Long id);
 
-    public List<UsuarioResponseDTO> findByNome(String nome);
+    List<UsuarioResponseDTO> findByNome(String nome);
 
-    public List<UsuarioResponseDTO> findByAll();
+    List<UsuarioResponseDTO> findByAll();
 
 }

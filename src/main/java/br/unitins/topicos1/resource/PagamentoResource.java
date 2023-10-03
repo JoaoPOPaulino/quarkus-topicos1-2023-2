@@ -9,7 +9,11 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
+
 import java.util.List;
+
 import jakarta.inject.Inject;
 import br.unitins.topicos1.dto.PagamentoDTO;
 import br.unitins.topicos1.dto.PagamentoResponseDTO;
@@ -24,14 +28,16 @@ public class PagamentoResource {
     PagamentoService service;
 
     @POST
-    public PagamentoResponseDTO insert(PagamentoDTO dto) {
-        return service.insert(dto);
+    public Response insert(PagamentoDTO dto) {
+        PagamentoResponseDTO responseDTO = service.insert(dto);
+        return Response.status(Status.CREATED).entity(responseDTO).build();
     }
 
     @PUT
     @Path("/{id}")
-    public PagamentoResponseDTO update(@PathParam("id") Long id, PagamentoDTO dto) {
-        return service.update(dto, id);
+    public Response update(@PathParam("id") Long id, PagamentoDTO dto) {
+        PagamentoResponseDTO responseDTO = service.update(dto, id);
+        return Response.status(Status.NO_CONTENT).entity(responseDTO).build();
     }
 
     @DELETE

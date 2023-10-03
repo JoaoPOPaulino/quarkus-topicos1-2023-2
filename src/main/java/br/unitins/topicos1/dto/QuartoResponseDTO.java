@@ -16,6 +16,6 @@ public record QuartoResponseDTO(
                 quarto.getNumero(),
                 quarto.getTipo(),
                 quarto.getPreco(),
-                quarto.getDisponivel());
+                quarto.isDisponivel());
     }
 }

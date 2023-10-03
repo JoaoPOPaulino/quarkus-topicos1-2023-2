@@ -6,13 +6,13 @@ import br.unitins.topicos1.dto.PagamentoResponseDTO;
 
 public interface PagamentoService {
 
-    public PagamentoResponseDTO insert(PagamentoDTO dto);
+    PagamentoResponseDTO insert(PagamentoDTO dto);
 
-    public PagamentoResponseDTO update(PagamentoDTO dto, Long id);
+    PagamentoResponseDTO update(PagamentoDTO dto, Long id);
 
-    public void delete(Long id);
+    void delete(Long id);
 
-    public PagamentoResponseDTO findById(Long id);
+    PagamentoResponseDTO findById(Long id);
 
-    public List<PagamentoResponseDTO> findByAll();
+    List<PagamentoResponseDTO> findByAll();
 }
