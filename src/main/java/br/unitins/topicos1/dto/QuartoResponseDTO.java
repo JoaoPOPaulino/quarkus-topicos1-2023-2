@@ -18,4 +18,8 @@ public record QuartoResponseDTO(
                 quarto.getPreco(),
                 quarto.isDisponivel());
     }
+
+    public Long getId() {
+        return id;
+    }
 }

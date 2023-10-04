@@ -21,4 +21,8 @@ public record ReservaResponseDTO(
                 reserva.getDataInicio(),
                 reserva.getDataFinal());
     }
+
+    public Long getId() {
+        return id;
+    }
 }

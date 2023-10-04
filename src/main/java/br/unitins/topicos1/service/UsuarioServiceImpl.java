@@ -29,13 +29,13 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Transactional
     public UsuarioResponseDTO insert(UsuarioDTO dto) {
         Usuario novoUsuario = new Usuario();
-        novoUsuario.setNome(dto.nome());
-        novoUsuario.setLogin(dto.login());
-        novoUsuario.setSenha(dto.senha());
+        novoUsuario.setNome(dto.getNome());
+        novoUsuario.setLogin(dto.getLogin());
+        novoUsuario.setSenha(dto.getSenha());
 
-        if (dto.listaTelefone() != null && !dto.listaTelefone().isEmpty()) {
+        if (dto.getListaTelefone() != null && !dto.getListaTelefone().isEmpty()) {
             novoUsuario.setListaTelefone(new ArrayList<>());
-            for (TelefoneDTO telDto : dto.listaTelefone()) {
+            for (TelefoneDTO telDto : dto.getListaTelefone()) {
                 Telefone telefone = new Telefone();
                 telefone.setCodigoArea(telDto.getCodigoArea());
                 telefone.setNumero(telDto.getNumero());
@@ -55,12 +55,12 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new NotFoundException("Usuário não encontrado.");
         }
 
-        usuarioExistente.setNome(dto.nome());
-        usuarioExistente.setLogin(dto.login());
-        usuarioExistente.setSenha(dto.senha());
+        usuarioExistente.setNome(dto.getNome());
+        usuarioExistente.setLogin(dto.getLogin());
+        usuarioExistente.setSenha(dto.getSenha());
 
         usuarioExistente.getListaTelefone().clear();
-        for (TelefoneDTO telDto : dto.listaTelefone()) {
+        for (TelefoneDTO telDto : dto.getListaTelefone()) {
             Telefone telefone = new Telefone();
             telefone.setCodigoArea(telDto.getCodigoArea());
             telefone.setNumero(telDto.getNumero());

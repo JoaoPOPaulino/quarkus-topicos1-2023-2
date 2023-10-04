@@ -3,9 +3,12 @@ package br.unitins.topicos1.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import br.unitins.topicos1.repository.ReservaRepository;
+import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import br.unitins.topicos1.dto.PagamentoDTO;
 import br.unitins.topicos1.dto.PagamentoResponseDTO;
 import br.unitins.topicos1.model.Pagamento;
+import br.unitins.topicos1.model.Reserva;
 import br.unitins.topicos1.repository.PagamentoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -17,13 +20,20 @@ public class PagamentoServiceImpl implements PagamentoService {
 
     @Inject
     PagamentoRepository repository;
+    @Inject
+    ReservaRepository reservaRepository; // Injete o ReservaRepository aqui
 
     @Override
     @Transactional
     public PagamentoResponseDTO insert(PagamentoDTO dto) {
+        Reserva reserva = reservaRepository.findById(dto.getReservaId());
+        if (reserva == null) {
+            throw new NotFoundException("Reserva não encontrada");
+        }
+
         Pagamento novoPagamento = new Pagamento();
         novoPagamento.setTipoPagamento(dto.getTipoPagamento());
-        // Adicione outros campos aqui, se necessário
+        novoPagamento.setReserva(reserva);
 
         repository.persist(novoPagamento);
 
@@ -39,7 +49,6 @@ public class PagamentoServiceImpl implements PagamentoService {
         }
 
         pagamentoExistente.setTipoPagamento(dto.getTipoPagamento());
-        // Atualize outros campos aqui, se necessário
 
         repository.persist(pagamentoExistente);
 

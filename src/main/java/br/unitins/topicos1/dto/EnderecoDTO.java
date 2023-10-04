@@ -1,5 +1,6 @@
 package br.unitins.topicos1.dto;
 
+import br.unitins.topicos1.model.Endereco;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -18,6 +19,18 @@ public class EnderecoDTO {
 
     @NotNull(message = "O número não pode estar vazio")
     private Integer numero;
+
+    public EnderecoDTO() {
+
+    }
+
+    public EnderecoDTO(String estado, String cidade, String quadra, String rua, Integer numero) {
+        this.estado = estado;
+        this.cidade = cidade;
+        this.quadra = quadra;
+        this.rua = rua;
+        this.numero = numero;
+    }
 
     public String getEstado() {
         return estado;
@@ -39,4 +52,16 @@ public class EnderecoDTO {
         return numero;
     }
 
+    public static EnderecoDTO valueOf(Endereco endereco) {
+        if (endereco == null) {
+            return null;
+        }
+
+        return new EnderecoDTO(
+                endereco.getEstado(),
+                endereco.getCidade(),
+                endereco.getQuadra(),
+                endereco.getRua(),
+                endereco.getNumero());
+    }
 }

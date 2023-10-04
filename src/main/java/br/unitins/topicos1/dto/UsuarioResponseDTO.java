@@ -13,7 +13,7 @@ public record UsuarioResponseDTO(
                 @NotBlank(message = "O nome não pode estar em branco") String nome,
                 @NotBlank(message = "O login não pode estar em branco") String login,
                 @Valid List<TelefoneDTO> listaTelefone,
-                @Valid Endereco endereco) {
+                @Valid EnderecoDTO endereco) {
 
         public static UsuarioResponseDTO valueOf(Usuario usuario) {
                 List<TelefoneDTO> telefonesDTO = usuario.getListaTelefone()
@@ -21,11 +21,16 @@ public record UsuarioResponseDTO(
                                 .map(telefone -> TelefoneDTO.valueOf(telefone))
                                 .toList();
 
+                EnderecoDTO enderecoDTO = EnderecoDTO.valueOf(usuario.getEndereco());
                 return new UsuarioResponseDTO(
                                 usuario.getId(),
                                 usuario.getNome(),
                                 usuario.getLogin(),
                                 telefonesDTO,
-                                usuario.getEndereco());
+                                enderecoDTO);
+        }
+
+        public Long getId() {
+                return id;
         }
 }

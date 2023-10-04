@@ -15,7 +15,7 @@ public class Pagamento extends DefaultEntity {
         CARTAO_CREDITO,
         CARTAO_DEBITO,
         DINHEIRO,
-        TRANSFERENCIA
+        BOLETO
     }
 
     @Enumerated(EnumType.STRING)

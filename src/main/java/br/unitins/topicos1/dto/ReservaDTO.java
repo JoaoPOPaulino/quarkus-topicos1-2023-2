@@ -28,6 +28,9 @@ public class ReservaDTO {
     @FutureOrPresent(message = "A data de início deve ser futura ou a data atual")
     private LocalDate dataFim;
 
+    public ReservaDTO(Long idUsuario, String string, String string2) {
+    }
+
     public Long getUsuarioId() {
         return usuarioId;
     }
