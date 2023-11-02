@@ -4,10 +4,11 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.UsuarioDTO;
 import br.unitins.topicos1.dto.UsuarioResponseDTO;
+import jakarta.validation.Valid;
 
 public interface UsuarioService {
 
-    UsuarioResponseDTO insert(UsuarioDTO dto);
+    UsuarioResponseDTO insert(@Valid UsuarioDTO dto);
 
     UsuarioResponseDTO update(UsuarioDTO dto, Long id);
 
@@ -18,5 +19,7 @@ public interface UsuarioService {
     List<UsuarioResponseDTO> findByNome(String nome);
 
     List<UsuarioResponseDTO> findByAll();
+
+    UsuarioResponseDTO findByLoginAndSenha(String login, String senha);
 
 }

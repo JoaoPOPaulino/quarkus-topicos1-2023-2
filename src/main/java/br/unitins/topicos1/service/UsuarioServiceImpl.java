@@ -8,12 +8,12 @@ import br.unitins.topicos1.dto.UsuarioDTO;
 import br.unitins.topicos1.dto.UsuarioResponseDTO;
 import br.unitins.topicos1.model.Telefone;
 import br.unitins.topicos1.model.Usuario;
-import br.unitins.topicos1.repository.TelefoneRepository;
 import br.unitins.topicos1.repository.UsuarioRepository;
-
+import br.unitins.topicos1.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.NotFoundException;
 
 @ApplicationScoped
@@ -22,20 +22,23 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Inject
     UsuarioRepository repository;
 
-    @Inject
-    TelefoneRepository telefoneRepository;
-
     @Override
     @Transactional
-    public UsuarioResponseDTO insert(UsuarioDTO dto) {
-        Usuario novoUsuario = new Usuario();
-        novoUsuario.setNome(dto.getNome());
-        novoUsuario.setLogin(dto.getLogin());
-        novoUsuario.setSenha(dto.getSenha());
+    public UsuarioResponseDTO insert(@Valid UsuarioDTO dto) {
 
-        if (dto.getListaTelefone() != null && !dto.getListaTelefone().isEmpty()) {
-            novoUsuario.setListaTelefone(new ArrayList<>());
-            for (TelefoneDTO telDto : dto.getListaTelefone()) {
+        if (repository.findByLogin(dto.login()) != null) {
+            throw new ValidationException("login", "Login já existe.");
+        }
+
+        Usuario novoUsuario = new Usuario();
+        novoUsuario.setNome(dto.nome());
+        novoUsuario.setLogin(dto.login());
+        novoUsuario.setSenha(dto.senha());
+
+        if (dto.listaTelefone() != null &&
+                !dto.listaTelefone().isEmpty()) {
+            novoUsuario.setListaTelefone(new ArrayList<Telefone>());
+            for (TelefoneDTO telDto : dto.listaTelefone()) {
                 Telefone telefone = new Telefone();
                 telefone.setCodigoArea(telDto.getCodigoArea());
                 telefone.setNumero(telDto.getNumero());
@@ -50,26 +53,26 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     @Transactional
     public UsuarioResponseDTO update(UsuarioDTO dto, Long id) {
-        Usuario usuarioExistente = repository.findById(id);
-        if (usuarioExistente == null) {
+        Usuario usuario = repository.findById(id);
+        if (usuario == null) {
             throw new NotFoundException("Usuário não encontrado.");
         }
 
-        usuarioExistente.setNome(dto.getNome());
-        usuarioExistente.setLogin(dto.getLogin());
-        usuarioExistente.setSenha(dto.getSenha());
+        usuario.setNome(dto.nome());
+        usuario.setLogin(dto.login());
+        usuario.setSenha(dto.senha());
 
-        usuarioExistente.getListaTelefone().clear();
-        for (TelefoneDTO telDto : dto.getListaTelefone()) {
+        usuario.getListaTelefone().clear();
+        for (TelefoneDTO telDto : dto.listaTelefone()) {
             Telefone telefone = new Telefone();
             telefone.setCodigoArea(telDto.getCodigoArea());
             telefone.setNumero(telDto.getNumero());
-            usuarioExistente.getListaTelefone().add(telefone);
+            usuario.getListaTelefone().add(telefone);
         }
 
-        repository.persist(usuarioExistente);
+        repository.persist(usuario);
 
-        return UsuarioResponseDTO.valueOf(usuarioExistente);
+        return UsuarioResponseDTO.valueOf(usuario);
     }
 
     @Override
@@ -107,5 +110,14 @@ public class UsuarioServiceImpl implements UsuarioService {
             dtos.add(UsuarioResponseDTO.valueOf(usuario));
         }
         return dtos;
+    }
+
+    @Override
+    public UsuarioResponseDTO findByLoginAndSenha(String login, String senha) {
+        Usuario usuario = repository.findByLoginAndSenha(login, senha);
+        if (usuario == null)
+            throw new ValidationException("login", "Login ou senha inválido");
+
+        return UsuarioResponseDTO.valueOf(usuario);
     }
 }
