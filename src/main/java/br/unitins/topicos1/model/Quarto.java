@@ -32,10 +32,6 @@ public class Quarto extends DefaultEntity {
     @Column(nullable = false)
     private boolean disponivel;
 
-    @ManyToOne
-    @JoinColumn(name = "quarto_descricao_id")
-    private QuartoDescricao quartoDescricao;
-
     public int getNumero() {
         return numero;
     }
@@ -74,14 +70,6 @@ public class Quarto extends DefaultEntity {
         this.disponivel = disponivel;
     }
 
-    public QuartoDescricao getQuartoDescricao() {
-        return quartoDescricao;
-    }
-
-    public void setQuartoDescricao(QuartoDescricao quartoDescricao) {
-        this.quartoDescricao = quartoDescricao;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -92,12 +80,12 @@ public class Quarto extends DefaultEntity {
         return numero == quarto.numero &&
                 tipo == quarto.tipo &&
                 Objects.equals(preco, quarto.preco) &&
-                disponivel == quarto.disponivel; // Correção aqui
+                disponivel == quarto.disponivel;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(numero, tipo, preco, disponivel); // Correção aqui
+        return Objects.hash(numero, tipo, preco, disponivel);
     }
 
 }
