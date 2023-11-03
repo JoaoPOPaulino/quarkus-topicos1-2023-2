@@ -6,6 +6,7 @@ import java.util.List;
 import br.unitins.topicos1.dto.TelefoneDTO;
 import br.unitins.topicos1.dto.UsuarioDTO;
 import br.unitins.topicos1.dto.UsuarioResponseDTO;
+import br.unitins.topicos1.model.Endereco;
 import br.unitins.topicos1.model.Telefone;
 import br.unitins.topicos1.model.Usuario;
 import br.unitins.topicos1.repository.UsuarioRepository;
@@ -46,6 +47,17 @@ public class UsuarioServiceImpl implements UsuarioService {
             }
         }
 
+        if (dto.endereco() == null) {
+            Endereco endereco = new Endereco();
+            endereco.setEstado(dto.endereco().getEstado());
+            endereco.setCidade(dto.endereco().getCidade());
+            endereco.setQuadra(dto.endereco().getQuadra());
+            endereco.setRua(dto.endereco().getRua());
+            endereco.setNumero(dto.endereco().getNumero());
+            novoUsuario.setEndereco(endereco);
+        }
+        
+
         repository.persist(novoUsuario);
         return UsuarioResponseDTO.valueOf(novoUsuario);
     }
@@ -68,6 +80,16 @@ public class UsuarioServiceImpl implements UsuarioService {
             telefone.setCodigoArea(telDto.getCodigoArea());
             telefone.setNumero(telDto.getNumero());
             usuario.getListaTelefone().add(telefone);
+        }
+
+        if (dto.endereco() != null && dto.endereco() == null) {
+            Endereco endereco = new Endereco();
+            endereco.setEstado(dto.endereco().getEstado());
+            endereco.setCidade(dto.endereco().getCidade());
+            endereco.setQuadra(dto.endereco().getQuadra());
+            endereco.setRua(dto.endereco().getRua());
+            endereco.setNumero(dto.endereco().getNumero());
+            usuario.setEndereco(endereco);
         }
 
         repository.persist(usuario);

@@ -30,7 +30,7 @@ public class QuartoResourceTest {
 
     @Test
     public void testInsert() {
-        QuartoDTO dto = createSampleQuartoDTO(101, TipoQuarto.LUXO, 350.0, true);
+        QuartoDTO dto = new QuartoDTO(101, TipoQuarto.LUXO, 350.0, true);
 
         given()
                 .contentType(ContentType.JSON)
@@ -48,32 +48,32 @@ public class QuartoResourceTest {
 
     @Test
     public void testUpdate() {
-        QuartoDTO dtoInsert = createSampleQuartoDTO(102, TipoQuarto.CASAL, 300.0, false);
+        QuartoDTO dtoInsert = new QuartoDTO(102, TipoQuarto.CASAL, 300.0, false);
 
         QuartoResponseDTO quartoTest = quartoService.insert(dtoInsert);
 
-        QuartoDTO dtoUpdate = createSampleQuartoDTO(102, TipoQuarto.SIMPLES, 250.0, true);
+        QuartoDTO dtoUpdate = new QuartoDTO(102, TipoQuarto.SIMPLES, 250.0, true);
 
         given()
                 .contentType(ContentType.JSON)
                 .body(dtoUpdate)
-                .when().put("/quarto/" + quartoTest.getId())
+                .when().put("/quarto/" + quartoTest.id())
                 .then()
                 .statusCode(204);
     }
 
-    private QuartoDTO createSampleQuartoDTO(int numero, TipoQuarto tipo, double preco, boolean disponivel) {
+    private QuartoDTO QuartoDTO(int numero, TipoQuarto tipo, double preco, boolean disponivel) {
         return new QuartoDTO(numero, tipo, preco, disponivel);
     }
 
     @Test
     public void testDelete() {
-        QuartoDTO dto = createSampleQuartoDTO(103, TipoQuarto.LUXO, 200.0, true);
+        QuartoDTO dto = new QuartoDTO(103, TipoQuarto.LUXO, 200.0, true);
 
         QuartoResponseDTO quartoTest = quartoService.insert(dto);
 
         given()
-                .when().delete("/quarto/" + quartoTest.getId())
+                .when().delete("/quarto/" + quartoTest.id())
                 .then()
                 .statusCode(204);
     }

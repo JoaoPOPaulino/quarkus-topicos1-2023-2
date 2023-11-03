@@ -1,28 +1,23 @@
 package br.unitins.topicos1.dto;
 
 import br.unitins.topicos1.model.Endereco;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 
 public class EnderecoDTO {
-    @NotEmpty(message = "O estado não pode estar vazio")
+    @NotBlank(message = "O estado não pode estar vazio.")
     private String estado;
 
-    @NotEmpty(message = "A cidade não pode estar vazia")
+    @NotBlank(message = "A cidade não pode estar vazia.")
     private String cidade;
 
-    @NotEmpty(message = "A quadra não pode estar vazia")
+    @NotBlank(message = "A quadra não pode estar vazia.")
     private String quadra;
 
-    @NotEmpty(message = "A rua não pode estar vazia")
+    @NotBlank(message = "A rua não pode estar vazia.")
     private String rua;
 
-    @NotNull(message = "O número não pode estar vazio")
+    @NotBlank(message = "O número não pode estar vazio.")
     private Integer numero;
-
-    public EnderecoDTO() {
-
-    }
 
     public EnderecoDTO(String estado, String cidade, String quadra, String rua, Integer numero) {
         this.estado = estado;
@@ -53,9 +48,6 @@ public class EnderecoDTO {
     }
 
     public static EnderecoDTO valueOf(Endereco endereco) {
-        if (endereco == null) {
-            return null;
-        }
 
         return new EnderecoDTO(
                 endereco.getEstado(),

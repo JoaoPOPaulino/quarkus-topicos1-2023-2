@@ -8,5 +8,6 @@ public record UsuarioDTO(
         @NotBlank(message = "O campo não pode ser nulo.") String nome,
         String login,
         String senha,
-        List<TelefoneDTO> listaTelefone) {
+        List<TelefoneDTO> listaTelefone,
+        EnderecoDTO endereco) {
 }

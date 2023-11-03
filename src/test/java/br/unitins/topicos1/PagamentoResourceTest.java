@@ -48,9 +48,10 @@ public class PagamentoResourceTest {
 
         @Test
         public void testInsert() {
+
                 PagamentoDTO dto = new PagamentoDTO(
                                 TipoPagamento.CARTAO_CREDITO,
-                                null); // Não associamos o pagamento a uma reserva neste teste
+                                null);
 
                 given()
                                 .contentType(ContentType.JSON)
@@ -61,13 +62,11 @@ public class PagamentoResourceTest {
                                 .body(
                                                 "id", notNullValue(),
                                                 "tipoPagamento", is("CARTAO_CREDITO"),
-                                                "reservaId", is(nullValue())); // Usamos is(nullValue()) para verificar
-                                                                               // se o campo é nulo
+                                                "reservaId", is(nullValue()));
         }
 
         @Test
         public void testUpdate() {
-                // Crie um usuário fictício
                 List<TelefoneDTO> telefones = new ArrayList<TelefoneDTO>();
                 telefones.add(new TelefoneDTO("63", "5555-5555"));
 
@@ -81,29 +80,26 @@ public class PagamentoResourceTest {
                                 endereco);
 
                 UsuarioResponseDTO usuarioTest = usuarioService.insert(dtoUsuario);
-                Long idUsuario = usuarioTest.getId();
+                Long idUsuario = usuarioTest.id();
 
-                // Crie uma reserva fictícia
                 ReservaDTO dtoReserva = new ReservaDTO(
-                                idUsuario, // Use o ID do usuário criado anteriormente
+                                idUsuario,
                                 "2023-12-01",
                                 "2023-12-10");
 
                 ReservaResponseDTO reservaTest = reservaService.insert(dtoReserva);
-                Long idReserva = reservaTest.getId();
+                Long idReserva = reservaTest.id();
 
-                // Inserir um pagamento fictício
                 PagamentoDTO dtoInsert = new PagamentoDTO(
                                 TipoPagamento.CARTAO_CREDITO,
                                 idReserva);
 
                 PagamentoResponseDTO pagamentoTest = pagamentoService.insert(dtoInsert);
-                Long idPagamento = pagamentoTest.getId();
+                Long idPagamento = pagamentoTest.id();
 
-                // Atualizar o pagamento fictício
                 PagamentoDTO dtoUpdate = new PagamentoDTO(
                                 TipoPagamento.BOLETO,
-                                idReserva); // Use o mesmo ID de reserva para a atualização
+                                idReserva);
 
                 given()
                                 .contentType(ContentType.JSON)

@@ -76,7 +76,7 @@ public class UsuarioResourceTest {
                 UsuarioResponseDTO usuarioTest = usuarioService.insert(dtoInsert);
 
                 // Obter o ID do usuário inserido
-                Long id = usuarioTest.getId();
+                Long id = usuarioTest.id();
 
                 UsuarioDTO dtoUpdate = new UsuarioDTO(
                                 "Mark Zuckerberg",
@@ -109,7 +109,7 @@ public class UsuarioResourceTest {
 
                 // Inserindo um usuário
                 UsuarioResponseDTO usuarioTest = usuarioService.insert(dto);
-                Long id = usuarioTest.getId();
+                Long id = usuarioTest.id();
 
                 given()
                                 .when().delete("/usuarios/" + id)

@@ -2,13 +2,15 @@ package br.unitins.topicos1.dto;
 
 import java.util.List;
 
+import br.unitins.topicos1.model.Endereco;
 import br.unitins.topicos1.model.Usuario;
 
 public record UsuarioResponseDTO(
                 Long id,
                 String nome,
                 String login,
-                List<TelefoneDTO> listaTelefone) {
+                List<TelefoneDTO> listaTelefone,
+                Endereco endereco) {
         public static UsuarioResponseDTO valueOf(Usuario usuario) {
                 return new UsuarioResponseDTO(
                                 usuario.getId(),
@@ -16,6 +18,7 @@ public record UsuarioResponseDTO(
                                 usuario.getLogin(),
                                 usuario.getListaTelefone()
                                                 .stream()
-                                                .map(t -> TelefoneDTO.valueOf(t)).toList());
+                                                .map(t -> TelefoneDTO.valueOf(t)).toList(),
+                                usuario.getEndereco());
         }
 }
