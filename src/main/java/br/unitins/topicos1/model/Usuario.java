@@ -4,29 +4,20 @@ import java.util.List;
 
 import io.smallrye.common.constraint.NotNull;
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Usuario extends DefaultEntity {
 
-    @NotBlank
-    @Column(nullable = false, length = 100)
     private String nome;
-
-    @NotBlank
-    @Column(nullable = false, length = 50, unique = true)
     private String login;
-
-    @NotBlank
-    @Column(nullable = false, length = 100)
     private String senha;
+    private Perfil perfil;
 
     @NotEmpty(message = "A lista de telefone não pode estar vazia")
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -37,20 +28,6 @@ public class Usuario extends DefaultEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinTable(name = "usuario_endereco", joinColumns = @JoinColumn(name = "id_usuario"), inverseJoinColumns = @JoinColumn(name = "id_endereco"))
     private Endereco endereco;
-
-    @OneToMany(mappedBy = "usuario")
-    private List<Reserva> reservas;
-
-    public Usuario(String nome, String login, String senha, List<Telefone> listaTelefone, Endereco endereco) {
-        this.nome = nome;
-        this.login = login;
-        this.senha = senha;
-        this.listaTelefone = listaTelefone;
-        this.endereco = endereco;
-    }
-
-    public Usuario() {
-    }
 
     public String getNome() {
         return nome;
@@ -90,6 +67,14 @@ public class Usuario extends DefaultEntity {
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
+    }
+
+    public Perfil getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
     }
 
 }

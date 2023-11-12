@@ -5,9 +5,10 @@ import java.util.List;
 import jakarta.validation.constraints.NotBlank;
 
 public record UsuarioDTO(
-        @NotBlank(message = "O campo não pode ser nulo.") String nome,
-        String login,
-        String senha,
-        List<TelefoneDTO> listaTelefone,
-        EnderecoDTO endereco) {
+                @NotBlank(message = "O campo não pode ser nulo.") String nome,
+                String login,
+                String senha,
+                Integer idPerfil,
+                List<TelefoneDTO> listaTelefone,
+                EnderecoDTO endereco) {
 }

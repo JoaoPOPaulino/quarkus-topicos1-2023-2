@@ -1,12 +1,14 @@
 package br.unitins.topicos1.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import br.unitins.topicos1.dto.TelefoneDTO;
 import br.unitins.topicos1.dto.UsuarioDTO;
 import br.unitins.topicos1.dto.UsuarioResponseDTO;
 import br.unitins.topicos1.model.Endereco;
+import br.unitins.topicos1.model.Perfil;
 import br.unitins.topicos1.model.Telefone;
 import br.unitins.topicos1.model.Usuario;
 import br.unitins.topicos1.repository.UsuarioRepository;
@@ -23,6 +25,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Inject
     UsuarioRepository repository;
 
+    @Inject
+    HashService hashService;
+
     @Override
     @Transactional
     public UsuarioResponseDTO insert(@Valid UsuarioDTO dto) {
@@ -34,7 +39,8 @@ public class UsuarioServiceImpl implements UsuarioService {
         Usuario novoUsuario = new Usuario();
         novoUsuario.setNome(dto.nome());
         novoUsuario.setLogin(dto.login());
-        novoUsuario.setSenha(dto.senha());
+        novoUsuario.setSenha(hashService.getHashSenha(dto.senha()));
+        novoUsuario.setPerfil(Perfil.valueOf(dto.idPerfil()));
 
         if (dto.listaTelefone() != null &&
                 !dto.listaTelefone().isEmpty()) {
@@ -56,7 +62,6 @@ public class UsuarioServiceImpl implements UsuarioService {
             endereco.setNumero(dto.endereco().getNumero());
             novoUsuario.setEndereco(endereco);
         }
-        
 
         repository.persist(novoUsuario);
         return UsuarioResponseDTO.valueOf(novoUsuario);
@@ -141,5 +146,11 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new ValidationException("login", "Login ou senha inválido");
 
         return UsuarioResponseDTO.valueOf(usuario);
+    }
+
+    @Override
+    public UsuarioResponseDTO findByLogin(String login) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findByLogin'");
     }
 }

@@ -1,28 +1,43 @@
 package br.unitins.topicos1.model;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import java.time.LocalDate;
-import java.util.Objects;
 
 @Entity
 public class Reserva extends DefaultEntity {
+
+    private LocalDate dataIncio;
+    private LocalDate dataFim;
 
     @ManyToOne
     @JoinColumn(name = "id_quarto")
     private Quarto quarto;
 
     @ManyToOne
-    @JoinColumn(name = "id_usuario")
-    private Usuario usuario;
+    @JoinColumn(name = "id_pedido")
+    private Pedido pedido;
 
-    private LocalDate dataInicio;
-    private LocalDate dataFinal;
+    private Double preco;
+    private Integer quantidade;
 
-    @OneToOne(mappedBy = "reserva") // reserva
-    private Pagamento pagamento;
+    public LocalDate getDataIncio() {
+        return dataIncio;
+    }
+
+    public void setDataIncio(LocalDate dataIncio) {
+        this.dataIncio = dataIncio;
+    }
+
+    public LocalDate getDataFim() {
+        return dataFim;
+    }
+
+    public void setDataFim(LocalDate dataFim) {
+        this.dataFim = dataFim;
+    }
 
     public Quarto getQuarto() {
         return quarto;
@@ -32,63 +47,28 @@ public class Reserva extends DefaultEntity {
         this.quarto = quarto;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Pedido getPedido() {
+        return pedido;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
     }
 
-    public LocalDate getDataInicio() {
-        return dataInicio;
+    public Double getPreco() {
+        return preco;
     }
 
-    public void setDataInicio(LocalDate dataInicio) {
-        if (dataInicio == null || dataFinal == null || dataInicio.isAfter(dataFinal)) {
-            throw new IllegalArgumentException("Datas de reserva inválidas.");
-        }
-        this.dataInicio = dataInicio;
+    public void setPreco(Double preco) {
+        this.preco = preco;
     }
 
-    public LocalDate getDataFinal() {
-        return dataFinal;
+    public Integer getQuantidade() {
+        return quantidade;
     }
 
-    public void setDataFinal(LocalDate dataFinal) {
-        if (dataInicio == null || dataFinal == null || dataInicio.isAfter(dataFinal)) {
-            throw new IllegalArgumentException("Datas de reserva inválidas.");
-        }
-        this.dataFinal = dataFinal;
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
     }
 
-    public Pagamento getPagamento() {
-        return pagamento;
-    }
-
-    public void setPagamento(Pagamento pagamento) {
-        this.pagamento = pagamento;
-        if (pagamento != null) {
-            pagamento.setReserva(this);
-        }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        Reserva reserva = (Reserva) o;
-        return Objects.equals(quarto, reserva.quarto) &&
-                Objects.equals(usuario, reserva.usuario) &&
-                Objects.equals(dataInicio, reserva.dataInicio) &&
-                Objects.equals(dataFinal, reserva.dataFinal) &&
-                Objects.equals(pagamento, reserva.pagamento);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(quarto, usuario, dataInicio, dataFinal, pagamento);
-    }
 }

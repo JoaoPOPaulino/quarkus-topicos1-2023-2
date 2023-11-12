@@ -22,4 +22,6 @@ public interface UsuarioService {
 
     UsuarioResponseDTO findByLoginAndSenha(String login, String senha);
 
+    UsuarioResponseDTO findByLogin(String login);
+
 }

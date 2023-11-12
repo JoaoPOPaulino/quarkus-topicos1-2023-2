@@ -1,28 +1,30 @@
 package br.unitins.topicos1.dto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import br.unitins.topicos1.model.Reserva;
 
 public record ReservaResponseDTO(
-        Long id,
-        Long usuarioId,
-        Long quartoId,
-        Long pagamentoId,
-        LocalDate dataInicio,
-        LocalDate dataFim) {
+        LocalDate dataI,
+        LocalDate dataF,
+        Integer quantidade,
+        Double preco,
+        Long idQuarto,
+        Integer numero) {
 
     public static ReservaResponseDTO valueOf(Reserva reserva) {
         return new ReservaResponseDTO(
-                reserva.getId(),
-                reserva.getUsuario().getId(),
+                reserva.getDataIncio(),
+                reserva.getDataFim(),
+                reserva.getQuantidade(),
+                reserva.getPreco(),
                 reserva.getQuarto().getId(),
-                reserva.getPagamento().getId(),
-                reserva.getDataInicio(),
-                reserva.getDataFinal());
+                reserva.getQuarto().getNumero());
     }
 
-    public Long getId() {
-        return id;
+    public static List<ReservaResponseDTO> valueOf(List<Reserva> reserva) {
+        return reserva.stream().map(i -> ReservaResponseDTO.valueOf(i)).toList();
     }
+
 }

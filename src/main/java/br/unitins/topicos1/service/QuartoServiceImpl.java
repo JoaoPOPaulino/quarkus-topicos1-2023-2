@@ -84,3 +84,34 @@ public class QuartoServiceImpl implements QuartoService {
                 .collect(Collectors.toList());
     }
 }
+
+// @Transactional
+// public QuartoResponseDTO insert(QuartoDTO dto) {
+// Quarto quarto = new Quarto();
+// quarto.setNumero(dto.getNumero());
+// quarto.setTipo(dto.getTipo());
+// quarto.setPreco(dto.getPreco());
+// quarto.setDisponivel(dto.isDisponivel());
+// persist(quarto);
+
+// return QuartoResponseDTO.valueOf(quarto);
+// }
+
+// @Transactional
+// public QuartoResponseDTO update(QuartoDTO dto, Long id) {
+// Quarto quarto = findById(id);
+// if (quarto == null) {
+// throw new NotFoundException();
+// }
+// quarto.setNumero(dto.getNumero());
+// quarto.setTipo(dto.getTipo());
+// quarto.setPreco(dto.getPreco());
+// quarto.setDisponivel(dto.isDisponivel());
+// persist(quarto);
+
+// return QuartoResponseDTO.valueOf(quarto);
+// }
+
+// public List<Quarto> findByAll() {
+// return listAll();
+// }
