@@ -1,7 +1,6 @@
 package br.unitins.topicos1.service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import br.unitins.topicos1.dto.TelefoneDTO;
@@ -45,22 +44,24 @@ public class UsuarioServiceImpl implements UsuarioService {
         if (dto.listaTelefone() != null &&
                 !dto.listaTelefone().isEmpty()) {
             novoUsuario.setListaTelefone(new ArrayList<Telefone>());
-            for (TelefoneDTO telDto : dto.listaTelefone()) {
+            for (TelefoneDTO tel : dto.listaTelefone()) {
                 Telefone telefone = new Telefone();
-                telefone.setCodigoArea(telDto.getCodigoArea());
-                telefone.setNumero(telDto.getNumero());
+                telefone.setCodigoArea(tel.codigoArea());
+                telefone.setNumero(tel.numero());
                 novoUsuario.getListaTelefone().add(telefone);
             }
         }
 
-        if (dto.endereco() == null) {
+        if (dto.endereco() != null) {
             Endereco endereco = new Endereco();
-            endereco.setEstado(dto.endereco().getEstado());
-            endereco.setCidade(dto.endereco().getCidade());
-            endereco.setQuadra(dto.endereco().getQuadra());
-            endereco.setRua(dto.endereco().getRua());
-            endereco.setNumero(dto.endereco().getNumero());
+            endereco.setEstado(dto.endereco().estado());
+            endereco.setCidade(dto.endereco().cidade());
+            endereco.setQuadra(dto.endereco().quadra());
+            endereco.setRua(dto.endereco().rua());
+            endereco.setNumero(dto.endereco().numero());
+
             novoUsuario.setEndereco(endereco);
+
         }
 
         repository.persist(novoUsuario);
@@ -80,20 +81,20 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.setSenha(dto.senha());
 
         usuario.getListaTelefone().clear();
-        for (TelefoneDTO telDto : dto.listaTelefone()) {
+        for (TelefoneDTO tel : dto.listaTelefone()) {
             Telefone telefone = new Telefone();
-            telefone.setCodigoArea(telDto.getCodigoArea());
-            telefone.setNumero(telDto.getNumero());
+            telefone.setCodigoArea(tel.codigoArea());
+            telefone.setNumero(tel.numero());
             usuario.getListaTelefone().add(telefone);
         }
 
         if (dto.endereco() != null && dto.endereco() == null) {
             Endereco endereco = new Endereco();
-            endereco.setEstado(dto.endereco().getEstado());
-            endereco.setCidade(dto.endereco().getCidade());
-            endereco.setQuadra(dto.endereco().getQuadra());
-            endereco.setRua(dto.endereco().getRua());
-            endereco.setNumero(dto.endereco().getNumero());
+            endereco.setEstado(dto.endereco().estado());
+            endereco.setCidade(dto.endereco().cidade());
+            endereco.setQuadra(dto.endereco().quadra());
+            endereco.setRua(dto.endereco().rua());
+            endereco.setNumero(dto.endereco().numero());
             usuario.setEndereco(endereco);
         }
 

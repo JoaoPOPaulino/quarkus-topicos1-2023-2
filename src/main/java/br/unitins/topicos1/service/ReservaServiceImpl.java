@@ -5,14 +5,10 @@ import java.util.stream.Collectors;
 
 import br.unitins.topicos1.dto.ReservaDTO;
 import br.unitins.topicos1.dto.ReservaResponseDTO;
-import br.unitins.topicos1.model.Pagamento;
 import br.unitins.topicos1.model.Reserva;
-import br.unitins.topicos1.model.Quarto;
-import br.unitins.topicos1.model.Usuario;
-import br.unitins.topicos1.repository.PagamentoRepository;
+import br.unitins.topicos1.repository.PedidoRepository;
 import br.unitins.topicos1.repository.QuartoRepository;
 import br.unitins.topicos1.repository.ReservaRepository;
-import br.unitins.topicos1.repository.UsuarioRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -25,77 +21,43 @@ public class ReservaServiceImpl implements ReservaService {
     ReservaRepository repository;
 
     @Inject
-    UsuarioRepository usuarioRepository;
+    PedidoRepository pedidoRepository;
 
     @Inject
     QuartoRepository quartoRepository;
-
-    @Inject
-    PagamentoRepository pagamentoRepository;
 
     @Override
     @Transactional
     public ReservaResponseDTO insert(ReservaDTO dto) {
         Reserva novaReserva = new Reserva();
-
-        Usuario usuario = usuarioRepository.findById(dto.getUsuarioId());
-        if (usuario == null) {
-            throw new NotFoundException("Usuário não encontrado");
-        }
-
-        Quarto quarto = quartoRepository.findById(dto.getQuartoId());
-        if (quarto == null) {
+        novaReserva.setDataIncio(dto.dataI());
+        novaReserva.setDataFim(dto.dateF());
+        novaReserva.setQuantidade(dto.quantidade());
+        novaReserva.setQuarto(quartoRepository.findById(dto.idQuarto()));
+        if (quartoRepository == null) {
             throw new NotFoundException("Quarto não encontrado");
         }
 
-        Pagamento pagamento = pagamentoRepository.findById(dto.getPagamentoId());
-        if (pagamento == null) {
-            throw new NotFoundException("Pagamento não encontrado");
-        }
-
-        novaReserva.setUsuario(usuario);
-        novaReserva.setQuarto(quarto);
-        novaReserva.setDataInicio(dto.getDataInicio());
-        novaReserva.setDataFinal(dto.getDataFim());
-        novaReserva.setPagamento(pagamento); // Adicione aqui o relacionamento com Pagamento
-
         repository.persist(novaReserva);
-
         return ReservaResponseDTO.valueOf(novaReserva);
     }
 
     @Override
     @Transactional
     public ReservaResponseDTO update(ReservaDTO dto, Long id) {
-        Reserva reservaExistente = repository.findById(id);
-        if (reservaExistente == null) {
+        Reserva reserva = repository.findById(id);
+        if (reserva == null) {
             throw new NotFoundException("Reserva não encontrada");
         }
 
-        Usuario usuario = usuarioRepository.findById(dto.getUsuarioId());
-        if (usuario == null) {
-            throw new NotFoundException("Usuário não encontrado");
-        }
+        reserva.setDataIncio(dto.dataI());
+        reserva.setDataFim(dto.dateF());
+        reserva.setPreco(dto.preco());
+        reserva.setQuantidade(dto.quantidade());
 
-        Quarto quarto = quartoRepository.findById(dto.getQuartoId());
-        if (quarto == null) {
-            throw new NotFoundException("Quarto não encontrado");
-        }
+        repository.persist(reserva);
 
-        Pagamento pagamento = pagamentoRepository.findById(dto.getPagamentoId());
-        if (pagamento == null) {
-            throw new NotFoundException("Pagamento não encontrado");
-        }
-
-        reservaExistente.setUsuario(usuario);
-        reservaExistente.setQuarto(quarto);
-        reservaExistente.setDataInicio(dto.getDataInicio());
-        reservaExistente.setDataFinal(dto.getDataFim());
-        reservaExistente.setPagamento(pagamento); // Atualize o relacionamento com Pagamento
-
-        repository.persist(reservaExistente);
-
-        return ReservaResponseDTO.valueOf(reservaExistente);
+        return ReservaResponseDTO.valueOf(reserva);
     }
 
     @Override

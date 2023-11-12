@@ -17,6 +17,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
 @Path("/reservas")
@@ -28,30 +29,34 @@ public class ReservaResource {
     ReservaService service;
 
     @POST
-    public ReservaResponseDTO insert(ReservaDTO dto) {
+    public Response insert(ReservaDTO dto) {
         // Validação de Datas
-        if (dto.getDataInicio().isAfter(dto.getDataFim())) {
+        if (dto.dataI().isAfter(dto.dateF())) {
             throw new WebApplicationException("Data de início deve ser antes da data de fim.", Status.BAD_REQUEST);
         }
-        return service.insert(dto);
+
+        ReservaResponseDTO reserva = service.insert(dto);
+        return Response.status(Status.CREATED).entity(reserva).build();
     }
 
     @PUT
     @Transactional
     @Path("/{id}")
-    public ReservaResponseDTO update(ReservaDTO dto, @PathParam("id") Long id) {
+    public Response update(ReservaDTO dto, @PathParam("id") Long id) {
         // Validação de Datas
-        if (dto.getDataInicio().isAfter(dto.getDataFim())) {
+        if (dto.dataI().isAfter(dto.dateF())) {
             throw new WebApplicationException("Data de início deve ser antes da data de fim.", Status.BAD_REQUEST);
         }
-        return service.update(dto, id);
+        ReservaResponseDTO reserva = service.update(dto, id);
+        return Response.ok(reserva).build();
     }
 
     @DELETE
     @Transactional
     @Path("/{id}")
-    public void delete(@PathParam("id") Long id) {
+    public Response delete(@PathParam("id") Long id) {
         service.delete(id);
+        return Response.status(Status.NO_CONTENT).build();
     }
 
     @GET
@@ -61,11 +66,11 @@ public class ReservaResource {
 
     @GET
     @Path("/{id}")
-    public ReservaResponseDTO findById(@PathParam("id") Long id) {
+    public Response findById(@PathParam("id") Long id) {
         ReservaResponseDTO dto = service.findById(id);
         if (dto == null) {
             throw new WebApplicationException("Reserva não encontrada.", Status.NOT_FOUND);
         }
-        return dto;
+        return Response.ok(dto).build();
     }
 }

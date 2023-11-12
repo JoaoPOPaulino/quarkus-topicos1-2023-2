@@ -43,6 +43,7 @@ public class UsuarioResourceTest {
                                 "Mark Zuckerberg Insert",
                                 "marquinho",
                                 "333",
+                                1,
                                 telefones,
                                 endereco);
 
@@ -69,6 +70,7 @@ public class UsuarioResourceTest {
                                 "Mark Zuckerberg Update",
                                 "morkos",
                                 "333",
+                                1,
                                 telefones,
                                 endereco);
 
@@ -82,6 +84,7 @@ public class UsuarioResourceTest {
                                 "Mark Zuckerberg",
                                 "mark",
                                 "555",
+                                1,
                                 telefones,
                                 endereco);
 
@@ -104,6 +107,7 @@ public class UsuarioResourceTest {
                                 "Mark Zuckerberg Delete",
                                 "marquinho",
                                 "333",
+                                1,
                                 telefones,
                                 endereco);
 

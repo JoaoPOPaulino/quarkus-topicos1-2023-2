@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.oracle.svm.core.annotate.Inject;
-
 import br.unitins.topicos1.dto.PedidoDTO;
 import br.unitins.topicos1.dto.PedidoResponseDTO;
 import br.unitins.topicos1.dto.ReservaDTO;
@@ -16,6 +14,7 @@ import br.unitins.topicos1.repository.PedidoRepository;
 import br.unitins.topicos1.repository.QuartoRepository;
 import br.unitins.topicos1.repository.UsuarioRepository;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
 @ApplicationScoped
@@ -27,7 +26,7 @@ public class PedidoServimeImpl implements PedidoService {
     @Inject
     UsuarioRepository usuarioRepository;
 
-    @jakarta.inject.Inject
+    @Inject
     PedidoRepository pedidoRepository;
 
     @Override

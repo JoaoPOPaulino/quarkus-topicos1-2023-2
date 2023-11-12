@@ -10,8 +10,7 @@ public record ReservaResponseDTO(
         LocalDate dataF,
         Integer quantidade,
         Double preco,
-        Long idQuarto,
-        Integer numero) {
+        Long idQuarto) {
 
     public static ReservaResponseDTO valueOf(Reserva reserva) {
         return new ReservaResponseDTO(
@@ -19,8 +18,7 @@ public record ReservaResponseDTO(
                 reserva.getDataFim(),
                 reserva.getQuantidade(),
                 reserva.getPreco(),
-                reserva.getQuarto().getId(),
-                reserva.getQuarto().getNumero());
+                reserva.getQuarto().getId());
     }
 
     public static List<ReservaResponseDTO> valueOf(List<Reserva> reserva) {
