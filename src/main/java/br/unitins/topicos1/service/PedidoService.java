@@ -4,15 +4,21 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.PedidoDTO;
 import br.unitins.topicos1.dto.PedidoResponseDTO;
+import br.unitins.topicos1.model.Pedido;
+import jakarta.validation.Valid;
 
 public interface PedidoService {
 
-    public PedidoResponseDTO insert(PedidoDTO dto, String login);
+    PedidoResponseDTO insert(PedidoDTO dto, String login);
 
-    public PedidoResponseDTO findById(Long id);
+    PedidoResponseDTO update(PedidoDTO dto, Long id);
 
-    public List<PedidoResponseDTO> findByAll();
+    void delete(Long id);
 
-    public List<PedidoResponseDTO> findByAll(String login);
+    PedidoResponseDTO findById(Long id);
+
+    List<PedidoResponseDTO> findByAll();
+
+    List<PedidoResponseDTO> findByAll(String login);
 
 }

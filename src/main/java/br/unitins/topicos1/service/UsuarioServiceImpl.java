@@ -151,7 +151,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public UsuarioResponseDTO findByLogin(String login) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByLogin'");
+        Usuario usuario = repository.findByLogin(login);
+        if (usuario == null) {
+            throw new ValidationException("login", "Login não encontrado");
+        }
+        return UsuarioResponseDTO.valueOf(usuario);
     }
 }

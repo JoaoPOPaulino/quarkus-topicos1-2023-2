@@ -16,6 +16,7 @@ import br.unitins.topicos1.repository.UsuarioRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 
 @ApplicationScoped
 public class PedidoServimeImpl implements PedidoService {
@@ -27,7 +28,7 @@ public class PedidoServimeImpl implements PedidoService {
     UsuarioRepository usuarioRepository;
 
     @Inject
-    PedidoRepository pedidoRepository;
+    PedidoRepository repository;
 
     @Override
     @Transactional
@@ -61,24 +62,73 @@ public class PedidoServimeImpl implements PedidoService {
 
         pedido.setUsuario(usuarioRepository.findByLogin(login));
 
-        pedidoRepository.persist(pedido);
+        repository.persist(pedido);
 
         return PedidoResponseDTO.valueOf(pedido);
     }
 
     @Override
+    @Transactional
+    public PedidoResponseDTO update(PedidoDTO dto, Long id) {
+        Pedido pedido = repository.findById(id);
+
+        if (pedido == null) {
+            throw new NotFoundException("Pedido não encontrado");
+        }
+
+        Double total = 0.0;
+
+        for (ReservaDTO reservaDto : dto.reservas()) {
+            total += (reservaDto.preco() + reservaDto.quantidade());
+        }
+
+        pedido.setTotalPedido(total);
+
+        List<Reserva> reservas = new ArrayList<>();
+        for (ReservaDTO reservaDto : dto.reservas()) {
+            Reserva reserva = new Reserva();
+            reserva.setDataFim(reservaDto.dataI());
+            reserva.setDataFim(reservaDto.dateF());
+            reserva.setPreco(reservaDto.preco());
+            reserva.setQuantidade(reservaDto.quantidade());
+            reserva.setPedido(pedido);
+            Quarto quarto = quartoRepository.findById(reservaDto.idQuarto());
+            reserva.setQuarto(quarto);
+
+            quarto.setDisponivel(false);
+
+            reservas.add(reserva);
+        }
+
+        pedido.setReservas(reservas);
+
+        repository.persist(pedido);
+
+        return PedidoResponseDTO.valueOf(pedido);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+
+        if (!repository.deleteById(id)) {
+            throw new NotFoundException();
+        }
+    }
+
+    @Override
     public PedidoResponseDTO findById(Long id) {
-        return PedidoResponseDTO.valueOf(pedidoRepository.findById(id));
+        return PedidoResponseDTO.valueOf(repository.findById(id));
     }
 
     @Override
     public List<PedidoResponseDTO> findByAll() {
-        return pedidoRepository.listAll().stream().map(e -> PedidoResponseDTO.valueOf(e)).toList();
+        return repository.listAll().stream().map(e -> PedidoResponseDTO.valueOf(e)).toList();
     }
 
     @Override
     public List<PedidoResponseDTO> findByAll(String login) {
-        return pedidoRepository.listAll().stream()
+        return repository.listAll().stream()
                 .map(e -> PedidoResponseDTO.valueOf(e)).toList();
     }
 
