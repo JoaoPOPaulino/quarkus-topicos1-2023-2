@@ -4,8 +4,6 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.PedidoDTO;
 import br.unitins.topicos1.dto.PedidoResponseDTO;
-import br.unitins.topicos1.model.Pedido;
-import jakarta.validation.Valid;
 
 public interface PedidoService {
 
