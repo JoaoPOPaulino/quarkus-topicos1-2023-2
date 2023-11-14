@@ -1,7 +1,6 @@
 package br.unitins.topicos1.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -13,9 +12,6 @@ public class Telefone extends DefaultEntity {
     @NotBlank
     @Size(min = 8, max = 12)
     private String numero;
-
-    @ManyToOne
-    private Usuario usuario;
 
     public String getCodigoArea() {
         return codigoArea;
@@ -31,14 +27,6 @@ public class Telefone extends DefaultEntity {
 
     public void setNumero(String numero) {
         this.numero = numero;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 
 }
