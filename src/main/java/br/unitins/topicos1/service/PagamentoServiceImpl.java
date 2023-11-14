@@ -42,7 +42,6 @@ public class PagamentoServiceImpl implements PagamentoService {
         pagamento.setTipoPagamento(TipoPagamento.valueOf(dto.tipoPagamento().id()));
         repository.persist(pagamento);
 
-        // Se a reserva não tiver um pagamento, cria automaticamente
         reservaService.atualizarReservaComPagamento(reserva.getId(), pagamento);
 
         return PagamentoResponseDTO.valueOf(pagamento);
