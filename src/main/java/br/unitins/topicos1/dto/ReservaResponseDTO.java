@@ -29,4 +29,8 @@ public record ReservaResponseDTO(
                         .map(p -> PagamentoResponseDTO.valueOf(p)).toList());
     }
 
+    public boolean temPagamento() {
+        return pagamento != null && !pagamento.isEmpty();
+    }
+
 }
