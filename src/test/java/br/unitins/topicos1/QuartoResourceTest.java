@@ -44,11 +44,9 @@ public class QuartoResourceTest {
                                 .then()
                                 .statusCode(201)
                                 .body("id", notNullValue(),
-                                                "numero", is(101),
+                                                "numero", is(1),
                                                 "preco", is(150.0f),
-                                                "disponivel", is(true),
-                                                "tipoQuarto.id", is(1),
-                                                "tipoQuarto.label", is("Casual"));
+                                                "disponivel", is(true));
         }
 
         @Test

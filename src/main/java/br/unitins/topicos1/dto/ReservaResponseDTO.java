@@ -29,8 +29,4 @@ public record ReservaResponseDTO(
                         .map(p -> PagamentoResponseDTO.valueOf(p)).toList());
     }
 
-    public static List<ReservaResponseDTO> valueOf(List<Reserva> reserva) {
-        return reserva.stream().map(i -> ReservaResponseDTO.valueOf(i)).toList();
-    }
-
 }

@@ -70,7 +70,7 @@ public class QuartoServiceImpl implements QuartoService {
     }
 
     @Override
-    public List<QuartoResponseDTO> findByTipo(Quarto tipo) {
+    public List<QuartoResponseDTO> findByTipo(TipoQuarto tipo) {
         List<Quarto> quartos = repository.findByTipo(tipo);
         return quartos.stream()
                 .map(QuartoResponseDTO::valueOf)
