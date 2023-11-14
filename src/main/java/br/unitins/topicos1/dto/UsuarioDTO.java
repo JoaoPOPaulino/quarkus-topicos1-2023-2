@@ -11,4 +11,5 @@ public record UsuarioDTO(
                 Integer idPerfil,
                 List<TelefoneDTO> listaTelefone,
                 EnderecoDTO endereco) {
+
 }

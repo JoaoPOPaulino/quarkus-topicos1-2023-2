@@ -5,9 +5,10 @@ import java.util.List;
 import br.unitins.topicos1.dto.QuartoDTO;
 import br.unitins.topicos1.dto.QuartoResponseDTO;
 import br.unitins.topicos1.model.Quarto;
+import jakarta.validation.Valid;
 
 public interface QuartoService {
-    QuartoResponseDTO insert(QuartoDTO dto);
+    QuartoResponseDTO insert(@Valid QuartoDTO dto);
 
     QuartoResponseDTO update(QuartoDTO dto, Long id);
 

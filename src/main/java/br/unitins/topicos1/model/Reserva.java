@@ -1,10 +1,13 @@
 package br.unitins.topicos1.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Reserva extends DefaultEntity {
@@ -17,11 +20,14 @@ public class Reserva extends DefaultEntity {
     private Quarto quarto;
 
     @ManyToOne
-    @JoinColumn(name = "id_pedido")
-    private Pedido pedido;
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;
 
     private Double preco;
     private Integer quantidade;
+
+    @OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL)
+    private List<Pagamento> pagamento;
 
     public LocalDate getDataIncio() {
         return dataIncio;
@@ -47,14 +53,6 @@ public class Reserva extends DefaultEntity {
         this.quarto = quarto;
     }
 
-    public Pedido getPedido() {
-        return pedido;
-    }
-
-    public void setPedido(Pedido pedido) {
-        this.pedido = pedido;
-    }
-
     public Double getPreco() {
         return preco;
     }
@@ -69,6 +67,22 @@ public class Reserva extends DefaultEntity {
 
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public List<Pagamento> getPagamento() {
+        return pagamento;
+    }
+
+    public void setPagamento(List<Pagamento> pagamento) {
+        this.pagamento = pagamento;
     }
 
 }

@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import br.unitins.topicos1.dto.ReservaDTO;
 import br.unitins.topicos1.dto.ReservaResponseDTO;
 import br.unitins.topicos1.model.Reserva;
-import br.unitins.topicos1.repository.PedidoRepository;
 import br.unitins.topicos1.repository.QuartoRepository;
 import br.unitins.topicos1.repository.ReservaRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -19,9 +18,6 @@ public class ReservaServiceImpl implements ReservaService {
 
     @Inject
     ReservaRepository repository;
-
-    @Inject
-    PedidoRepository pedidoRepository;
 
     @Inject
     QuartoRepository quartoRepository;

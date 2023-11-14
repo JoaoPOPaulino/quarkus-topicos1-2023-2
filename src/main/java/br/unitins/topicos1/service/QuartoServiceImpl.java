@@ -23,7 +23,7 @@ public class QuartoServiceImpl implements QuartoService {
     @Transactional
     public QuartoResponseDTO insert(QuartoDTO dto) {
         Quarto novoQuarto = new Quarto();
-        novoQuarto.setTipoQuarto(TipoQuarto.valueOf(dto.idTipo()));
+        novoQuarto.setTipoQuarto(TipoQuarto.valueOf(dto.tipoQuarto().id()));
         novoQuarto.setNumero(dto.numero());
         novoQuarto.setPreco(dto.preco());
         novoQuarto.setDisponivel(dto.disponivel());
@@ -39,7 +39,7 @@ public class QuartoServiceImpl implements QuartoService {
         Quarto quarto = repository.findById(id);
 
         if (quarto != null) {
-            quarto.setTipoQuarto(TipoQuarto.valueOf(dto.idTipo()));
+            quarto.setTipoQuarto(TipoQuarto.valueOf(dto.tipoQuarto().id()));
             quarto.setNumero(dto.numero());
             quarto.setPreco(dto.preco());
             quarto.setDisponivel(dto.disponivel());

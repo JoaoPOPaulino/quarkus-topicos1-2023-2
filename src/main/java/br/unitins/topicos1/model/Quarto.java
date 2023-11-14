@@ -1,6 +1,10 @@
 package br.unitins.topicos1.model;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Quarto extends DefaultEntity {
@@ -9,6 +13,9 @@ public class Quarto extends DefaultEntity {
     private Integer numero;
     private Double preco;
     private boolean disponivel;
+
+    @OneToMany(mappedBy = "quarto", cascade = CascadeType.ALL)
+    private List<Reserva> reservas;
 
     public Integer getNumero() {
         return numero;
@@ -50,6 +57,14 @@ public class Quarto extends DefaultEntity {
 
     public void setTipoQuarto(TipoQuarto tipoQuarto) {
         this.tipoQuarto = tipoQuarto;
+    }
+
+    public List<Reserva> getReservas() {
+        return reservas;
+    }
+
+    public void setReservas(List<Reserva> reservas) {
+        this.reservas = reservas;
     }
 
 }
