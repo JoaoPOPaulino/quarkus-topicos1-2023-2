@@ -89,7 +89,7 @@ public class UsuarioResourceTest {
                 given()
                                 .contentType(ContentType.JSON)
                                 .body(dtoUpdate)
-                                .when().put("/usuarios/" + id) // Use o ID obtido para formar o URL de atualização
+                                .when().put("/usuarios/" + id)
                                 .then()
                                 .statusCode(204);
         }

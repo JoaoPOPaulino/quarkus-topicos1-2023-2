@@ -25,12 +25,15 @@ public class PagamentoServiceImpl implements PagamentoService {
     @Inject
     ReservaService reservaService;
 
+    @Override
+    @Transactional
     public PagamentoResponseDTO insert(@Valid PagamentoDTO dto) {
-        ReservaResponseDTO reserva = reservaService.findById(dto.idReserva());
-        if (reserva == null) {
+        ReservaResponseDTO reservaResponse = reservaService.findById(dto.reserva().getId());
+        if (reservaResponse == null) {
             throw new NotFoundException("Reserva não encontrada.");
         }
 
+        Reserva reserva = reservaService.findById(dto.reserva().getId()).reserva();
         if (reserva.temPagamento()) {
             throw new ValidationException("idReserva", "Já existe um pagamento para esta reserva.");
         }
@@ -38,10 +41,10 @@ public class PagamentoServiceImpl implements PagamentoService {
         Pagamento pagamento = new Pagamento();
         pagamento.setDataPagamento(LocalDateTime.now());
         pagamento.setValor(dto.valor());
-        pagamento.setReserva(reserva.id());
+        pagamento.setReserva(reserva);
         pagamento.setTipoPagamento(TipoPagamento.valueOf(dto.tipoPagamento().id()));
-        repository.persist(pagamento);
 
+        repository.persist(pagamento);
         reservaService.atualizarReservaComPagamento(reserva.getId(), pagamento);
 
         return PagamentoResponseDTO.valueOf(pagamento);
@@ -55,16 +58,14 @@ public class PagamentoServiceImpl implements PagamentoService {
             throw new NotFoundException("Pagamento não encontrado.");
         }
 
-        ReservaResponseDTO reserva = reservaService.findById(dto.idReserva());
+        ReservaResponseDTO reserva = reservaService.findById(dto.reserva().getId());
         if (reserva == null) {
             throw new NotFoundException("Reserva não encontrada.");
         }
 
         pagamento.setDataPagamento(LocalDateTime.now());
         pagamento.setValor(dto.valor());
-        pagamento.setReserva(Reserva.valueOf(dto.idReserva()));
         pagamento.setTipoPagamento(TipoPagamento.valueOf(dto.tipoPagamento().id()));
-
         repository.persist(pagamento);
         return PagamentoResponseDTO.valueOf(pagamento);
     }

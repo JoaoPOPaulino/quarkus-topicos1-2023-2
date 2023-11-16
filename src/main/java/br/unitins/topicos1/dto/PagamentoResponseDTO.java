@@ -1,10 +1,10 @@
 package br.unitins.topicos1.dto;
 
+import java.time.LocalDateTime;
+
 import br.unitins.topicos1.model.Pagamento;
 import br.unitins.topicos1.model.Reserva;
 import br.unitins.topicos1.model.TipoPagamento;
-
-import java.time.LocalDateTime;
 
 public record PagamentoResponseDTO(
         Long id,
@@ -21,4 +21,5 @@ public record PagamentoResponseDTO(
                 pagamento.getTipoPagamento(),
                 pagamento.getValor());
     }
+
 }

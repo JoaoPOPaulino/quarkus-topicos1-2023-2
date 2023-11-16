@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import br.unitins.topicos1.dto.ReservaDTO;
 import br.unitins.topicos1.dto.ReservaResponseDTO;
+import br.unitins.topicos1.model.Pagamento;
 import br.unitins.topicos1.model.Reserva;
 import br.unitins.topicos1.repository.QuartoRepository;
 import br.unitins.topicos1.repository.ReservaRepository;
@@ -81,5 +82,13 @@ public class ReservaServiceImpl implements ReservaService {
         return reservas.stream()
                 .map(ReservaResponseDTO::valueOf)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void atualizarReservaComPagamento(Long idReserva, Pagamento pagamento) {
+        Reserva reserva = repository.findById(idReserva);
+        if (reserva == null) {
+            throw new NotFoundException("Reserva não encontrada.");
+        }
     }
 }

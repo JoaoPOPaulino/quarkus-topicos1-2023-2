@@ -1,7 +1,6 @@
 package br.unitins.topicos1.model;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -25,9 +24,6 @@ public class Reserva extends DefaultEntity {
 
     private Double preco;
     private Integer quantidade;
-
-    @OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL)
-    private List<Pagamento> pagamento;
 
     public LocalDate getDataIncio() {
         return dataIncio;
@@ -77,12 +73,12 @@ public class Reserva extends DefaultEntity {
         this.usuario = usuario;
     }
 
-    public List<Pagamento> getPagamento() {
-        return pagamento;
+    public static Reserva valueOf(Long idReserva) {
+        return null;
     }
 
-    public void setPagamento(List<Pagamento> pagamento) {
-        this.pagamento = pagamento;
+    public boolean temPagamento() {
+        return false;
     }
 
 }

@@ -97,7 +97,6 @@ public class QuartoResourceTest {
                                 .then()
                                 .statusCode(204);
 
-                // Verifica se o quarto foi excluído corretamente
                 given()
                                 .when()
                                 .get("/quartos/" + id)

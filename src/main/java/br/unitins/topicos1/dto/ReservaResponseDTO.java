@@ -1,9 +1,11 @@
 package br.unitins.topicos1.dto;
 
 import java.time.LocalDate;
-import java.util.List;
 
+import br.unitins.topicos1.model.Pagamento;
+import br.unitins.topicos1.model.Quarto;
 import br.unitins.topicos1.model.Reserva;
+import br.unitins.topicos1.model.Usuario;
 
 public record ReservaResponseDTO(
         Long id,
@@ -11,9 +13,8 @@ public record ReservaResponseDTO(
         LocalDate dataF,
         Integer quantidade,
         Double preco,
-        QuartoResponseDTO quarto,
-        UsuarioResponseDTO usuario,
-        List<PagamentoResponseDTO> pagamento) {
+        Quarto quarto,
+        Usuario usuario) {
 
     public static ReservaResponseDTO valueOf(Reserva reserva) {
         return new ReservaResponseDTO(
@@ -22,15 +23,11 @@ public record ReservaResponseDTO(
                 reserva.getDataFim(),
                 reserva.getQuantidade(),
                 reserva.getPreco(),
-                QuartoResponseDTO.valueOf(reserva.getQuarto()),
-                UsuarioResponseDTO.valueOf(reserva.getUsuario()),
-                reserva.getPagamento()
-                        .stream()
-                        .map(p -> PagamentoResponseDTO.valueOf(p)).toList());
+                reserva.getQuarto(),
+                reserva.getUsuario());
     }
 
-    public boolean temPagamento() {
-        return pagamento != null && !pagamento.isEmpty();
+    public Reserva reserva() {
+        return reserva();
     }
-
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.ReservaDTO;
 import br.unitins.topicos1.dto.ReservaResponseDTO;
+import br.unitins.topicos1.model.Pagamento;
 
 public interface ReservaService {
 
@@ -16,5 +17,7 @@ public interface ReservaService {
     ReservaResponseDTO findById(Long id);
 
     List<ReservaResponseDTO> findByAll();
+
+    void atualizarReservaComPagamento(Long id, Pagamento pagamento);
 
 }
