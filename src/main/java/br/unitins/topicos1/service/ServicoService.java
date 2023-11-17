@@ -17,5 +17,5 @@ public interface ServicoService {
 
     List<ServicoResponseDTO> findByNome(String nome);
 
-    List<ServicoResponseDTO> findByAll();
+    List<ServicoResponseDTO> findAll();
 }

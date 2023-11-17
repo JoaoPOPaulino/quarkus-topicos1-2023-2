@@ -25,7 +25,7 @@ public class ComentarioResource {
     ComentarioService service;
 
     @POST
-    public Response insert(ComentarioDTO dto){
+    public Response insert(ComentarioDTO dto) {
         return Response.status(Status.CREATED).entity(service.insert(dto)).build();
 
     }
@@ -33,22 +33,22 @@ public class ComentarioResource {
     @PUT
     @Transactional
     @Path("/{id}")
-    public Response update(ComentarioDTO dto, @PathParam("id)")Long id){
-       service.update(dto, id);
+    public Response update(ComentarioDTO dto, @PathParam("id)") Long id) {
+        service.update(dto, id);
         return Response.noContent().build();
-        }
+    }
 
     @DELETE
     @Transactional
     @Path("/{id}")
-    public Response delete(@PathParam("id") Long id){
+    public Response delete(@PathParam("id") Long id) {
         service.delete(id);
         return Response.noContent().build();
-        }
-    
+    }
+
     @GET
     @Path("/{id}")
-    public Response findById(@PathParam("id")Long id){
+    public Response findById(@PathParam("id") Long id) {
         return Response.ok(service.findById(id)).build();
     }
 

@@ -3,6 +3,7 @@ package br.unitins.topicos1.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.unitins.topicos1.dto.ComentarioResponseDTO;
 import br.unitins.topicos1.dto.ServicoDTO;
 import br.unitins.topicos1.dto.ServicoResponseDTO;
 import br.unitins.topicos1.model.Servico;
@@ -78,13 +79,11 @@ public class ServicoServiceImpl implements ServicoService {
     }
 
     @Override
-    public List<ServicoResponseDTO> findByAll() {
+    public List<ServicoResponseDTO> findAll() {
         List<Servico> servicos = repository.listAll();
-        List<ServicoResponseDTO> dtos = new ArrayList<>();
-        for (Servico servico : servicos) {
-            dtos.add(ServicoResponseDTO.valueOf(servico));
-        }
-        return dtos;
+        return servicos.stream()
+                .map(ServicoResponseDTO::valueOf)
+                .toList();
     }
 
 }

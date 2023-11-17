@@ -47,7 +47,7 @@ public class ServiceResource {
 
     @GET
     public Response findAll() {
-        return Response.ok(service.findByAll()).build();
+        return Response.ok(service.findAll()).build();
     }
 
     @GET
