@@ -25,18 +25,20 @@ public class Servico extends DefaultEntity {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    public LocalDate getHoraInicio() {
+    public LocalDateTime getHoraInicio() {
         return horaInicio;
     }
-    public void setHoraInicio(LocalDate horaInicio) {
+    public void setHoraInicio(LocalDateTime horaInicio) {
         this.horaInicio = horaInicio;
     }
-    public LocalDate getHoraFim() {
+    public LocalDateTime getHoraFim() {
         return horaFim;
     }
-    public void setHoraFim(LocalDate horaFim) {
+    public void setHoraFim(LocalDateTime horaFim) {
         this.horaFim = horaFim;
     }
+   
+    
 
 
     
