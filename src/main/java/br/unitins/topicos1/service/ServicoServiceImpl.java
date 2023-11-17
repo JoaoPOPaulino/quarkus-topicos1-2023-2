@@ -3,7 +3,6 @@ package br.unitins.topicos1.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.unitins.topicos1.dto.ComentarioResponseDTO;
 import br.unitins.topicos1.dto.ServicoDTO;
 import br.unitins.topicos1.dto.ServicoResponseDTO;
 import br.unitins.topicos1.model.Servico;
@@ -52,7 +51,6 @@ public class ServicoServiceImpl implements ServicoService {
 
     @Override
     public void delete(Long id) {
-        Servico servico = repository.findById(id);
         if (!repository.deleteById(id)) {
             throw new NotFoundException("Serviço não encontrado.");
         }

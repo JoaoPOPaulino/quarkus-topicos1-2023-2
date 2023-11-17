@@ -95,7 +95,7 @@ public class UsuarioResourceTest {
         }
 
         @Test
-        public void testDelete() {
+        void testDelete() {
                 List<TelefoneDTO> telefones = new ArrayList<TelefoneDTO>();
                 telefones.add(new TelefoneDTO("63", "5555-5555"));
 

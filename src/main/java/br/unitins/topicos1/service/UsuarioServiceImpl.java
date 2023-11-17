@@ -106,7 +106,6 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     @Transactional
     public void delete(Long id) {
-        Usuario usuario = repository.findById(id);
         if (!repository.deleteById(id)) {
             throw new NotFoundException("Usuário não encontrado.");
         }

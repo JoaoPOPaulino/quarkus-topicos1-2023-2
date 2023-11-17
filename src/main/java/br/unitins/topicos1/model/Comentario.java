@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Comentario extends DefaultEntity {
@@ -12,7 +12,7 @@ public class Comentario extends DefaultEntity {
 	private String conteudo;
 	private LocalDateTime dataCriacao;
 
-	@OneToMany
+	@ManyToOne
 	@JoinColumn(name = "id_usuarios")
 	private Usuario usuario;
 
