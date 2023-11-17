@@ -4,7 +4,6 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.ServicoDTO;
 import br.unitins.topicos1.dto.ServicoResponseDTO;
-import br.unitins.topicos1.dto.UsuarioResponseDTO;
 import jakarta.validation.Valid;
 
 public interface ServicoService {
@@ -14,7 +13,7 @@ public interface ServicoService {
 
     void delete(Long id);
 
-    UsuarioResponseDTO findById(Long id);
+    ServicoResponseDTO findById(Long id);
 
     List<ServicoResponseDTO> findByNome(String nome);
 

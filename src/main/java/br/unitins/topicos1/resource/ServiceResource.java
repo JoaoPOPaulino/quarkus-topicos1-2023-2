@@ -1,9 +1,6 @@
 package br.unitins.topicos1.resource;
 
-
-
 import br.unitins.topicos1.dto.ServicoDTO;
-import br.unitins.topicos1.dto.UsuarioDTO;
 import br.unitins.topicos1.service.ServicoService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -23,16 +20,16 @@ import jakarta.ws.rs.core.Response.Status;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class ServiceResource {
-    
+
     @Inject
     ServicoService service;
 
     @POST
-    public Response insert(ServicoDTO dto){
+    public Response insert(ServicoDTO dto) {
         return Response.status(Status.CREATED).entity(service.insert(dto)).build();
     }
 
-     @PUT
+    @PUT
     @Transactional
     @Path("/{id}")
     public Response update(ServicoDTO dto, @PathParam("id") Long id) {
