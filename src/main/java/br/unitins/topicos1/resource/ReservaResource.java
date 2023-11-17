@@ -41,7 +41,6 @@ public class ReservaResource {
         }
 
         String login = jwt.getSubject();
-        
 
         ReservaResponseDTO reserva = service.insert(dto);
         return Response.status(Status.CREATED).entity(reserva).build();

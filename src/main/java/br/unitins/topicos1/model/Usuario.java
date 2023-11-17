@@ -2,6 +2,8 @@ package br.unitins.topicos1.model;
 
 import java.util.List;
 
+import jakarta.persistence.FetchType;
+
 import io.smallrye.common.constraint.NotNull;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -20,7 +22,7 @@ public class Usuario extends DefaultEntity {
     private Perfil perfil;
 
     @NotEmpty(message = "A lista de telefone não pode estar vazia")
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinTable(name = "usuario_telefone", joinColumns = @JoinColumn(name = "id_usuario"), inverseJoinColumns = @JoinColumn(name = "id_telefone"))
     private List<Telefone> listaTelefone;
 
