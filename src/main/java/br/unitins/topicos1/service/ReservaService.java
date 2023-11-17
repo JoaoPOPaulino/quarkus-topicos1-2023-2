@@ -5,12 +5,13 @@ import java.util.List;
 import br.unitins.topicos1.dto.ReservaDTO;
 import br.unitins.topicos1.dto.ReservaResponseDTO;
 import br.unitins.topicos1.model.Pagamento;
+import jakarta.validation.Valid;
 
 public interface ReservaService {
 
-    ReservaResponseDTO insert(ReservaDTO dto);
+    ReservaResponseDTO insert(@Valid ReservaDTO dto);
 
-    ReservaResponseDTO update(ReservaDTO dto, Long id);
+    ReservaResponseDTO update(@Valid ReservaDTO dto, Long id);
 
     void delete(Long id);
 

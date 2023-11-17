@@ -2,11 +2,14 @@ package br.unitins.topicos1.resource;
 
 import java.util.List;
 
+import org.eclipse.microprofile.jwt.JsonWebToken;
+
 import br.unitins.topicos1.dto.ReservaDTO;
 import br.unitins.topicos1.dto.ReservaResponseDTO;
 import br.unitins.topicos1.service.ReservaService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -28,12 +31,17 @@ public class ReservaResource {
     @Inject
     ReservaService service;
 
+    @Inject
+    JsonWebToken jwt;
+
     @POST
-    public Response insert(ReservaDTO dto) {
-        // Validação de Datas
+    public Response insert(@Valid ReservaDTO dto) {
         if (dto.dataI().isAfter(dto.dateF())) {
             throw new WebApplicationException("Data de início deve ser antes da data de fim.", Status.BAD_REQUEST);
         }
+
+        String login = jwt.getSubject();
+        
 
         ReservaResponseDTO reserva = service.insert(dto);
         return Response.status(Status.CREATED).entity(reserva).build();
@@ -42,7 +50,7 @@ public class ReservaResource {
     @PUT
     @Transactional
     @Path("/{id}")
-    public Response update(ReservaDTO dto, @PathParam("id") Long id) {
+    public Response update(@Valid ReservaDTO dto, @PathParam("id") Long id) {
         if (dto.dataI().isAfter(dto.dateF())) {
             throw new WebApplicationException("Data de início deve ser antes da data de fim.", Status.BAD_REQUEST);
         }

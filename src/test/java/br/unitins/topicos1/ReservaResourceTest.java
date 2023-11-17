@@ -105,7 +105,17 @@ public class ReservaResourceTest {
                 ReservaDTO dtoUpdate = new ReservaDTO(dataInicio, newDataFim, 1, quarto.id(), quarto.preco(),
                                 usuario.id());
 
-                given()
+                                given()
+                                .contentType(ContentType.JSON)
+                                .body(dtoUpdate)
+                                .when().post("/reservas")
+                                .then()
+                                .statusCode(201)
+                                .body(
+                                                "id", notNullValue(),
+                                                "dataInicio", is(dataInicio.toString()),
+                                                "dataFim", is(dataFim.toString()),
+                                                "preco", is(200.0f));given()
                                 .contentType(ContentType.JSON)
                                 .body(dtoUpdate)
                                 .when().put("/reservas/" + id)

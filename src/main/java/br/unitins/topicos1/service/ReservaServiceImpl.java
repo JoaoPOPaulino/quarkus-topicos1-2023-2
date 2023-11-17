@@ -3,6 +3,7 @@ package br.unitins.topicos1.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import br.unitins.topicos1.dto.QuartoDTO;
 import br.unitins.topicos1.dto.ReservaDTO;
 import br.unitins.topicos1.dto.ReservaResponseDTO;
 import br.unitins.topicos1.model.Pagamento;
@@ -42,12 +43,7 @@ public class ReservaServiceImpl implements ReservaService {
         novaReserva.setDataIncio(dto.dataI());
         novaReserva.setDataFim(dto.dateF());
         novaReserva.setQuantidade(dto.quantidade());
-
-        Double precoQuarto = quarto.getPreco();
-        if (precoQuarto == null) {
-            throw new IllegalArgumentException("Preço do quarto não encontrado");
-        }
-        novaReserva.setPreco(precoQuarto * dto.quantidade());
+        novaReserva.setPreco(dto.preco());
 
         novaReserva.setUsuario(usuarioRepository.findById(dto.idUsuario()));
         if (usuarioRepository == null) {
@@ -71,18 +67,12 @@ public class ReservaServiceImpl implements ReservaService {
         reserva.setPreco(dto.preco());
         reserva.setQuantidade(dto.quantidade());
 
-        Quarto quarto = quartoRepository.findById(dto.idQuarto());
+        Quarto quarto = quartoRepository.findById(id);
         if (quarto == null) {
             throw new NotFoundException("Quarto não encontrado");
         }
 
-        Double precoQuarto = quarto.getPreco();
-        if (precoQuarto == null) {
-            throw new IllegalArgumentException("Preço do quarto não encontrado");
-        }
-        reserva.setPreco(precoQuarto * dto.quantidade());
-
-        reserva.setUsuario(usuarioRepository.findById(dto.idUsuario()));
+        reserva.setUsuario(usuarioRepository.findById(id));
         if (reserva.getUsuario() == null) {
             throw new NotFoundException("Usuário não encontrado");
         }

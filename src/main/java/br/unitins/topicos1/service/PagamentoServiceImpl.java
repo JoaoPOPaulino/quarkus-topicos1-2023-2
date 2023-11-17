@@ -28,6 +28,8 @@ public class PagamentoServiceImpl implements PagamentoService {
     @Override
     @Transactional
     public PagamentoResponseDTO insert(@Valid PagamentoDTO dto) {
+        Pagamento pagamento = new Pagamento();
+        pagamento.setDataPagamento(LocalDateTime.now());
         ReservaResponseDTO reservaResponse = reservaService.findById(dto.reserva().getId());
         if (reservaResponse == null) {
             throw new NotFoundException("Reserva não encontrada.");
@@ -37,9 +39,7 @@ public class PagamentoServiceImpl implements PagamentoService {
         if (reserva.temPagamento()) {
             throw new ValidationException("idReserva", "Já existe um pagamento para esta reserva.");
         }
-
-        Pagamento pagamento = new Pagamento();
-        pagamento.setDataPagamento(LocalDateTime.now());
+        
         pagamento.setValor(dto.valor());
         pagamento.setReserva(reserva);
         pagamento.setTipoPagamento(TipoPagamento.valueOf(dto.tipoPagamento().id()));

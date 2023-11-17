@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 import br.unitins.topicos1.model.Quarto;
 import br.unitins.topicos1.model.Reserva;
-import br.unitins.topicos1.model.Usuario;
 
 public record ReservaResponseDTO(
         Long id,
@@ -13,7 +12,7 @@ public record ReservaResponseDTO(
         Integer quantidade,
         Double quarto,
         Quarto preco,
-        Usuario usuario) {
+        UsuarioResponseDTO usuario) {
 
     public static ReservaResponseDTO valueOf(Reserva reserva) {
         return new ReservaResponseDTO(
@@ -23,7 +22,7 @@ public record ReservaResponseDTO(
                 reserva.getQuantidade(),
                 reserva.getQuarto().getPreco(),
                 reserva.getQuarto(),
-                reserva.getUsuario());
+                UsuarioResponseDTO.valueOf(reserva.getUsuario()));
     }
 
     public Reserva reserva() {
