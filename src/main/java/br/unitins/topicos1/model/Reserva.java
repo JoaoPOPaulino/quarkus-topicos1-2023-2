@@ -2,11 +2,9 @@ package br.unitins.topicos1.model;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 
 @Entity
 public class Reserva extends DefaultEntity {
@@ -41,22 +39,6 @@ public class Reserva extends DefaultEntity {
         this.dataFim = dataFim;
     }
 
-    public Quarto getQuarto() {
-        return quarto;
-    }
-
-    public void setQuarto(Quarto quarto) {
-        this.quarto = quarto;
-    }
-
-    public Double getPreco() {
-        return preco;
-    }
-
-    public void setPreco(Double preco) {
-        this.preco = preco;
-    }
-
     public Integer getQuantidade() {
         return quantidade;
     }
@@ -79,6 +61,22 @@ public class Reserva extends DefaultEntity {
 
     public boolean temPagamento() {
         return false;
+    }
+
+    public Quarto getQuarto() {
+        return quarto;
+    }
+
+    public void setQuarto(Quarto quarto) {
+        this.quarto = quarto;
+    }
+
+    public Double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(Double preco) {
+        this.preco = preco;
     }
 
 }

@@ -2,7 +2,6 @@ package br.unitins.topicos1.dto;
 
 import java.time.LocalDate;
 
-import br.unitins.topicos1.model.Pagamento;
 import br.unitins.topicos1.model.Quarto;
 import br.unitins.topicos1.model.Reserva;
 import br.unitins.topicos1.model.Usuario;
@@ -12,8 +11,8 @@ public record ReservaResponseDTO(
         LocalDate dataI,
         LocalDate dataF,
         Integer quantidade,
-        Double preco,
-        Quarto quarto,
+        Double quarto,
+        Quarto preco,
         Usuario usuario) {
 
     public static ReservaResponseDTO valueOf(Reserva reserva) {
@@ -22,7 +21,7 @@ public record ReservaResponseDTO(
                 reserva.getDataIncio(),
                 reserva.getDataFim(),
                 reserva.getQuantidade(),
-                reserva.getPreco(),
+                reserva.getQuarto().getPreco(),
                 reserva.getQuarto(),
                 reserva.getUsuario());
     }

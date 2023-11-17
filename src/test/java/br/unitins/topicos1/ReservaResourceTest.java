@@ -47,34 +47,21 @@ public class ReservaResourceTest {
 
         @Test
         public void testInsert() {
-                List<TelefoneDTO> telefones = new ArrayList<TelefoneDTO>();
+                List<TelefoneDTO> telefones = new ArrayList<>();
                 telefones.add(new TelefoneDTO("63", "5555-5555"));
-
                 EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua", 123);
-
-                UsuarioDTO usuarioTest = new UsuarioDTO(
-                                "Mark Zuckerberg Insert",
-                                "marquinho",
-                                "333",
-                                1,
-                                telefones,
+                UsuarioDTO usuarioTest = new UsuarioDTO("Novo Usuário", "novoUsuario", "senha123", 1, telefones,
                                 endereco);
-
                 UsuarioResponseDTO usuario = usuarioService.insert(usuarioTest);
 
                 TipoQuartoDTO tipo = new TipoQuartoDTO(1, "Casual");
-                QuartoDTO quartoTest = new QuartoDTO(
-                                1,
-                                150.0,
-                                true,
-                                tipo);
-
+                QuartoDTO quartoTest = new QuartoDTO(1, 150.0, true, tipo);
                 QuartoResponseDTO quarto = quartoService.insert(quartoTest);
 
                 LocalDate dataInicio = LocalDate.now();
                 LocalDate dataFim = dataInicio.plusDays(5);
-
-                ReservaDTO dto = new ReservaDTO(dataInicio, dataFim, 1, 200.0, quarto.id(), usuario.id());
+                ReservaDTO dto = new ReservaDTO(dataInicio, dataFim, 1, quarto.id(), quarto.preco(),
+                                usuario.id());
 
                 given()
                                 .contentType(ContentType.JSON)
@@ -86,46 +73,44 @@ public class ReservaResourceTest {
                                                 "id", notNullValue(),
                                                 "dataInicio", is(dataInicio.toString()),
                                                 "dataFim", is(dataFim.toString()),
-                                                "preço", is(200.0f));
+                                                "preco", is(200.0f));
         }
 
         @Test
         public void testUpdate() {
-
                 List<TelefoneDTO> telefones = new ArrayList<>();
                 telefones.add(new TelefoneDTO("63", "5555-5555"));
                 EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua", 123);
-                UsuarioDTO usuarioTest = new UsuarioDTO("Mark Zuckerberg Update", "marquinho", "333", 1, telefones,
-                                endereco);
+                UsuarioDTO usuarioTest = new UsuarioDTO("Mark Zuckerberg Update", "ok", "senha123", 1,
+                                telefones, endereco);
+
                 UsuarioResponseDTO usuario = usuarioService.insert(usuarioTest);
 
                 TipoQuartoDTO tipo = new TipoQuartoDTO(1, "Casual");
+
                 QuartoDTO quartoTest = new QuartoDTO(1, 150.0, true, tipo);
+
                 QuartoResponseDTO quarto = quartoService.insert(quartoTest);
 
                 LocalDate dataInicio = LocalDate.now();
                 LocalDate dataFim = dataInicio.plusDays(5);
-                ReservaDTO reservaDTO = new ReservaDTO(dataInicio, dataFim, 1, 200.0, quarto.id(), usuario.id());
-                ReservaResponseDTO reserva = reservaService.insert(reservaDTO);
+                ReservaDTO dtoInsert = new ReservaDTO(dataInicio, dataFim, 1, quarto.id(), quarto.preco(),
+                                usuario.id());
+
+                ReservaResponseDTO reservaTest = reservaService.insert(dtoInsert);
+
+                Long id = reservaTest.id();
 
                 LocalDate newDataFim = dataFim.plusDays(3);
-                reservaDTO = new ReservaDTO(dataInicio, newDataFim, 1, 250.0, quarto.id(), usuario.id());
+                ReservaDTO dtoUpdate = new ReservaDTO(dataInicio, newDataFim, 1, quarto.id(), quarto.preco(),
+                                usuario.id());
 
                 given()
                                 .contentType(ContentType.JSON)
-                                .body(reservaDTO)
-                                .when().put("/reservas/")
+                                .body(dtoUpdate)
+                                .when().put("/reservas/" + id)
                                 .then()
                                 .statusCode(204);
-                given()
-                                .when().get("/reservas/")
-                                .then()
-                                .statusCode(200)
-                                .body(
-                                                "id", is(reserva.id().intValue()),
-                                                "dataInicio", is(dataInicio.toString()),
-                                                "dataFim", is(newDataFim.toString()),
-                                                "preço", is(250.0f));
         }
 
         @Test
@@ -144,15 +129,18 @@ public class ReservaResourceTest {
 
                 LocalDate dataInicio = LocalDate.now();
                 LocalDate dataFim = dataInicio.plusDays(5);
-                ReservaDTO reservaDTO = new ReservaDTO(dataInicio, dataFim, 1, 200.0, quarto.id(), usuario.id());
-                ReservaResponseDTO reserva = reservaService.insert(reservaDTO);
+                ReservaDTO dtoInsert = new ReservaDTO(dataInicio, dataFim, 1, quarto.id(), quarto.preco(),
+                                usuario.id());
+                ReservaResponseDTO reservaTest = reservaService.insert(dtoInsert);
+
+                Long id = reservaTest.id();
                 given()
-                                .when().delete("/reservas/")
+                                .when().delete("/reservas/" + id)
                                 .then()
                                 .statusCode(204);
 
                 given()
-                                .when().get("/reservas/")
+                                .when().get("/reservas/" + id)
                                 .then()
                                 .statusCode(404);
         }

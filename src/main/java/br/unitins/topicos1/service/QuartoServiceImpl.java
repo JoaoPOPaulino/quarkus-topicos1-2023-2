@@ -53,9 +53,11 @@ public class QuartoServiceImpl implements QuartoService {
     @Override
     @Transactional
     public void delete(Long id) {
+        Quarto quarto = repository.findById(id);
         if (!repository.deleteById(id)) {
-            throw new NotFoundException();
+            throw new NotFoundException("Quarto não encontrado.");
         }
+        repository.delete(quarto);
     }
 
     @Override

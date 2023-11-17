@@ -6,9 +6,11 @@ import java.util.stream.Collectors;
 import br.unitins.topicos1.dto.ReservaDTO;
 import br.unitins.topicos1.dto.ReservaResponseDTO;
 import br.unitins.topicos1.model.Pagamento;
+import br.unitins.topicos1.model.Quarto;
 import br.unitins.topicos1.model.Reserva;
 import br.unitins.topicos1.repository.QuartoRepository;
 import br.unitins.topicos1.repository.ReservaRepository;
+import br.unitins.topicos1.repository.UsuarioRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -23,16 +25,33 @@ public class ReservaServiceImpl implements ReservaService {
     @Inject
     QuartoRepository quartoRepository;
 
+    @Inject
+    UsuarioRepository usuarioRepository;
+
     @Override
     @Transactional
     public ReservaResponseDTO insert(ReservaDTO dto) {
+
+        Quarto quarto = quartoRepository.findById(dto.idQuarto());
+        if (quarto == null) {
+            throw new IllegalArgumentException("Quarto não encontrado");
+        }
+
         Reserva novaReserva = new Reserva();
+        novaReserva.setQuarto(quarto);
         novaReserva.setDataIncio(dto.dataI());
         novaReserva.setDataFim(dto.dateF());
         novaReserva.setQuantidade(dto.quantidade());
-        novaReserva.setQuarto(quartoRepository.findById(dto.idQuarto()));
-        if (quartoRepository == null) {
-            throw new NotFoundException("Quarto não encontrado");
+
+        Double precoQuarto = quarto.getPreco();
+        if (precoQuarto == null) {
+            throw new IllegalArgumentException("Preço do quarto não encontrado");
+        }
+        novaReserva.setPreco(precoQuarto * dto.quantidade());
+
+        novaReserva.setUsuario(usuarioRepository.findById(dto.idUsuario()));
+        if (usuarioRepository == null) {
+            throw new NotFoundException("Usuário não encontrado");
         }
 
         repository.persist(novaReserva);
@@ -52,8 +71,23 @@ public class ReservaServiceImpl implements ReservaService {
         reserva.setPreco(dto.preco());
         reserva.setQuantidade(dto.quantidade());
 
-        repository.persist(reserva);
+        Quarto quarto = quartoRepository.findById(dto.idQuarto());
+        if (quarto == null) {
+            throw new NotFoundException("Quarto não encontrado");
+        }
 
+        Double precoQuarto = quarto.getPreco();
+        if (precoQuarto == null) {
+            throw new IllegalArgumentException("Preço do quarto não encontrado");
+        }
+        reserva.setPreco(precoQuarto * dto.quantidade());
+
+        reserva.setUsuario(usuarioRepository.findById(dto.idUsuario()));
+        if (reserva.getUsuario() == null) {
+            throw new NotFoundException("Usuário não encontrado");
+        }
+
+        repository.persist(reserva);
         return ReservaResponseDTO.valueOf(reserva);
     }
 
