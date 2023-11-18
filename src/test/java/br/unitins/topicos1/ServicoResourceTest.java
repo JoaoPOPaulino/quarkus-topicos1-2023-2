@@ -81,4 +81,24 @@ public class ServicoResourceTest {
                                 .statusCode(204);
         }
 
+        @Test
+        void testDelete() {
+                LocalDateTime horaInicio = LocalDateTime.of(2023, 1, 1, 8, 0);
+                LocalDateTime horaFim = LocalDateTime.of(2023, 1, 1, 11, 30);
+
+                ServicoDTO dto = new ServicoDTO(
+                                "Café da Manhã",
+                                "Serviço de café da manhã",
+                                horaInicio,
+                                horaFim);
+
+                ServicoResponseDTO servicoTest = servicoService.insert(dto);
+                Long id = servicoTest.id();
+
+                given()
+                                .when().delete("/usuarios/" + id)
+                                .then()
+                                .statusCode(204);
+        }
+
 }
