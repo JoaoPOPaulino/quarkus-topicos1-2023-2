@@ -1,6 +1,9 @@
 package br.unitins.topicos1.resource;
 
+import org.hibernate.query.SemanticException;
+
 import br.unitins.topicos1.dto.ComentarioDTO;
+import br.unitins.topicos1.dto.ComentarioResponseDTO;
 import br.unitins.topicos1.service.ComentarioService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -26,6 +29,7 @@ public class ComentarioResource {
 
     @POST
     public Response insert(ComentarioDTO dto) {
+
         return Response.status(Status.CREATED).entity(service.insert(dto)).build();
 
     }
@@ -47,14 +51,14 @@ public class ComentarioResource {
     }
 
     @GET
-    @Path("/{id}")
-    public Response findById(@PathParam("id") Long id) {
-        return Response.ok(service.findById(id)).build();
+    public Response findAll() {
+        return Response.ok(service.findAll()).build();
     }
 
     @GET
-    public Response findAll() {
-        return Response.ok(service.findAll()).build();
+    @Path("/{id}")
+    public Response findById(@PathParam("id") Long id) {
+        return Response.ok(service.findById(id)).build();
     }
 
 }

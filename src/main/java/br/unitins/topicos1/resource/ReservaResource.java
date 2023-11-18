@@ -36,25 +36,20 @@ public class ReservaResource {
 
     @POST
     public Response insert(@Valid ReservaDTO dto) {
-        if (dto.dataI().isAfter(dto.dateF())) {
-            throw new WebApplicationException("Data de início deve ser antes da data de fim.", Status.BAD_REQUEST);
-        }
 
-        String login = jwt.getSubject();
-
-        ReservaResponseDTO reserva = service.insert(dto);
-        return Response.status(Status.CREATED).entity(reserva).build();
+        return Response.status(Status.CREATED).entity(service.insert(dto)).build();
     }
 
     @PUT
     @Transactional
     @Path("/{id}")
     public Response update(@Valid ReservaDTO dto, @PathParam("id") Long id) {
-        if (dto.dataI().isAfter(dto.dateF())) {
-            throw new WebApplicationException("Data de início deve ser antes da data de fim.", Status.BAD_REQUEST);
-        }
-        ReservaResponseDTO reserva = service.update(dto, id);
-        return Response.ok(reserva).build();
+        // if (dto.dataI().isAfter(dto.dateF())) {
+        // throw new WebApplicationException("Data de início deve ser antes da data de
+        // fim.", Status.BAD_REQUEST);
+        // }
+        service.update(dto, id);
+        return Response.noContent().build();
     }
 
     @DELETE
@@ -62,21 +57,17 @@ public class ReservaResource {
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id) {
         service.delete(id);
-        return Response.status(Status.NO_CONTENT).build();
+        return Response.noContent().build();
     }
 
     @GET
-    public List<ReservaResponseDTO> findAll() {
-        return service.findByAll();
+    public Response findAll() {
+        return Response.ok(service.findByAll()).build();
     }
 
     @GET
     @Path("/{id}")
     public Response findById(@PathParam("id") Long id) {
-        ReservaResponseDTO dto = service.findById(id);
-        if (dto == null) {
-            throw new WebApplicationException("Reserva não encontrada.", Status.NOT_FOUND);
-        }
-        return Response.ok(dto).build();
+        return Response.ok(service.findById(id)).build();
     }
 }

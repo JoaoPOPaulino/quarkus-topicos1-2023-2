@@ -43,3 +43,24 @@ INSERT INTO usuario_endereco(id_usuario, id_endereco) VALUES(2, 2);
 INSERT INTO usuario_endereco(id_usuario, id_endereco) VALUES(3, 3);
 INSERT INTO usuario_endereco(id_usuario, id_endereco) VALUES(4, 4);
 
+-- Inserir dados de Comentario
+INSERT INTO comentario (conteudo, dataCriacao, id_usuarios) VALUES ('Comentário 1', '2023-09-01 10:00:00', 1);
+INSERT INTO comentario (conteudo, dataCriacao, id_usuarios) VALUES ('Comentário 2', '2023-09-02 11:00:00', 2);
+INSERT INTO comentario (conteudo, dataCriacao, id_usuarios) VALUES ('Comentário 3', '2023-09-03 12:00:00', 3);
+INSERT INTO comentario (conteudo, dataCriacao, id_usuarios) VALUES ('Comentário 4', '2023-09-04 13:00:00', 4);
+
+-- Inserir dados de Reserva
+INSERT INTO reserva (dataIncio, dataFim, preco, quantidade, id_quarto, id_usuario) VALUES ('2023-09-10', '2023-09-15', 500.0, 2, 101, 1);
+INSERT INTO reserva (dataIncio, dataFim, preco, quantidade, id_quarto, id_usuario) VALUES ('2023-10-01', '2023-10-05', 600.0, 1, 102, 2);
+INSERT INTO reserva (dataIncio, dataFim, preco, quantidade, id_quarto, id_usuario) VALUES ('2023-10-10', '2023-10-15', 700.0, 1, 103, 3);
+
+-- Inserir dados de Servico
+INSERT INTO servico (nome, descricao, horaInicio, horaFim) VALUES ('Serviço 1', 'Descrição 1', '08:00:00', '10:00:00');
+INSERT INTO servico (nome, descricao, horaInicio, horaFim) VALUES ('Serviço 2', 'Descrição 2', '10:00:00', '12:00:00');
+INSERT INTO servico (nome, descricao, horaInicio, horaFim) VALUES ('Serviço 3', 'Descrição 3', '12:00:00', '14:00:00');
+
+-- Inserir dados de Pagamento
+INSERT INTO pagamento (dataPagamento, valor, tipoPagamento, id_reserva) VALUES ('2023-09-05 15:00:00', 500.0, 1, 1);
+INSERT INTO pagamento (dataPagamento, valor, tipoPagamento, id_reserva) VALUES ('2023-10-06 16:00:00', 600.0, 2, 2);
+INSERT INTO pagamento (dataPagamento, valor, tipoPagamento, id_reserva) VALUES ('2023-10-16 17:00:00', 700.0, 3, 3);
+

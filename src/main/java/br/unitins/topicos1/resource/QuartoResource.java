@@ -2,6 +2,7 @@ package br.unitins.topicos1.resource;
 
 import br.unitins.topicos1.dto.QuartoDTO;
 import br.unitins.topicos1.dto.QuartoResponseDTO;
+import br.unitins.topicos1.model.TipoQuarto;
 import br.unitins.topicos1.service.QuartoService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -20,8 +21,7 @@ public class QuartoResource {
 
     @POST
     public Response insert(@Valid QuartoDTO dto) {
-        QuartoResponseDTO response = service.insert(dto);
-        return Response.status(Response.Status.CREATED).entity(response).build();
+        return Response.status(Response.Status.CREATED).entity(service.insert(dto)).build();
     }
 
     @PUT
@@ -29,6 +29,14 @@ public class QuartoResource {
     @Path("/{id}")
     public Response update(@Valid QuartoDTO dto, @PathParam("id") Long id) {
         service.update(dto, id);
+        return Response.noContent().build();
+    }
+
+    @DELETE
+    @Transactional
+    @Path("/{id}")
+    public Response delete(@PathParam("id") Long id) {
+        service.delete(id);
         return Response.noContent().build();
     }
 
@@ -44,11 +52,10 @@ public class QuartoResource {
         return Response.ok(response).build();
     }
 
-    @DELETE
-    @Transactional
-    @Path("/{id}")
-    public Response delete(@PathParam("id") Long id) {
-        service.delete(id);
-        return Response.noContent().build();
+    @GET
+    @Path("/serach/tipoQuarto/{tipoQuarto}")
+    public Response findByTipo(@PathParam("tipoQuarto") TipoQuarto tipoQuarto) {
+        return Response.ok(service.findByTipo(tipoQuarto)).build();
     }
+
 }

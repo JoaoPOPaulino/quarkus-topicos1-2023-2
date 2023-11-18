@@ -18,5 +18,5 @@ public interface QuartoService {
 
     List<QuartoResponseDTO> findAll();
 
-    List<QuartoResponseDTO> findByTipo(TipoQuarto tipo);
+    List<QuartoResponseDTO> findByTipo(TipoQuarto tipoQuarto);
 }
