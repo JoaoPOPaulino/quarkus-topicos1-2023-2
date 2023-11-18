@@ -47,9 +47,11 @@ public class ComentarioResourceTest {
 
                 EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua", 123);
 
+                String loginDinamico = "comentarioTeste" + System.currentTimeMillis();
+
                 UsuarioDTO dtoInsert = new UsuarioDTO(
-                                "Madfasd",
-                                "vasdv",
+                                "Comentario Test",
+                                loginDinamico,
                                 "333",
                                 1,
                                 telefones,
@@ -80,9 +82,11 @@ public class ComentarioResourceTest {
 
                 EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua", 123);
 
+                String loginDinamico = "comentarioTeste" + System.currentTimeMillis();
+
                 UsuarioDTO dtoInsert = new UsuarioDTO(
-                                "Madfasd",
-                                "vasdv",
+                                "Comentario Test",
+                                loginDinamico,
                                 "333",
                                 1,
                                 telefones,
@@ -118,9 +122,11 @@ public class ComentarioResourceTest {
 
                 EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua", 123);
 
+                String loginDinamico = "comentarioTeste" + System.currentTimeMillis();
+
                 UsuarioDTO dtoInsert = new UsuarioDTO(
-                                "Madfasd",
-                                "vasdv",
+                                "Comentario Test",
+                                loginDinamico,
                                 "333",
                                 1,
                                 telefones,

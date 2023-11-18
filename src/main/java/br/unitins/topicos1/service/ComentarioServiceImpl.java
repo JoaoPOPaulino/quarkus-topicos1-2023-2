@@ -12,6 +12,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import jakarta.validation.ValidationException;
 import jakarta.ws.rs.NotFoundException;
 
 @ApplicationScoped
@@ -22,12 +23,15 @@ public class ComentarioServiceImpl implements ComentarioService {
     @Inject
     UsuarioRepository usuarioRepository;
 
+    @Inject
+    HashService hashService;
+
     @Override
     @Transactional
     public ComentarioResponseDTO insert(@Valid ComentarioDTO dto) {
         Usuario usuario = usuarioRepository.findById(dto.idUsuario());
         if (usuario == null) {
-            throw new NotFoundException("Usuário não encontrado.");
+            throw new ValidationException("Usuário não encontrado.");
         }
 
         Comentario novoComentario = new Comentario();
