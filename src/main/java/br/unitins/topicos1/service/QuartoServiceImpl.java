@@ -81,8 +81,15 @@ public class QuartoServiceImpl implements QuartoService {
     public List<QuartoResponseDTO> findAll() {
         List<Quarto> quartos = repository.listAll();
         return quartos.stream()
-                .map(QuartoResponseDTO::valueOf)
-                .collect(Collectors.toList());
+                .map(e -> QuartoResponseDTO.valueOf(e)).toList();
+    }
+
+    @Override
+    @Transactional
+    public QuartoResponseDTO updateNomeImagem(Long id, String nomeImagem) {
+        Quarto quarto = repository.findById(id);
+        quarto.setNomeImagem(nomeImagem);
+        return QuartoResponseDTO.valueOf(quarto);
     }
 
 }

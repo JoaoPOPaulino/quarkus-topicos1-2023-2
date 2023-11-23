@@ -8,7 +8,8 @@ public record QuartoResponseDTO(
         TipoQuarto tipoQuarto,
         int numero,
         double preco,
-        boolean disponivel) {
+        boolean disponivel,
+        String nomeImagem) {
 
     public static QuartoResponseDTO valueOf(Quarto quarto) {
         return new QuartoResponseDTO(
@@ -16,7 +17,8 @@ public record QuartoResponseDTO(
                 quarto.getTipoQuarto(),
                 quarto.getNumero(),
                 quarto.getPreco(),
-                quarto.isDisponivel());
+                quarto.isDisponivel(),
+                quarto.getNomeImagem());
     }
 
 }

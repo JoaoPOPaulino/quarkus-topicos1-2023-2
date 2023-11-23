@@ -25,10 +25,10 @@ INSERT INTO usuario (nome, login, senha, perfil) VALUES ('Usuário 3', 'usuario3
 INSERT INTO usuario (nome, login, senha, perfil) VALUES ('Usuário 4', 'usuario4', 'senha4', 2);
 
 -- Inserir dados de Quarto
-INSERT INTO quarto (tipoQuarto, numero, preco, disponivel) VALUES (1, 101, 150.0, 1);
-INSERT INTO quarto (tipoQuarto, numero, preco, disponivel) VALUES (2, 102, 200.0, 1);
-INSERT INTO quarto (tipoQuarto, numero, preco, disponivel) VALUES (3, 103, 300.0, 0);
-INSERT INTO quarto (tipoQuarto, numero, preco, disponivel) VALUES (4, 104, 450.0, 1);
+INSERT INTO quarto (tipoQuarto, numero, preco, disponivel) VALUES (1, 101, 150.0, true);
+INSERT INTO quarto (tipoQuarto, numero, preco, disponivel) VALUES (2, 102, 200.0, true);
+INSERT INTO quarto (tipoQuarto, numero, preco, disponivel) VALUES (3, 103, 300.0, false);
+INSERT INTO quarto (tipoQuarto, numero, preco, disponivel) VALUES (4, 104, 450.0, true);
 
 -- Inserir Telefone no Usuario
 INSERT INTO usuario_telefone(id_usuario, id_telefone) VALUES(1, 1);
@@ -50,9 +50,9 @@ INSERT INTO comentario (conteudo, dataCriacao, id_usuarios) VALUES ('Comentário
 INSERT INTO comentario (conteudo, dataCriacao, id_usuarios) VALUES ('Comentário 4', '2023-09-04 13:00:00', 4);
 
 -- Inserir dados de Reserva
-INSERT INTO reserva (dataIncio, dataFim, preco, quantidade, id_quarto, id_usuario) VALUES ('2023-09-10', '2023-09-15', 500.0, 2, 101, 1);
-INSERT INTO reserva (dataIncio, dataFim, preco, quantidade, id_quarto, id_usuario) VALUES ('2023-10-01', '2023-10-05', 600.0, 1, 102, 2);
-INSERT INTO reserva (dataIncio, dataFim, preco, quantidade, id_quarto, id_usuario) VALUES ('2023-10-10', '2023-10-15', 700.0, 1, 103, 3);
+INSERT INTO reserva (dataIncio, dataFim, preco, quantidade, id_quarto, id_usuario) VALUES ('2023-09-10', '2023-09-15', 500.0, 2, 1, 1);
+INSERT INTO reserva (dataIncio, dataFim, preco, quantidade, id_quarto, id_usuario) VALUES ('2023-10-01', '2023-10-05', 600.0, 1, 2, 2);
+INSERT INTO reserva (dataIncio, dataFim, preco, quantidade, id_quarto, id_usuario) VALUES ('2023-10-10', '2023-10-15', 700.0, 1, 3, 3);
 
 -- Inserir dados de Servico
 INSERT INTO servico (nome, descricao, horaInicio, horaFim) VALUES ('Serviço 1', 'Descrição 1', '08:00:00', '10:00:00');

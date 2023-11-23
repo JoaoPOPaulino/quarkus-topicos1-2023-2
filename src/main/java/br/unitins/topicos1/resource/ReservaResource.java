@@ -1,11 +1,8 @@
 package br.unitins.topicos1.resource;
 
-import java.util.List;
-
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import br.unitins.topicos1.dto.ReservaDTO;
-import br.unitins.topicos1.dto.ReservaResponseDTO;
 import br.unitins.topicos1.service.ReservaService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -18,7 +15,6 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;

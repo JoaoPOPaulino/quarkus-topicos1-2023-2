@@ -14,6 +14,8 @@ public class Quarto extends DefaultEntity {
     private Double preco;
     private boolean disponivel;
 
+    private String nomeImagem;
+
     @OneToMany(mappedBy = "quarto", cascade = CascadeType.ALL)
     private List<Reserva> reservas;
 
@@ -65,6 +67,14 @@ public class Quarto extends DefaultEntity {
 
     public void setReservas(List<Reserva> reservas) {
         this.reservas = reservas;
+    }
+
+    public String getNomeImagem() {
+        return nomeImagem;
+    }
+
+    public void setNomeImagem(String nomeImagem) {
+        this.nomeImagem = nomeImagem;
     }
 
 }

@@ -4,6 +4,6 @@ import br.unitins.topicos1.dto.UsuarioResponseDTO;
 
 public interface JwtService {
 
-    public String generateJwt(UsuarioResponseDTO dto);
+    String generateJwt(UsuarioResponseDTO dto);
 
 }

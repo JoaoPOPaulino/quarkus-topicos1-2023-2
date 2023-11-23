@@ -19,4 +19,6 @@ public interface QuartoService {
     List<QuartoResponseDTO> findAll();
 
     List<QuartoResponseDTO> findByTipo(TipoQuarto tipoQuarto);
+
+    QuartoResponseDTO updateNomeImagem(Long id, String nomeImagem);
 }
