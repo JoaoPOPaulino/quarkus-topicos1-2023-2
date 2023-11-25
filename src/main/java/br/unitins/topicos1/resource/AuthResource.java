@@ -1,7 +1,11 @@
 package br.unitins.topicos1.resource;
 
+import org.jboss.logging.Logger;
+
 import br.unitins.topicos1.dto.LoginDTO;
 import br.unitins.topicos1.dto.UsuarioResponseDTO;
+import br.unitins.topicos1.service.HashService;
+import br.unitins.topicos1.service.JwtService;
 import br.unitins.topicos1.service.UsuarioService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -20,11 +24,35 @@ public class AuthResource {
     @Inject
     UsuarioService service;
 
+    @Inject
+    HashService hashService;
+
+    @Inject
+    JwtService jwtService;
+
+    private static final Logger LOG = Logger.getLogger(AuthResource.class);
+
     @POST
     public Response login(@Valid LoginDTO dto) {
-        UsuarioResponseDTO result = service.findByLoginAndSenha(dto.login(), dto.senha());
 
-        return Response.ok().entity(result).build();
+        LOG.info("Iniciando autenticação.");
+        String hashSenha = hashService.getHashSenha(dto.senha());
+        LOG.info("Hash da senha gerada.");
+
+        LOG.debug(hashSenha);
+
+        UsuarioResponseDTO result = service.findByLoginAndSenha(dto.login(), hashSenha);
+
+        if (result != null) {
+            LOG.info("Login e senha corretos.");
+        } else
+            LOG.info("Login e senha incorretos.");
+
+        String token = jwtService.generateJwt(result);
+
+        LOG.info("Finalizando o processo de login.");
+
+        return Response.ok().header("Authorization", token).build();
     }
 
 }
