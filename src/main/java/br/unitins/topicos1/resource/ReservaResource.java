@@ -1,7 +1,8 @@
 package br.unitins.topicos1.resource;
 
+import java.util.List;
+
 import org.eclipse.microprofile.jwt.JsonWebToken;
-import org.hibernate.mapping.List;
 
 import br.unitins.topicos1.dto.ReservaDTO;
 import br.unitins.topicos1.dto.ReservaResponseDTO;
@@ -71,9 +72,13 @@ public class ReservaResource {
 
     @GET
     @Path("/historico")
-    public Response listarHistoricoReservas() {
-        Long usuarioId = Long.valueOf(jwt.getSubject());
-        List<ReservaResponseDTO> historico = service.findById(usuarioId);
-        return Response.ok(historico).build();
+    public Response HistoricoReservas() {
+        try {
+            Long usuarioId = Long.parseLong(jwt.getSubject());
+            List<ReservaResponseDTO> reservas = service.findReservaByUsuarioId(usuarioId);
+            return Response.ok(reservas).build();
+        } catch (NumberFormatException e) {
+            return Response.status(Response.Status.UNAUTHORIZED).entity("Usuário não autorizado.").build();
+        }
     }
 }

@@ -4,17 +4,15 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.ComentarioDTO;
 import br.unitins.topicos1.dto.ComentarioResponseDTO;
-import jakarta.validation.Valid;
 
 public interface ComentarioService {
+    ComentarioResponseDTO insert(ComentarioDTO dto);
 
-    ComentarioResponseDTO insert(@Valid ComentarioDTO dto);
-
-    ComentarioResponseDTO update(@Valid ComentarioDTO dto, Long id);
-
-    void delete(Long id);
+    List<ComentarioResponseDTO> findAll();
 
     ComentarioResponseDTO findById(Long id);
 
-    List<ComentarioResponseDTO> findAll();
+    ComentarioResponseDTO update(ComentarioDTO dto, Long id);
+
+    void delete(Long id);
 }

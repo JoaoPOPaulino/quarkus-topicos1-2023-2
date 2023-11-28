@@ -28,32 +28,33 @@ public class ComentarioServiceImpl implements ComentarioService {
     @Override
     @Transactional
     public ComentarioResponseDTO insert(@Valid ComentarioDTO dto) {
-        Usuario usuario = usuarioRepository.findById(dto.idUsuario());
+        var usuario = usuarioRepository.findById(dto.idUsuario());
         if (usuario == null) {
-            throw new ValidationException("Usuário não encontrado.");
+            throw new NotFoundException("Usuário não encontrado.");
         }
 
-        Comentario novoComentario = new Comentario();
-        novoComentario.setConteudo(dto.conteudo());
-        novoComentario.setDataCriacao(dto.dataPublicacao());
-        novoComentario.setUsuario(usuario);
+        Comentario comentario = new Comentario();
+        comentario.setConteudo(dto.conteudo());
+        comentario.setDataCriacao(dto.dataCriacao());
+        comentario.setUsuario(usuario);
 
-        repository.persist(novoComentario);
-        return ComentarioResponseDTO.valueOf(novoComentario);
+        repository.persist(comentario);
+        return ComentarioResponseDTO.valueOf(comentario);
+
     }
 
     @Override
     @Transactional
     public ComentarioResponseDTO update(@Valid ComentarioDTO dto, Long id) {
-        Comentario comentario = repository.findById(id);
+        var comentario = repository.findById(id);
         if (comentario == null) {
             throw new NotFoundException("Comentário não encontrado.");
         }
 
         comentario.setConteudo(dto.conteudo());
-        comentario.setDataCriacao(dto.dataPublicacao());
-        repository.persist(comentario);
+        comentario.setDataCriacao(dto.dataCriacao());
 
+        repository.persist(comentario);
         return ComentarioResponseDTO.valueOf(comentario);
     }
 
@@ -76,8 +77,8 @@ public class ComentarioServiceImpl implements ComentarioService {
 
     @Override
     public List<ComentarioResponseDTO> findAll() {
-        List<Comentario> comentarios = repository.listAll();
-        return comentarios.stream()
+        return repository.listAll()
+                .stream()
                 .map(ComentarioResponseDTO::valueOf)
                 .collect(Collectors.toList());
     }

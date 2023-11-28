@@ -67,6 +67,14 @@ public class ServicoServiceImpl implements ServicoService {
     }
 
     @Override
+    public List<ServicoResponseDTO> findAll() {
+        List<Servico> servicos = repository.listAll();
+        return servicos.stream()
+                .map(ServicoResponseDTO::valueOf)
+                .toList();
+    }
+
+    @Override
     public List<ServicoResponseDTO> findByNome(String nome) {
         List<Servico> servicos = repository.findByNome(nome);
         List<ServicoResponseDTO> dtos = new ArrayList<>();
@@ -74,14 +82,6 @@ public class ServicoServiceImpl implements ServicoService {
             dtos.add(ServicoResponseDTO.valueOf(servico));
         }
         return dtos;
-    }
-
-    @Override
-    public List<ServicoResponseDTO> findAll() {
-        List<Servico> servicos = repository.listAll();
-        return servicos.stream()
-                .map(ServicoResponseDTO::valueOf)
-                .toList();
     }
 
 }

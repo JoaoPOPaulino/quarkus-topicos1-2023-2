@@ -1,6 +1,7 @@
 package br.unitins.topicos1.resource;
 
 import br.unitins.topicos1.dto.ComentarioDTO;
+import br.unitins.topicos1.dto.ComentarioResponseDTO;
 import br.unitins.topicos1.service.ComentarioService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -35,14 +36,20 @@ public class ComentarioResource {
     @Transactional
     @Path("/{id}")
     public Response update(ComentarioDTO dto, @PathParam("id)") Long id) {
-        service.update(dto, id);
-        return Response.noContent().build();
+        ComentarioResponseDTO dtoUpdate = service.update(dto, id);
+        if (dtoUpdate == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.ok(dtoUpdate).build();
     }
 
     @DELETE
     @Transactional
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id) {
+        if (!service.delete(id)) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
         service.delete(id);
         return Response.noContent().build();
     }
@@ -53,9 +60,14 @@ public class ComentarioResource {
     }
 
     @GET
+    @Transactional
     @Path("/{id}")
     public Response findById(@PathParam("id") Long id) {
-        return Response.ok(service.findById(id)).build();
+        ComentarioResponseDTO dto = service.findById(id);
+        if (dto == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.ok(dto).build();
     }
 
 }

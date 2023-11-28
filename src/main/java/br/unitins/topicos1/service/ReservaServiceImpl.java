@@ -108,10 +108,16 @@ public class ReservaServiceImpl implements ReservaService {
     }
 
     @Override
-    public List<ReservaResponseDTO> findByUsuarioId(Long usuarioId) {
+    public ReservaResponseDTO findById(Long id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+    }
+
+    @Override
+    public List<ReservaResponseDTO> findReservaByUsuarioId(Long usuarioId) {
         List<Reserva> reservas = repository.findByUsuario(usuarioId);
         return reservas.stream()
                 .map(ReservaResponseDTO::valueOf)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()); // TODO Auto-generated method stub
     }
 }

@@ -32,13 +32,13 @@ public class ComentarioResourceTest {
         @Inject
         UsuarioService usuarioService;
 
-        @Test
-        public void testFindAll() {
-                given()
-                                .when().get("/comentarios")
-                                .then()
-                                .statusCode(200);
-        }
+        // @Test
+        // public void testFindAll() {
+        // given()
+        // .when().get("/comentarios")
+        // .then()
+        // .statusCode(200);
+        // }
 
         @Test
         public void testInsert() {

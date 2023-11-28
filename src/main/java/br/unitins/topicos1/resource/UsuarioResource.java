@@ -1,5 +1,7 @@
 package br.unitins.topicos1.resource;
 
+import org.jboss.logging.Logger;
+
 import br.unitins.topicos1.dto.UsuarioDTO;
 import br.unitins.topicos1.service.UsuarioService;
 import jakarta.inject.Inject;
@@ -21,11 +23,14 @@ import jakarta.ws.rs.core.Response.Status;
 @Consumes(MediaType.APPLICATION_JSON)
 public class UsuarioResource {
 
+    private static final Logger LOGGER = Logger.getLogger(UsuarioResource.class.getName());
+
     @Inject
     UsuarioService service;
 
     @POST
     public Response insert(UsuarioDTO dto) {
+        LOGGER.info("Inserindo novo usuário");
         return Response.status(Status.CREATED).entity(service.insert(dto)).build();
     }
 

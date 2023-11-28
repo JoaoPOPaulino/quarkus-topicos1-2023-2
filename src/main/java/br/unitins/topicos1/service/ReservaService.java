@@ -21,4 +21,6 @@ public interface ReservaService {
 
     void atualizarReservaComPagamento(Long id, Pagamento pagamento);
 
+    List<ReservaResponseDTO> findReservaByUsuarioId(Long usuarioId);
+
 }
