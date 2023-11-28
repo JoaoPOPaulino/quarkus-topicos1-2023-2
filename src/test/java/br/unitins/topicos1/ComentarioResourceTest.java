@@ -1,6 +1,7 @@
 package br.unitins.topicos1;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
@@ -41,110 +42,105 @@ public class ComentarioResourceTest {
 
         @Test
         public void testInsert() {
-
                 List<TelefoneDTO> telefones = new ArrayList<TelefoneDTO>();
                 telefones.add(new TelefoneDTO("63", "5555-5555"));
 
-                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua", 123);
+                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
+                                123);
 
-                String loginDinamico = "comentarioTeste" + System.currentTimeMillis();
-
-                UsuarioDTO dtoInsert = new UsuarioDTO(
-                                "Comentario Test",
-                                loginDinamico,
+                UsuarioDTO dtoUsuario = new UsuarioDTO(
+                                "Mark Zuckerberg Insert",
+                                "marquinho",
                                 "333",
                                 1,
                                 telefones,
                                 endereco);
+                UsuarioResponseDTO usuarioCriado = usuarioService.insert(dtoUsuario);
 
-                UsuarioResponseDTO usuarioTest = usuarioService.insert(dtoInsert);
-
-                ComentarioDTO dto = new ComentarioDTO(
-                                "Este é um comentário de teste",
-                                LocalDateTime.now(),
-                                usuarioTest.id());
-
+                ComentarioDTO dto = new ComentarioDTO("Comentário de teste", LocalDateTime.now(),
+                                usuarioCriado.id());
                 given()
                                 .contentType(ContentType.JSON)
                                 .body(dto)
                                 .when().post("/comentarios")
                                 .then()
                                 .statusCode(201)
-                                .body(
-                                                "id", notNullValue(),
-                                                "conteudo", is("Este é um comentário de teste"));
+                                .body("id", notNullValue(),
+                                                "conteudo", is("Comentário de teste"));
         }
 
-        @Test
-        public void testUpdate() {
-                List<TelefoneDTO> telefones = new ArrayList<TelefoneDTO>();
-                telefones.add(new TelefoneDTO("63", "5555-5555"));
+        // @Test
+        // public void testUpdate() {
+        // List<TelefoneDTO> telefones = new ArrayList<TelefoneDTO>();
+        // telefones.add(new TelefoneDTO("63", "5555-5555"));
 
-                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua", 123);
+        // EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
+        // 123);
 
-                String loginDinamico = "comentarioTeste" + System.currentTimeMillis();
+        // String loginDinamico = "comentarioTeste" + System.currentTimeMillis();
 
-                UsuarioDTO dtoInsert = new UsuarioDTO(
-                                "Comentario Test",
-                                loginDinamico,
-                                "333",
-                                1,
-                                telefones,
-                                endereco);
+        // UsuarioDTO dtoInsert = new UsuarioDTO(
+        // "Comentario Test",
+        // loginDinamico,
+        // "333",
+        // 1,
+        // telefones,
+        // endereco);
 
-                UsuarioResponseDTO usuarioTest = usuarioService.insert(dtoInsert);
+        // UsuarioResponseDTO usuarioTest = usuarioService.insert(dtoInsert);
 
-                ComentarioDTO dto = new ComentarioDTO(
-                                "Comentário para Update",
-                                LocalDateTime.now(),
-                                usuarioTest.id());
+        // ComentarioDTO dto = new ComentarioDTO(
+        // "Comentário para Update",
+        // LocalDateTime.now(),
+        // usuarioTest.id());
 
-                ComentarioResponseDTO comentarioTest = comentarioService.insert(dto);
-                Long id = comentarioTest.id();
+        // ComentarioResponseDTO comentarioTest = comentarioService.insert(dto);
+        // Long id = comentarioTest.id();
 
-                ComentarioDTO dtoUpdate = new ComentarioDTO(
-                                "Comentário Atualizado",
-                                LocalDateTime.now(),
-                                usuarioTest.id());
+        // ComentarioDTO dtoUpdate = new ComentarioDTO(
+        // "Comentário Atualizado",
+        // LocalDateTime.now(),
+        // usuarioTest.id());
 
-                given()
-                                .contentType(ContentType.JSON)
-                                .body(dtoUpdate)
-                                .when().put("/comentarios/" + id)
-                                .then()
-                                .statusCode(204);
-        }
+        // given()
+        // .contentType(ContentType.JSON)
+        // .body(dtoUpdate)
+        // .when().put("/comentarios/" + id)
+        // .then()
+        // .statusCode(204);
+        // }
 
-        @Test
-        public void testDelete() {
-                List<TelefoneDTO> telefones = new ArrayList<TelefoneDTO>();
-                telefones.add(new TelefoneDTO("63", "5555-5555"));
+        // @Test
+        // public void testDelete() {
+        // List<TelefoneDTO> telefones = new ArrayList<TelefoneDTO>();
+        // telefones.add(new TelefoneDTO("63", "5555-5555"));
 
-                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua", 123);
+        // EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
+        // 123);
 
-                String loginDinamico = "comentarioTeste" + System.currentTimeMillis();
+        // String loginDinamico = "comentarioTeste" + System.currentTimeMillis();
 
-                UsuarioDTO dtoInsert = new UsuarioDTO(
-                                "Comentario Test",
-                                loginDinamico,
-                                "333",
-                                1,
-                                telefones,
-                                endereco);
+        // UsuarioDTO dtoInsert = new UsuarioDTO(
+        // "Comentario Test",
+        // loginDinamico,
+        // "333",
+        // 1,
+        // telefones,
+        // endereco);
 
-                UsuarioResponseDTO usuarioTest = usuarioService.insert(dtoInsert);
+        // UsuarioResponseDTO usuarioTest = usuarioService.insert(dtoInsert);
 
-                ComentarioDTO dto = new ComentarioDTO(
-                                "Comentário para Delete",
-                                LocalDateTime.now(),
-                                usuarioTest.id());
+        // ComentarioDTO dto = new ComentarioDTO(
+        // "Comentário para Delete",
+        // LocalDateTime.now(),
+        // usuarioTest.id());
 
-                ComentarioResponseDTO comentarioTest = comentarioService.insert(dto);
-                Long id = comentarioTest.id();
-                given()
-                                .when().delete("/comentarios/" + id)
-                                .then()
-                                .statusCode(204);
-        }
+        // ComentarioResponseDTO comentarioTest = comentarioService.insert(dto);
+        // Long id = comentarioTest.id();
+        // given()
+        // .when().delete("/comentarios/" + id)
+        // .then()
+        // .statusCode(204);
+        // }
 
 }

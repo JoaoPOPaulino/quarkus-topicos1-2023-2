@@ -92,15 +92,6 @@ public class ReservaServiceImpl implements ReservaService {
     }
 
     @Override
-    public ReservaResponseDTO findById(Long id) {
-        Reserva reserva = repository.findById(id);
-        if (reserva == null) {
-            throw new NotFoundException("Reserva não encontrada");
-        }
-        return ReservaResponseDTO.valueOf(reserva);
-    }
-
-    @Override
     public List<ReservaResponseDTO> findByAll() {
         List<Reserva> reservas = repository.listAll();
         return reservas.stream()
@@ -114,5 +105,13 @@ public class ReservaServiceImpl implements ReservaService {
         if (reserva == null) {
             throw new NotFoundException("Reserva não encontrada.");
         }
+    }
+
+    @Override
+    public List<ReservaResponseDTO> findByUsuarioId(Long usuarioId) {
+        List<Reserva> reservas = repository.findByUsuario(usuarioId);
+        return reservas.stream()
+                .map(ReservaResponseDTO::valueOf)
+                .collect(Collectors.toList());
     }
 }

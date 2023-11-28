@@ -1,8 +1,10 @@
 package br.unitins.topicos1.resource;
 
 import org.eclipse.microprofile.jwt.JsonWebToken;
+import org.hibernate.mapping.List;
 
 import br.unitins.topicos1.dto.ReservaDTO;
+import br.unitins.topicos1.dto.ReservaResponseDTO;
 import br.unitins.topicos1.service.ReservaService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -65,5 +67,13 @@ public class ReservaResource {
     @Path("/{id}")
     public Response findById(@PathParam("id") Long id) {
         return Response.ok(service.findById(id)).build();
+    }
+
+    @GET
+    @Path("/historico")
+    public Response listarHistoricoReservas() {
+        Long usuarioId = Long.valueOf(jwt.getSubject());
+        List<ReservaResponseDTO> historico = service.findById(usuarioId);
+        return Response.ok(historico).build();
     }
 }

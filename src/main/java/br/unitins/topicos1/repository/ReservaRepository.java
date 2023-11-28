@@ -10,4 +10,5 @@ public class ReservaRepository implements PanacheRepositoryBase<Reserva, Long> {
     public List<Reserva> findByUsuario(Long usuarioId) {
         return list("usuario.id", usuarioId);
     }
+
 }

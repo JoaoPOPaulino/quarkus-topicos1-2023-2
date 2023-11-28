@@ -1,6 +1,8 @@
 package br.unitins.topicos1.service;
 
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import br.unitins.topicos1.dto.ComentarioDTO;
 import br.unitins.topicos1.dto.ComentarioResponseDTO;
@@ -22,9 +24,6 @@ public class ComentarioServiceImpl implements ComentarioService {
 
     @Inject
     UsuarioRepository usuarioRepository;
-
-    @Inject
-    HashService hashService;
 
     @Override
     @Transactional
@@ -80,7 +79,7 @@ public class ComentarioServiceImpl implements ComentarioService {
         List<Comentario> comentarios = repository.listAll();
         return comentarios.stream()
                 .map(ComentarioResponseDTO::valueOf)
-                .toList();
+                .collect(Collectors.toList());
     }
 
 }

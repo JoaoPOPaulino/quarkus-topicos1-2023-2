@@ -1,9 +1,6 @@
 package br.unitins.topicos1.resource;
 
-import org.hibernate.query.SemanticException;
-
 import br.unitins.topicos1.dto.ComentarioDTO;
-import br.unitins.topicos1.dto.ComentarioResponseDTO;
 import br.unitins.topicos1.service.ComentarioService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;

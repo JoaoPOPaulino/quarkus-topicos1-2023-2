@@ -37,7 +37,8 @@ public class UsuarioResourceTest {
                 List<TelefoneDTO> telefones = new ArrayList<TelefoneDTO>();
                 telefones.add(new TelefoneDTO("63", "5555-5555"));
 
-                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua", 123);
+                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
+                                123);
 
                 UsuarioDTO dto = new UsuarioDTO(
                                 "Mark Zuckerberg Insert",
@@ -64,7 +65,8 @@ public class UsuarioResourceTest {
                 List<TelefoneDTO> telefones = new ArrayList<TelefoneDTO>();
                 telefones.add(new TelefoneDTO("63", "5555-5555"));
 
-                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua", 123);
+                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
+                                123);
 
                 UsuarioDTO dtoInsert = new UsuarioDTO(
                                 "Mark Zuckerberg Update",
@@ -99,7 +101,8 @@ public class UsuarioResourceTest {
                 List<TelefoneDTO> telefones = new ArrayList<TelefoneDTO>();
                 telefones.add(new TelefoneDTO("63", "5555-5555"));
 
-                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua", 123);
+                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
+                                123);
 
                 UsuarioDTO dto = new UsuarioDTO(
                                 "Mark Zuckerberg Delete",
