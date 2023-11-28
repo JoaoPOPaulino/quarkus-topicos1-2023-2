@@ -75,10 +75,10 @@ public class UsuarioServiceImpl implements UsuarioService {
         if (usuario == null) {
             throw new NotFoundException("Usuário não encontrado.");
         }
-
         usuario.setNome(dto.nome());
         usuario.setLogin(dto.login());
-        usuario.setSenha(dto.senha());
+
+        usuario.setSenha(hashService.getHashSenha(dto.senha()));
 
         usuario.getListaTelefone().clear();
         for (TelefoneDTO tel : dto.listaTelefone()) {
