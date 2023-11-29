@@ -1,5 +1,6 @@
 package br.unitins.topicos1.model;
 
+import br.unitins.topicos1.dto.EnderecoDTO;
 import jakarta.persistence.Entity;
 
 @Entity
@@ -10,6 +11,15 @@ public class Endereco extends DefaultEntity {
     private String quadra;
     private String rua;
     private Integer numero;
+
+    public Endereco(EnderecoDTO dto) {
+        this.estado = dto.estado();
+        this.cidade = dto.cidade();
+        this.quadra = dto.quadra();
+        this.quadra = dto.quadra();
+        this.rua = dto.rua();
+        this.numero = dto.numero();
+    }
 
     public String getEstado() {
         return estado;

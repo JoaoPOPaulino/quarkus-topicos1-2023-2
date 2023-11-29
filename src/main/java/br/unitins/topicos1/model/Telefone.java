@@ -1,5 +1,6 @@
 package br.unitins.topicos1.model;
 
+import br.unitins.topicos1.dto.TelefoneDTO;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -12,6 +13,11 @@ public class Telefone extends DefaultEntity {
     @NotBlank
     @Size(min = 8, max = 12)
     private String numero;
+
+    public Telefone(TelefoneDTO dto) {
+        this.codigoArea = dto.codigoArea();
+        this.numero = dto.numero();
+    }
 
     public String getCodigoArea() {
         return codigoArea;

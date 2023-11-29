@@ -2,6 +2,7 @@ package br.unitins.topicos1.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import br.unitins.topicos1.dto.EnderecoDTO;
 import br.unitins.topicos1.dto.TelefoneDTO;
@@ -43,23 +44,13 @@ public class Usuario extends DefaultEntity {
         this.perfil = Perfil.valueOf(dto.idPerfil());
 
         if (dto.listaTelefone() != null && !dto.listaTelefone().isEmpty()) {
-            this.listaTelefone = new ArrayList<>();
-            for (TelefoneDTO tel : dto.listaTelefone()) {
-                Telefone telefone = new Telefone();
-                telefone.setCodigoArea(tel.codigoArea());
-                telefone.setNumero(tel.numero());
-                this.listaTelefone.add(telefone);
-            }
+            this.listaTelefone = dto.listaTelefone().stream()
+                    .map(Telefone::new)
+                    .collect(Collectors.toList());
         }
 
         if (dto.endereco() != null) {
-            EnderecoDTO enderecoDTO = dto.endereco();
-            this.endereco = new Endereco();
-            this.endereco.setEstado(enderecoDTO.estado());
-            this.endereco.setCidade(enderecoDTO.cidade());
-            this.endereco.setQuadra(enderecoDTO.quadra());
-            this.endereco.setRua(enderecoDTO.rua());
-            this.endereco.setNumero(enderecoDTO.numero());
+            this.endereco = new Endereco(dto.endereco());
         }
     }
 
@@ -72,23 +63,15 @@ public class Usuario extends DefaultEntity {
         this.perfil = Perfil.valueOf(dto.idPerfil());
 
         if (dto.listaTelefone() != null && !dto.listaTelefone().isEmpty()) {
-            this.listaTelefone = new ArrayList<>();
-            for (TelefoneDTO tel : dto.listaTelefone()) {
-                Telefone telefone = new Telefone();
-                telefone.setCodigoArea(tel.codigoArea());
-                telefone.setNumero(tel.numero());
-                this.listaTelefone.add(telefone);
-            }
+            this.listaTelefone = dto.listaTelefone().stream()
+                    .map(Telefone::new)
+                    .collect(Collectors.toList());
         }
 
-        if (dto.endereco() != null) {
-            EnderecoDTO enderecoDTO = dto.endereco();
-            this.endereco = new Endereco();
-            this.endereco.setEstado(enderecoDTO.estado());
-            this.endereco.setCidade(enderecoDTO.cidade());
-            this.endereco.setQuadra(enderecoDTO.quadra());
-            this.endereco.setRua(enderecoDTO.rua());
-            this.endereco.setNumero(enderecoDTO.numero());
+        if (dto.endereco() != null)
+
+        {
+            this.endereco = new Endereco(dto.endereco());
         }
     }
 

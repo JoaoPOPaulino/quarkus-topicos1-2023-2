@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import br.unitins.topicos1.dto.quarto.QuartoDTO;
 import br.unitins.topicos1.dto.reserva.ReservaDTO;
 import br.unitins.topicos1.dto.reserva.ReservaResponseDTO;
+import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
 import br.unitins.topicos1.model.Pagamento;
 import br.unitins.topicos1.model.Quarto;
 import br.unitins.topicos1.model.Reserva;
@@ -88,8 +89,11 @@ public class ReservaServiceImpl implements ReservaService {
 
     @Override
     public ReservaResponseDTO findById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+        Reserva reserva = repository.findById(id);
+        if (reserva == null) {
+            throw new NotFoundException("Usuário não encontrado.");
+        }
+        return ReservaResponseDTO.valueOf(reserva);
     }
 
     @Override
@@ -97,6 +101,6 @@ public class ReservaServiceImpl implements ReservaService {
         List<Reserva> reservas = repository.findByUsuario(usuarioId);
         return reservas.stream()
                 .map(ReservaResponseDTO::valueOf)
-                .collect(Collectors.toList()); // TODO Auto-generated method stub
+                .collect(Collectors.toList());
     }
 }
