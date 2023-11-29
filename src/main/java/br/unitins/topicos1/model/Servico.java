@@ -2,6 +2,7 @@ package br.unitins.topicos1.model;
 
 import java.time.LocalDateTime;
 
+import br.unitins.topicos1.dto.servico.ServicoDTO;
 import jakarta.persistence.Entity;
 
 @Entity
@@ -11,6 +12,20 @@ public class Servico extends DefaultEntity {
     private String descricao;
     private LocalDateTime horaInicio;
     private LocalDateTime horaFim;
+
+    public Servico(ServicoDTO dto) {
+        this.nome = dto.nome();
+        this.descricao = dto.descricao();
+        this.horaInicio = dto.horaI();
+        this.horaFim = dto.horaF();
+    }
+
+    public void atualizazrServico(ServicoDTO dto) {
+        this.nome = dto.nome();
+        this.descricao = dto.descricao();
+        this.horaInicio = dto.horaI();
+        this.horaFim = dto.horaF();
+    }
 
     public String getNome() {
         return nome;

@@ -2,6 +2,7 @@ package br.unitins.topicos1.model;
 
 import java.time.LocalDateTime;
 
+import br.unitins.topicos1.dto.pagamento.PagamentoDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -11,9 +12,23 @@ public class Pagamento extends DefaultEntity {
     private TipoPagamento tipoPagamento;
     private LocalDateTime dataPagamento;
     private Double valor;
+
     @ManyToOne
     @JoinColumn(name = "id_reserva")
     private Reserva reserva;
+
+    public Pagamento(PagamentoDTO dto) {
+        this.tipoPagamento = TipoPagamento.valueOf(dto.tipoPagamento().id());
+        this.dataPagamento = dto.dataPagamento();
+        this.valor = dto.valor();
+        this.reserva = dto.reserva();
+    }
+
+    public void atualizarComDto(PagamentoDTO dto) {
+        this.tipoPagamento = TipoPagamento.valueOf(dto.tipoPagamento().id());
+        this.dataPagamento = dto.dataPagamento();
+        this.valor = dto.valor();
+    }
 
     public TipoPagamento getTipoPagamento() {
         return tipoPagamento;

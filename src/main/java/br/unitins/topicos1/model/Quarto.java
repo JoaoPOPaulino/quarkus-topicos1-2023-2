@@ -2,6 +2,7 @@ package br.unitins.topicos1.model;
 
 import java.util.List;
 
+import br.unitins.topicos1.dto.quarto.QuartoDTO;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -13,11 +14,21 @@ public class Quarto extends DefaultEntity {
     private Integer numero;
     private Double preco;
     private boolean disponivel;
-
     private String nomeImagem;
 
-    @OneToMany(mappedBy = "quarto", cascade = CascadeType.ALL)
-    private List<Reserva> reservas;
+    public Quarto(QuartoDTO dto) {
+        this.tipoQuarto = TipoQuarto.valueOf(dto.tipoQuarto().id());
+        this.numero = dto.numero();
+        this.preco = dto.preco();
+        this.disponivel = dto.disponivel();
+    }
+
+    public void atualizarComDTO(QuartoDTO dto) {
+        this.tipoQuarto = TipoQuarto.valueOf(dto.tipoQuarto().id());
+        this.numero = dto.numero();
+        this.preco = dto.preco();
+        this.disponivel = dto.disponivel();
+    }
 
     public Integer getNumero() {
         return numero;
@@ -59,14 +70,6 @@ public class Quarto extends DefaultEntity {
 
     public void setTipoQuarto(TipoQuarto tipoQuarto) {
         this.tipoQuarto = tipoQuarto;
-    }
-
-    public List<Reserva> getReservas() {
-        return reservas;
-    }
-
-    public void setReservas(List<Reserva> reservas) {
-        this.reservas = reservas;
     }
 
     public String getNomeImagem() {

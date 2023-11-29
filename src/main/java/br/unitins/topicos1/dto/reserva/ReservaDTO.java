@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotNull;
 
 public record ReservaDTO(
                 @FutureOrPresent(message = "A data de início da reserva deve ser igual ou posterior à data atual") @NotNull(message = "A data de início não pode ser nula.") LocalDate dataI,
-                @FutureOrPresent(message = "A data final da reserva deve ser igual ou posterior à data atual") @NotNull(message = "A data de fim não pode ser nula.") LocalDate dateF,
+                @FutureOrPresent(message = "A data final da reserva deve ser igual ou posterior à data atual") @NotNull(message = "A data de fim não pode ser nula.") LocalDate dataF,
                 Integer quantidade,
                 @NotNull(message = "O idQuarto não pode ser nulo.") Long idQuarto,
                 @NotNull(message = "O idQuarto não pode ser nulo.") Double preco,

@@ -1,20 +1,17 @@
 package br.unitins.topicos1.service.comentario;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import br.unitins.topicos1.dto.comentario.ComentarioDTO;
 import br.unitins.topicos1.dto.comentario.ComentarioResponseDTO;
 import br.unitins.topicos1.model.Comentario;
-import br.unitins.topicos1.model.Usuario;
 import br.unitins.topicos1.repository.ComentarioRepository;
 import br.unitins.topicos1.repository.UsuarioRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import jakarta.validation.ValidationException;
 import jakarta.ws.rs.NotFoundException;
 
 @ApplicationScoped
@@ -32,12 +29,7 @@ public class ComentarioServiceImpl implements ComentarioService {
         if (usuario == null) {
             throw new NotFoundException("Usuário não encontrado.");
         }
-
-        Comentario comentario = new Comentario();
-        comentario.setConteudo(dto.conteudo());
-        comentario.setDataCriacao(dto.dataCriacao());
-        comentario.setUsuario(usuario);
-
+        Comentario comentario = new Comentario(dto, usuario);
         repository.persist(comentario);
         return ComentarioResponseDTO.valueOf(comentario);
 
@@ -51,9 +43,7 @@ public class ComentarioServiceImpl implements ComentarioService {
             throw new NotFoundException("Comentário não encontrado.");
         }
 
-        comentario.setConteudo(dto.conteudo());
-        comentario.setDataCriacao(dto.dataCriacao());
-
+        comentario.atualizarComDto(dto);
         repository.persist(comentario);
         return ComentarioResponseDTO.valueOf(comentario);
     }

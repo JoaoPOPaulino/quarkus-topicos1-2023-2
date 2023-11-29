@@ -22,14 +22,8 @@ public class QuartoServiceImpl implements QuartoService {
     @Override
     @Transactional
     public QuartoResponseDTO insert(QuartoDTO dto) {
-        Quarto novoQuarto = new Quarto();
-        novoQuarto.setTipoQuarto(TipoQuarto.valueOf(dto.tipoQuarto().id()));
-        novoQuarto.setNumero(dto.numero());
-        novoQuarto.setPreco(dto.preco());
-        novoQuarto.setDisponivel(dto.disponivel());
-
+        Quarto novoQuarto = new Quarto(dto);
         repository.persist(novoQuarto);
-
         return QuartoResponseDTO.valueOf(novoQuarto);
     }
 
@@ -37,16 +31,11 @@ public class QuartoServiceImpl implements QuartoService {
     @Transactional
     public QuartoResponseDTO update(QuartoDTO dto, Long id) {
         Quarto quarto = repository.findById(id);
-
-        if (quarto != null) {
-            quarto.setTipoQuarto(TipoQuarto.valueOf(dto.tipoQuarto().id()));
-            quarto.setNumero(dto.numero());
-            quarto.setPreco(dto.preco());
-            quarto.setDisponivel(dto.disponivel());
-        } else {
-            throw new NotFoundException();
+        if (quarto == null) {
+            throw new NotFoundException("Quarto não encontrado.");
         }
-
+        quarto.atualizarComDTO(dto);
+        repository.persist(quarto);
         return QuartoResponseDTO.valueOf(quarto);
     }
 

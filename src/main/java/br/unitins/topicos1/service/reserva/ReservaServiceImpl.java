@@ -9,6 +9,7 @@ import br.unitins.topicos1.dto.reserva.ReservaResponseDTO;
 import br.unitins.topicos1.model.Pagamento;
 import br.unitins.topicos1.model.Quarto;
 import br.unitins.topicos1.model.Reserva;
+import br.unitins.topicos1.model.Usuario;
 import br.unitins.topicos1.repository.QuartoRepository;
 import br.unitins.topicos1.repository.ReservaRepository;
 import br.unitins.topicos1.repository.UsuarioRepository;
@@ -34,22 +35,12 @@ public class ReservaServiceImpl implements ReservaService {
     public ReservaResponseDTO insert(ReservaDTO dto) {
 
         Quarto quarto = quartoRepository.findById(dto.idQuarto());
-        if (quarto == null) {
-            throw new IllegalArgumentException("Quarto não encontrado");
+        Usuario usuario = usuarioRepository.findById(dto.idUsuario());
+
+        if (quarto == null || usuario == null) {
+            throw new IllegalArgumentException("Quarto ou Usuário não encontrado.");
         }
-
-        Reserva novaReserva = new Reserva();
-        novaReserva.setQuarto(quarto);
-        novaReserva.setDataIncio(dto.dataI());
-        novaReserva.setDataFim(dto.dateF());
-        novaReserva.setQuantidade(dto.quantidade());
-        novaReserva.setPreco(dto.preco());
-
-        novaReserva.setUsuario(usuarioRepository.findById(dto.idUsuario()));
-        if (usuarioRepository == null) {
-            throw new NotFoundException("Usuário não encontrado");
-        }
-
+        Reserva novaReserva = new Reserva(dto, quarto, usuario);
         repository.persist(novaReserva);
         return ReservaResponseDTO.valueOf(novaReserva);
     }
@@ -58,25 +49,13 @@ public class ReservaServiceImpl implements ReservaService {
     @Transactional
     public ReservaResponseDTO update(ReservaDTO dto, Long id) {
         Reserva reserva = repository.findById(id);
-        if (reserva == null) {
-            throw new NotFoundException("Reserva não encontrada");
+        Quarto quarto = quartoRepository.findById(dto.idQuarto());
+        Usuario usuario = usuarioRepository.findById(dto.idUsuario());
+        if (reserva == null || quarto == null || usuario == null) {
+            throw new NotFoundException("Reserva, Quarto ou Usuário não encontrado");
         }
 
-        reserva.setDataIncio(dto.dataI());
-        reserva.setDataFim(dto.dateF());
-        reserva.setPreco(dto.preco());
-        reserva.setQuantidade(dto.quantidade());
-
-        Quarto quarto = quartoRepository.findById(id);
-        if (quarto == null) {
-            throw new NotFoundException("Quarto não encontrado");
-        }
-
-        reserva.setUsuario(usuarioRepository.findById(id));
-        if (reserva.getUsuario() == null) {
-            throw new NotFoundException("Usuário não encontrado");
-        }
-
+        reserva.atualizarComDTO(dto, quarto, usuario);
         repository.persist(reserva);
         return ReservaResponseDTO.valueOf(reserva);
     }

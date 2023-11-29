@@ -21,14 +21,8 @@ public class ServicoServiceImpl implements ServicoService {
     @Override
     @Transactional
     public ServicoResponseDTO insert(@Valid ServicoDTO dto) {
-        Servico novoServico = new Servico();
-        novoServico.setNome(dto.nome());
-        novoServico.setDescricao(dto.descricao());
-        novoServico.setHoraInicio(dto.horaI());
-        novoServico.setHoraFim(dto.horaF());
-
+        Servico novoServico = new Servico(dto);
         repository.persist(novoServico);
-
         return ServicoResponseDTO.valueOf(novoServico);
     }
 
@@ -39,12 +33,7 @@ public class ServicoServiceImpl implements ServicoService {
         if (servico == null) {
             throw new NotFoundException("Serviço não encontrado.");
         }
-
-        servico.setNome(dto.nome());
-        servico.setDescricao(dto.descricao());
-        servico.setHoraInicio(dto.horaI());
-        servico.setHoraFim(dto.horaF());
-
+        servico.atualizazrServico(dto);
         repository.persist(servico);
         return ServicoResponseDTO.valueOf(servico);
     }

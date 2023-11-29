@@ -2,6 +2,7 @@ package br.unitins.topicos1.model;
 
 import java.time.LocalDate;
 
+import br.unitins.topicos1.dto.reserva.ReservaDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -22,6 +23,24 @@ public class Reserva extends DefaultEntity {
 
     private Double preco;
     private Integer quantidade;
+
+    public Reserva(ReservaDTO dto, Quarto quarto, Usuario usuario) {
+        this.dataIncio = dto.dataI();
+        this.dataFim = dto.dataF();
+        this.preco = dto.preco();
+        this.quantidade = dto.quantidade();
+        this.quarto = quarto;
+        this.usuario = usuario;
+    }
+
+    public void atualizarComDTO(ReservaDTO dto, Quarto quarto, Usuario usuario) {
+        this.dataIncio = dto.dataI();
+        this.dataFim = dto.dataF();
+        this.preco = dto.preco();
+        this.quantidade = dto.quantidade();
+        this.quarto = quarto;
+        this.usuario = usuario;
+    }
 
     public LocalDate getDataIncio() {
         return dataIncio;

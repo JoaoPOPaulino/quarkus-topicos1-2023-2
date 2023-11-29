@@ -1,7 +1,12 @@
 package br.unitins.topicos1.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import br.unitins.topicos1.dto.EnderecoDTO;
+import br.unitins.topicos1.dto.TelefoneDTO;
+import br.unitins.topicos1.dto.usuario.UsuarioDTO;
+import br.unitins.topicos1.service.hash.HashService;
 import jakarta.persistence.FetchType;
 
 import io.smallrye.common.constraint.NotNull;
@@ -30,6 +35,62 @@ public class Usuario extends DefaultEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinTable(name = "usuario_endereco", joinColumns = @JoinColumn(name = "id_usuario"), inverseJoinColumns = @JoinColumn(name = "id_endereco"))
     private Endereco endereco;
+
+    public Usuario(UsuarioDTO dto, HashService hashService) {
+        this.nome = dto.nome();
+        this.login = dto.login();
+        this.senha = hashService.getHashSenha(dto.senha());
+        this.perfil = Perfil.valueOf(dto.idPerfil());
+
+        if (dto.listaTelefone() != null && !dto.listaTelefone().isEmpty()) {
+            this.listaTelefone = new ArrayList<>();
+            for (TelefoneDTO tel : dto.listaTelefone()) {
+                Telefone telefone = new Telefone();
+                telefone.setCodigoArea(tel.codigoArea());
+                telefone.setNumero(tel.numero());
+                this.listaTelefone.add(telefone);
+            }
+        }
+
+        if (dto.endereco() != null) {
+            EnderecoDTO enderecoDTO = dto.endereco();
+            this.endereco = new Endereco();
+            this.endereco.setEstado(enderecoDTO.estado());
+            this.endereco.setCidade(enderecoDTO.cidade());
+            this.endereco.setQuadra(enderecoDTO.quadra());
+            this.endereco.setRua(enderecoDTO.rua());
+            this.endereco.setNumero(enderecoDTO.numero());
+        }
+    }
+
+    public void atualizarComDTO(UsuarioDTO dto, HashService hashService) {
+        this.nome = dto.nome();
+        this.login = dto.login();
+        if (dto.senha() != null && !dto.senha().isEmpty()) {
+            this.senha = hashService.getHashSenha(dto.senha());
+        }
+        this.perfil = Perfil.valueOf(dto.idPerfil());
+
+        if (dto.listaTelefone() != null && !dto.listaTelefone().isEmpty()) {
+            this.listaTelefone = new ArrayList<>();
+            for (TelefoneDTO tel : dto.listaTelefone()) {
+                Telefone telefone = new Telefone();
+                telefone.setCodigoArea(tel.codigoArea());
+                telefone.setNumero(tel.numero());
+                this.listaTelefone.add(telefone);
+            }
+        }
+
+        if (dto.endereco() != null) {
+            EnderecoDTO enderecoDTO = dto.endereco();
+            this.endereco = new Endereco();
+            this.endereco.setEstado(enderecoDTO.estado());
+            this.endereco.setCidade(enderecoDTO.cidade());
+            this.endereco.setQuadra(enderecoDTO.quadra());
+            this.endereco.setRua(enderecoDTO.rua());
+            this.endereco.setNumero(enderecoDTO.numero());
+        }
+    }
 
     public String getNome() {
         return nome;

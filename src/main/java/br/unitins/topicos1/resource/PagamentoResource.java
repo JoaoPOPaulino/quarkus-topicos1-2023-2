@@ -50,4 +50,9 @@ public class PagamentoResource {
     public Response findById(@PathParam("id") Long id) {
         return Response.ok(service.findById(id)).build();
     }
+
+    @GET
+    public Response findAll() {
+        return Response.ok(service.findByAll()).build();
+    }
 }

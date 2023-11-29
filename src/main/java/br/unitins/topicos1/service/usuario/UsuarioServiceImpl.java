@@ -3,12 +3,8 @@ package br.unitins.topicos1.service.usuario;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.unitins.topicos1.dto.TelefoneDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
-import br.unitins.topicos1.model.Endereco;
-import br.unitins.topicos1.model.Perfil;
-import br.unitins.topicos1.model.Telefone;
 import br.unitins.topicos1.model.Usuario;
 import br.unitins.topicos1.repository.UsuarioRepository;
 import br.unitins.topicos1.service.hash.HashService;
@@ -35,36 +31,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         if (repository.findByLogin(dto.login()) != null) {
             throw new ValidationException("login", "Login já existe.");
         }
-
-        Usuario novoUsuario = new Usuario();
-        novoUsuario.setNome(dto.nome());
-        novoUsuario.setLogin(dto.login());
-        novoUsuario.setSenha(hashService.getHashSenha(dto.senha()));
-        novoUsuario.setPerfil(Perfil.valueOf(dto.idPerfil()));
-
-        if (dto.listaTelefone() != null &&
-                !dto.listaTelefone().isEmpty()) {
-            novoUsuario.setListaTelefone(new ArrayList<Telefone>());
-            for (TelefoneDTO tel : dto.listaTelefone()) {
-                Telefone telefone = new Telefone();
-                telefone.setCodigoArea(tel.codigoArea());
-                telefone.setNumero(tel.numero());
-                novoUsuario.getListaTelefone().add(telefone);
-            }
-        }
-
-        if (dto.endereco() != null) {
-            Endereco endereco = new Endereco();
-            endereco.setEstado(dto.endereco().estado());
-            endereco.setCidade(dto.endereco().cidade());
-            endereco.setQuadra(dto.endereco().quadra());
-            endereco.setRua(dto.endereco().rua());
-            endereco.setNumero(dto.endereco().numero());
-
-            novoUsuario.setEndereco(endereco);
-
-        }
-
+        Usuario novoUsuario = new Usuario(dto, hashService);
         repository.persist(novoUsuario);
         return UsuarioResponseDTO.valueOf(novoUsuario);
     }
@@ -76,31 +43,8 @@ public class UsuarioServiceImpl implements UsuarioService {
         if (usuario == null) {
             throw new NotFoundException("Usuário não encontrado.");
         }
-        usuario.setNome(dto.nome());
-        usuario.setLogin(dto.login());
-
-        usuario.setSenha(hashService.getHashSenha(dto.senha()));
-
-        usuario.getListaTelefone().clear();
-        for (TelefoneDTO tel : dto.listaTelefone()) {
-            Telefone telefone = new Telefone();
-            telefone.setCodigoArea(tel.codigoArea());
-            telefone.setNumero(tel.numero());
-            usuario.getListaTelefone().add(telefone);
-        }
-
-        if (dto.endereco() != null && dto.endereco() == null) {
-            Endereco endereco = new Endereco();
-            endereco.setEstado(dto.endereco().estado());
-            endereco.setCidade(dto.endereco().cidade());
-            endereco.setQuadra(dto.endereco().quadra());
-            endereco.setRua(dto.endereco().rua());
-            endereco.setNumero(dto.endereco().numero());
-            usuario.setEndereco(endereco);
-        }
-
+        usuario.atualizarComDTO(dto, hashService);
         repository.persist(usuario);
-
         return UsuarioResponseDTO.valueOf(usuario);
     }
 
