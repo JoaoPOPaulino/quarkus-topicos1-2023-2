@@ -11,6 +11,7 @@ import br.unitins.topicos1.repository.QuartoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.NotFoundException;
 
 @ApplicationScoped
@@ -21,7 +22,7 @@ public class QuartoServiceImpl implements QuartoService {
 
     @Override
     @Transactional
-    public QuartoResponseDTO insert(QuartoDTO dto) {
+    public QuartoResponseDTO insert(@Valid QuartoDTO dto) {
         Quarto novoQuarto = new Quarto(dto);
         repository.persist(novoQuarto);
         return QuartoResponseDTO.valueOf(novoQuarto);
@@ -29,7 +30,7 @@ public class QuartoServiceImpl implements QuartoService {
 
     @Override
     @Transactional
-    public QuartoResponseDTO update(QuartoDTO dto, Long id) {
+    public QuartoResponseDTO update(@Valid QuartoDTO dto, Long id) {
         Quarto quarto = repository.findById(id);
         if (quarto == null) {
             throw new NotFoundException("Quarto não encontrado.");

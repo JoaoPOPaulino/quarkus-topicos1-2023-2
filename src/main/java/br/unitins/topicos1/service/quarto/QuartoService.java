@@ -10,7 +10,7 @@ import jakarta.validation.Valid;
 public interface QuartoService {
     QuartoResponseDTO insert(@Valid QuartoDTO dto);
 
-    QuartoResponseDTO update(QuartoDTO dto, Long id);
+    QuartoResponseDTO update(@Valid QuartoDTO dto, Long id);
 
     void delete(Long id);
 

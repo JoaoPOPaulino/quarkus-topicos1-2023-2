@@ -12,6 +12,10 @@ public class Endereco extends DefaultEntity {
     private String rua;
     private Integer numero;
 
+    public Endereco() {
+
+    }
+
     public Endereco(EnderecoDTO dto) {
         this.estado = dto.estado();
         this.cidade = dto.cidade();

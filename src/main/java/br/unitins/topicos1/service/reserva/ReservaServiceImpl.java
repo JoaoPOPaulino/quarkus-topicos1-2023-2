@@ -3,10 +3,8 @@ package br.unitins.topicos1.service.reserva;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import br.unitins.topicos1.dto.quarto.QuartoDTO;
 import br.unitins.topicos1.dto.reserva.ReservaDTO;
 import br.unitins.topicos1.dto.reserva.ReservaResponseDTO;
-import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
 import br.unitins.topicos1.model.Pagamento;
 import br.unitins.topicos1.model.Quarto;
 import br.unitins.topicos1.model.Reserva;
@@ -17,6 +15,7 @@ import br.unitins.topicos1.repository.UsuarioRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.NotFoundException;
 
 @ApplicationScoped
@@ -33,7 +32,7 @@ public class ReservaServiceImpl implements ReservaService {
 
     @Override
     @Transactional
-    public ReservaResponseDTO insert(ReservaDTO dto) {
+    public ReservaResponseDTO insert(@Valid ReservaDTO dto) {
 
         Quarto quarto = quartoRepository.findById(dto.idQuarto());
         Usuario usuario = usuarioRepository.findById(dto.idUsuario());
@@ -48,7 +47,7 @@ public class ReservaServiceImpl implements ReservaService {
 
     @Override
     @Transactional
-    public ReservaResponseDTO update(ReservaDTO dto, Long id) {
+    public ReservaResponseDTO update(@Valid ReservaDTO dto, Long id) {
         Reserva reserva = repository.findById(id);
         Quarto quarto = quartoRepository.findById(dto.idQuarto());
         Usuario usuario = usuarioRepository.findById(dto.idUsuario());

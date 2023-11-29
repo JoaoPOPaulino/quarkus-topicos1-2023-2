@@ -16,6 +16,10 @@ public class Quarto extends DefaultEntity {
     private boolean disponivel;
     private String nomeImagem;
 
+    public Quarto() {
+
+    }
+
     public Quarto(QuartoDTO dto) {
         this.tipoQuarto = TipoQuarto.valueOf(dto.tipoQuarto().id());
         this.numero = dto.numero();

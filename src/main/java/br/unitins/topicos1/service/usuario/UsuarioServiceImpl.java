@@ -38,7 +38,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @Transactional
-    public UsuarioResponseDTO update(UsuarioDTO dto, Long id) {
+    public UsuarioResponseDTO update(@Valid UsuarioDTO dto, Long id) {
         Usuario usuario = repository.findById(id);
         if (usuario == null) {
             throw new NotFoundException("Usuário não encontrado.");

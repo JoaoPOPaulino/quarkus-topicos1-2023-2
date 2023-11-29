@@ -37,6 +37,9 @@ public class Usuario extends DefaultEntity {
     @JoinTable(name = "usuario_endereco", joinColumns = @JoinColumn(name = "id_usuario"), inverseJoinColumns = @JoinColumn(name = "id_endereco"))
     private Endereco endereco;
 
+    public Usuario() {
+    }
+
     public Usuario(UsuarioDTO dto, HashService hashService) {
         this.nome = dto.nome();
         this.login = dto.login();

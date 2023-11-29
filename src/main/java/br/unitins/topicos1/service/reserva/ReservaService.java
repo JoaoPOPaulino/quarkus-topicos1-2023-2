@@ -4,7 +4,6 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.reserva.ReservaDTO;
 import br.unitins.topicos1.dto.reserva.ReservaResponseDTO;
-import br.unitins.topicos1.model.Pagamento;
 import jakarta.validation.Valid;
 
 public interface ReservaService {

@@ -48,7 +48,7 @@ public class PagamentoServiceImpl implements PagamentoService {
 
     @Override
     @Transactional
-    public PagamentoResponseDTO update(PagamentoDTO dto, Long id) {
+    public PagamentoResponseDTO update(@Valid PagamentoDTO dto, Long id) {
         Pagamento pagamento = repository.findById(id);
         if (pagamento == null) {
             throw new NotFoundException("Pagamento não encontrado.");

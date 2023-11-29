@@ -17,6 +17,10 @@ public class Pagamento extends DefaultEntity {
     @JoinColumn(name = "id_reserva")
     private Reserva reserva;
 
+    public Pagamento() {
+
+    }
+
     public Pagamento(PagamentoDTO dto) {
         this.tipoPagamento = TipoPagamento.valueOf(dto.tipoPagamento().id());
         this.dataPagamento = dto.dataPagamento();

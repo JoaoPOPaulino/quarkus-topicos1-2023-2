@@ -24,6 +24,10 @@ public class Reserva extends DefaultEntity {
     private Double preco;
     private Integer quantidade;
 
+    public Reserva() {
+
+    }
+
     public Reserva(ReservaDTO dto, Quarto quarto, Usuario usuario) {
         this.dataIncio = dto.dataI();
         this.dataFim = dto.dataF();

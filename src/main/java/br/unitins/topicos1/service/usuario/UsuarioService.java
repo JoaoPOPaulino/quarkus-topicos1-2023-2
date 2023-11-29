@@ -10,7 +10,7 @@ public interface UsuarioService {
 
     UsuarioResponseDTO insert(@Valid UsuarioDTO dto);
 
-    UsuarioResponseDTO update(UsuarioDTO dto, Long id);
+    UsuarioResponseDTO update(@Valid UsuarioDTO dto, Long id);
 
     void delete(Long id);
 

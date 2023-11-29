@@ -13,6 +13,10 @@ public class Servico extends DefaultEntity {
     private LocalDateTime horaInicio;
     private LocalDateTime horaFim;
 
+    public Servico() {
+
+    }
+
     public Servico(ServicoDTO dto) {
         this.nome = dto.nome();
         this.descricao = dto.descricao();

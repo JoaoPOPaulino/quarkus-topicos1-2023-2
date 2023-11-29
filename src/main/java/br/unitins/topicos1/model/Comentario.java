@@ -17,6 +17,10 @@ public class Comentario extends DefaultEntity {
 	@JoinColumn(name = "id_usuarios")
 	private Usuario usuario;
 
+	public Comentario() {
+
+	}
+
 	public Comentario(ComentarioDTO dto, Usuario usuario) {
 		this.conteudo = dto.conteudo();
 		this.dataCriacao = dto.dataCriacao();

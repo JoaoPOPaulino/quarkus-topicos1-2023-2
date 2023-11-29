@@ -14,6 +14,9 @@ public class Telefone extends DefaultEntity {
     @Size(min = 8, max = 12)
     private String numero;
 
+    public Telefone() {
+    }
+
     public Telefone(TelefoneDTO dto) {
         this.codigoArea = dto.codigoArea();
         this.numero = dto.numero();
