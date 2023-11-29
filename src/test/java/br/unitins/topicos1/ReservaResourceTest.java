@@ -10,17 +10,17 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import br.unitins.topicos1.dto.EnderecoDTO;
-import br.unitins.topicos1.dto.QuartoDTO;
-import br.unitins.topicos1.dto.QuartoResponseDTO;
-import br.unitins.topicos1.dto.ReservaDTO;
-import br.unitins.topicos1.dto.ReservaResponseDTO;
 import br.unitins.topicos1.dto.TelefoneDTO;
-import br.unitins.topicos1.dto.TipoQuartoDTO;
-import br.unitins.topicos1.dto.UsuarioDTO;
-import br.unitins.topicos1.dto.UsuarioResponseDTO;
-import br.unitins.topicos1.service.QuartoService;
-import br.unitins.topicos1.service.ReservaService;
-import br.unitins.topicos1.service.UsuarioService;
+import br.unitins.topicos1.dto.quarto.QuartoDTO;
+import br.unitins.topicos1.dto.quarto.QuartoResponseDTO;
+import br.unitins.topicos1.dto.reserva.ReservaDTO;
+import br.unitins.topicos1.dto.reserva.ReservaResponseDTO;
+import br.unitins.topicos1.dto.tipo.TipoQuartoDTO;
+import br.unitins.topicos1.dto.usuario.UsuarioDTO;
+import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
+import br.unitins.topicos1.service.quarto.QuartoService;
+import br.unitins.topicos1.service.reserva.ReservaService;
+import br.unitins.topicos1.service.usuario.UsuarioService;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import jakarta.inject.Inject;
@@ -105,7 +105,7 @@ public class ReservaResourceTest {
                 ReservaDTO dtoUpdate = new ReservaDTO(dataInicio, newDataFim, 1, quarto.id(), quarto.preco(),
                                 usuario.id());
 
-                                given()
+                given()
                                 .contentType(ContentType.JSON)
                                 .body(dtoUpdate)
                                 .when().post("/reservas")
@@ -115,7 +115,8 @@ public class ReservaResourceTest {
                                                 "id", notNullValue(),
                                                 "dataInicio", is(dataInicio.toString()),
                                                 "dataFim", is(dataFim.toString()),
-                                                "preco", is(200.0f));given()
+                                                "preco", is(200.0f));
+                given()
                                 .contentType(ContentType.JSON)
                                 .body(dtoUpdate)
                                 .when().put("/reservas/" + id)

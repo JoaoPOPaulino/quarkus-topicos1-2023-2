@@ -8,9 +8,9 @@ import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Test;
 
-import br.unitins.topicos1.dto.ServicoDTO;
-import br.unitins.topicos1.dto.ServicoResponseDTO;
-import br.unitins.topicos1.service.ServicoService;
+import br.unitins.topicos1.dto.servico.ServicoDTO;
+import br.unitins.topicos1.dto.servico.ServicoResponseDTO;
+import br.unitins.topicos1.service.servico.ServicoService;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import jakarta.inject.Inject;
@@ -24,7 +24,7 @@ public class ServicoResourceTest {
         @Test
         public void testFindAll() {
                 given()
-                                .when().get("/servicos")
+                                .when().get("/servico")
                                 .then()
                                 .statusCode(200);
         }

@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test;
 
 import br.unitins.topicos1.dto.EnderecoDTO;
 import br.unitins.topicos1.dto.TelefoneDTO;
-import br.unitins.topicos1.dto.UsuarioDTO;
-import br.unitins.topicos1.dto.UsuarioResponseDTO;
-import br.unitins.topicos1.service.UsuarioService;
+import br.unitins.topicos1.dto.usuario.UsuarioDTO;
+import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
+import br.unitins.topicos1.service.usuario.UsuarioService;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import jakarta.inject.Inject;

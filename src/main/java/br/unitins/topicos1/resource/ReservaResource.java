@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
-import br.unitins.topicos1.dto.ReservaDTO;
-import br.unitins.topicos1.dto.ReservaResponseDTO;
-import br.unitins.topicos1.service.ReservaService;
+import br.unitins.topicos1.dto.reserva.ReservaDTO;
+import br.unitins.topicos1.dto.reserva.ReservaResponseDTO;
+import br.unitins.topicos1.service.reserva.ReservaService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;

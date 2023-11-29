@@ -7,13 +7,13 @@ import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Test;
 
-import br.unitins.topicos1.dto.PagamentoDTO;
-import br.unitins.topicos1.dto.PagamentoResponseDTO;
-import br.unitins.topicos1.dto.ReservaDTO;
-import br.unitins.topicos1.dto.ReservaResponseDTO;
-import br.unitins.topicos1.dto.TipoPagamentoDTO;
-import br.unitins.topicos1.service.PagamentoService;
-import br.unitins.topicos1.service.ReservaService;
+import br.unitins.topicos1.dto.pagamento.PagamentoDTO;
+import br.unitins.topicos1.dto.pagamento.PagamentoResponseDTO;
+import br.unitins.topicos1.dto.reserva.ReservaDTO;
+import br.unitins.topicos1.dto.reserva.ReservaResponseDTO;
+import br.unitins.topicos1.dto.tipo.TipoPagamentoDTO;
+import br.unitins.topicos1.service.pagamento.PagamentoService;
+import br.unitins.topicos1.service.reserva.ReservaService;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import jakarta.inject.Inject;

@@ -6,12 +6,12 @@ import java.io.IOException;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import br.unitins.topicos1.application.Error;
-import br.unitins.topicos1.dto.QuartoDTO;
-import br.unitins.topicos1.dto.QuartoResponseDTO;
+import br.unitins.topicos1.dto.quarto.QuartoDTO;
+import br.unitins.topicos1.dto.quarto.QuartoResponseDTO;
 import br.unitins.topicos1.form.QuartoImageForm;
 import br.unitins.topicos1.model.TipoQuarto;
-import br.unitins.topicos1.service.QuartoFileService;
-import br.unitins.topicos1.service.QuartoService;
+import br.unitins.topicos1.service.quarto.QuartoFileService;
+import br.unitins.topicos1.service.quarto.QuartoService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;

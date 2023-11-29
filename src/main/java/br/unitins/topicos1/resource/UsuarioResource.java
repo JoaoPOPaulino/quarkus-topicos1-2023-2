@@ -2,8 +2,8 @@ package br.unitins.topicos1.resource;
 
 import org.jboss.logging.Logger;
 
-import br.unitins.topicos1.dto.UsuarioDTO;
-import br.unitins.topicos1.service.UsuarioService;
+import br.unitins.topicos1.dto.usuario.UsuarioDTO;
+import br.unitins.topicos1.service.usuario.UsuarioService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;

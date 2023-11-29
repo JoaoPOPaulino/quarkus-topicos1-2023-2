@@ -6,10 +6,10 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 
 import org.junit.jupiter.api.Test;
 
-import br.unitins.topicos1.dto.QuartoDTO;
-import br.unitins.topicos1.dto.QuartoResponseDTO;
-import br.unitins.topicos1.dto.TipoQuartoDTO;
-import br.unitins.topicos1.service.QuartoService;
+import br.unitins.topicos1.dto.quarto.QuartoDTO;
+import br.unitins.topicos1.dto.quarto.QuartoResponseDTO;
+import br.unitins.topicos1.dto.tipo.TipoQuartoDTO;
+import br.unitins.topicos1.service.quarto.QuartoService;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import jakarta.inject.Inject;

@@ -3,10 +3,10 @@ package br.unitins.topicos1.resource;
 import org.jboss.logging.Logger;
 
 import br.unitins.topicos1.dto.LoginDTO;
-import br.unitins.topicos1.dto.UsuarioResponseDTO;
-import br.unitins.topicos1.service.HashService;
-import br.unitins.topicos1.service.JwtService;
-import br.unitins.topicos1.service.UsuarioService;
+import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
+import br.unitins.topicos1.service.hash.HashService;
+import br.unitins.topicos1.service.jwt.JwtService;
+import br.unitins.topicos1.service.usuario.UsuarioService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;

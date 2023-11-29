@@ -1,7 +1,7 @@
 package br.unitins.topicos1.resource;
 
-import br.unitins.topicos1.dto.PagamentoDTO;
-import br.unitins.topicos1.service.PagamentoService;
+import br.unitins.topicos1.dto.pagamento.PagamentoDTO;
+import br.unitins.topicos1.service.pagamento.PagamentoService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;

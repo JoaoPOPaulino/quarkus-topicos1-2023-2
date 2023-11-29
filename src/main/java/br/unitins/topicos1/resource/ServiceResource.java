@@ -1,7 +1,7 @@
 package br.unitins.topicos1.resource;
 
-import br.unitins.topicos1.dto.ServicoDTO;
-import br.unitins.topicos1.service.ServicoService;
+import br.unitins.topicos1.dto.servico.ServicoDTO;
+import br.unitins.topicos1.service.servico.ServicoService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
