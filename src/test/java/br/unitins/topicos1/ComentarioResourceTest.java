@@ -1,7 +1,6 @@
 package br.unitins.topicos1;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
@@ -32,13 +31,13 @@ public class ComentarioResourceTest {
         @Inject
         UsuarioService usuarioService;
 
-        // @Test
-        // public void testFindAll() {
-        // given()
-        // .when().get("/comentarios")
-        // .then()
-        // .statusCode(200);
-        // }
+        @Test
+        public void testFindAll() {
+                given()
+                                .when().get("/comentarios")
+                                .then()
+                                .statusCode(200);
+        }
 
         @Test
         public void testInsert() {
@@ -69,78 +68,70 @@ public class ComentarioResourceTest {
                                                 "conteudo", is("Comentário de teste"));
         }
 
-        // @Test
-        // public void testUpdate() {
-        // List<TelefoneDTO> telefones = new ArrayList<TelefoneDTO>();
-        // telefones.add(new TelefoneDTO("63", "5555-5555"));
+        @Test
+        public void testUpdate() {
+                List<TelefoneDTO> telefones = new ArrayList<TelefoneDTO>();
+                telefones.add(new TelefoneDTO("63", "5555-5555"));
 
-        // EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
-        // 123);
+                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
+                                123);
 
-        // String loginDinamico = "comentarioTeste" + System.currentTimeMillis();
+                UsuarioDTO dtoUsuario = new UsuarioDTO(
+                                "Mark Zuckerberg Insert",
+                                "oi",
+                                "333",
+                                1,
+                                telefones,
+                                endereco);
+                UsuarioResponseDTO usuarioTest = usuarioService.insert(dtoUsuario);
 
-        // UsuarioDTO dtoInsert = new UsuarioDTO(
-        // "Comentario Test",
-        // loginDinamico,
-        // "333",
-        // 1,
-        // telefones,
-        // endereco);
+                ComentarioDTO dto = new ComentarioDTO("Comentário de teste", LocalDateTime.now(),
+                                usuarioTest.id());
 
-        // UsuarioResponseDTO usuarioTest = usuarioService.insert(dtoInsert);
+                ComentarioResponseDTO comentarioTest = comentarioService.insert(dto);
 
-        // ComentarioDTO dto = new ComentarioDTO(
-        // "Comentário para Update",
-        // LocalDateTime.now(),
-        // usuarioTest.id());
+                ComentarioDTO dtoUpdate = new ComentarioDTO(
+                                "Comentário Atualizado",
+                                LocalDateTime.now(),
+                                usuarioTest.id());
 
-        // ComentarioResponseDTO comentarioTest = comentarioService.insert(dto);
-        // Long id = comentarioTest.id();
+                Long id = comentarioTest.id();
 
-        // ComentarioDTO dtoUpdate = new ComentarioDTO(
-        // "Comentário Atualizado",
-        // LocalDateTime.now(),
-        // usuarioTest.id());
+                given()
+                                .contentType(ContentType.JSON)
+                                .body(dtoUpdate)
+                                .when().put("/comentarios/" + id)
+                                .then()
+                                .statusCode(204);
+        }
 
-        // given()
-        // .contentType(ContentType.JSON)
-        // .body(dtoUpdate)
-        // .when().put("/comentarios/" + id)
-        // .then()
-        // .statusCode(204);
-        // }
+        @Test
+        public void testDelete() {
+                List<TelefoneDTO> telefones = new ArrayList<TelefoneDTO>();
+                telefones.add(new TelefoneDTO("63", "5555-5555"));
 
-        // @Test
-        // public void testDelete() {
-        // List<TelefoneDTO> telefones = new ArrayList<TelefoneDTO>();
-        // telefones.add(new TelefoneDTO("63", "5555-5555"));
+                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
+                                123);
 
-        // EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
-        // 123);
+                UsuarioDTO dtoUsuario = new UsuarioDTO(
+                                "Mark Zuckerberg Insert",
+                                "marquinho",
+                                "333",
+                                1,
+                                telefones,
+                                endereco);
+                UsuarioResponseDTO usuarioTest = usuarioService.insert(dtoUsuario);
 
-        // String loginDinamico = "comentarioTeste" + System.currentTimeMillis();
+                ComentarioDTO dto = new ComentarioDTO("Comentário de teste", LocalDateTime.now(),
+                                usuarioTest.id());
 
-        // UsuarioDTO dtoInsert = new UsuarioDTO(
-        // "Comentario Test",
-        // loginDinamico,
-        // "333",
-        // 1,
-        // telefones,
-        // endereco);
+                ComentarioResponseDTO comentarioTest = comentarioService.insert(dto);
 
-        // UsuarioResponseDTO usuarioTest = usuarioService.insert(dtoInsert);
-
-        // ComentarioDTO dto = new ComentarioDTO(
-        // "Comentário para Delete",
-        // LocalDateTime.now(),
-        // usuarioTest.id());
-
-        // ComentarioResponseDTO comentarioTest = comentarioService.insert(dto);
-        // Long id = comentarioTest.id();
-        // given()
-        // .when().delete("/comentarios/" + id)
-        // .then()
-        // .statusCode(204);
-        // }
+                Long id = comentarioTest.id();
+                given()
+                                .when().delete("/comentarios/" + id)
+                                .then()
+                                .statusCode(204);
+        }
 
 }

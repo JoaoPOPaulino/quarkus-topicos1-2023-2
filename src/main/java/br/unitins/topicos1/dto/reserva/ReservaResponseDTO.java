@@ -10,9 +10,8 @@ public record ReservaResponseDTO(
         Long id,
         LocalDate dataI,
         LocalDate dataF,
-        Integer quantidade,
-        Double quarto,
-        Quarto preco,
+        Double preco,
+        Quarto quarto,
         UsuarioResponseDTO usuario) {
 
     public static ReservaResponseDTO valueOf(Reserva reserva) {
@@ -20,13 +19,9 @@ public record ReservaResponseDTO(
                 reserva.getId(),
                 reserva.getDataIncio(),
                 reserva.getDataFim(),
-                reserva.getQuantidade(),
                 reserva.getQuarto().getPreco(),
                 reserva.getQuarto(),
                 UsuarioResponseDTO.valueOf(reserva.getUsuario()));
     }
 
-    public Reserva reserva() {
-        return reserva();
-    }
 }

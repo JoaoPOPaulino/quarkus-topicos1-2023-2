@@ -96,7 +96,7 @@ public class ServicoResourceTest {
                 Long id = servicoTest.id();
 
                 given()
-                                .when().delete("/usuarios/" + id)
+                                .when().delete("/servico/" + id)
                                 .then()
                                 .statusCode(204);
         }

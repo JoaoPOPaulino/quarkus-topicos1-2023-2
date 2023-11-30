@@ -43,10 +43,6 @@ public class ReservaResource {
     @Transactional
     @Path("/{id}")
     public Response update(@Valid ReservaDTO dto, @PathParam("id") Long id) {
-        // if (dto.dataI().isAfter(dto.dateF())) {
-        // throw new WebApplicationException("Data de início deve ser antes da data de
-        // fim.", Status.BAD_REQUEST);
-        // }
         service.update(dto, id);
         return Response.noContent().build();
     }

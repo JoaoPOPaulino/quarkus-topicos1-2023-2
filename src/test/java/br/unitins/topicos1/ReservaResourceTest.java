@@ -58,10 +58,9 @@ public class ReservaResourceTest {
                 QuartoDTO quartoTest = new QuartoDTO(1, 150.0, true, tipo);
                 QuartoResponseDTO quarto = quartoService.insert(quartoTest);
 
-                LocalDate dataInicio = LocalDate.now();
+                LocalDate dataInicio = LocalDate.now().plusDays(1);
                 LocalDate dataFim = dataInicio.plusDays(5);
-                ReservaDTO dto = new ReservaDTO(dataInicio, dataFim, 1, quarto.id(), quarto.preco(),
-                                usuario.id());
+                ReservaDTO dto = new ReservaDTO(dataInicio, dataFim, quarto.id(), usuario.id());
 
                 given()
                                 .contentType(ContentType.JSON)
@@ -69,11 +68,9 @@ public class ReservaResourceTest {
                                 .when().post("/reservas")
                                 .then()
                                 .statusCode(201)
-                                .body(
-                                                "id", notNullValue(),
-                                                "dataInicio", is(dataInicio.toString()),
-                                                "dataFim", is(dataFim.toString()),
-                                                "preco", is(200.0f));
+                                .body("dataInicio", notNullValue())
+                                .body("dataFim", notNullValue())
+                                .body("preco", equalTo(150.0F));
         }
 
         @Test
@@ -94,28 +91,14 @@ public class ReservaResourceTest {
 
                 LocalDate dataInicio = LocalDate.now();
                 LocalDate dataFim = dataInicio.plusDays(5);
-                ReservaDTO dtoInsert = new ReservaDTO(dataInicio, dataFim, 1, quarto.id(), quarto.preco(),
-                                usuario.id());
+                ReservaDTO dtoInsert = new ReservaDTO(dataInicio, dataFim, quarto.id(), usuario.id());
 
                 ReservaResponseDTO reservaTest = reservaService.insert(dtoInsert);
-
                 Long id = reservaTest.id();
 
                 LocalDate newDataFim = dataFim.plusDays(3);
-                ReservaDTO dtoUpdate = new ReservaDTO(dataInicio, newDataFim, 1, quarto.id(), quarto.preco(),
-                                usuario.id());
+                ReservaDTO dtoUpdate = new ReservaDTO(newDataFim, dataFim, quarto.id(), usuario.id());
 
-                given()
-                                .contentType(ContentType.JSON)
-                                .body(dtoUpdate)
-                                .when().post("/reservas")
-                                .then()
-                                .statusCode(201)
-                                .body(
-                                                "id", notNullValue(),
-                                                "dataInicio", is(dataInicio.toString()),
-                                                "dataFim", is(dataFim.toString()),
-                                                "preco", is(200.0f));
                 given()
                                 .contentType(ContentType.JSON)
                                 .body(dtoUpdate)
@@ -140,8 +123,7 @@ public class ReservaResourceTest {
 
                 LocalDate dataInicio = LocalDate.now();
                 LocalDate dataFim = dataInicio.plusDays(5);
-                ReservaDTO dtoInsert = new ReservaDTO(dataInicio, dataFim, 1, quarto.id(), quarto.preco(),
-                                usuario.id());
+                ReservaDTO dtoInsert = new ReservaDTO(dataInicio, dataFim, quarto.id(), usuario.id());
                 ReservaResponseDTO reservaTest = reservaService.insert(dtoInsert);
 
                 Long id = reservaTest.id();

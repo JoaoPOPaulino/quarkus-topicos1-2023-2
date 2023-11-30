@@ -22,7 +22,6 @@ public class Reserva extends DefaultEntity {
     private Usuario usuario;
 
     private Double preco;
-    private Integer quantidade;
 
     public Reserva() {
 
@@ -31,8 +30,7 @@ public class Reserva extends DefaultEntity {
     public Reserva(ReservaDTO dto, Quarto quarto, Usuario usuario) {
         this.dataIncio = dto.dataI();
         this.dataFim = dto.dataF();
-        this.preco = dto.preco();
-        this.quantidade = dto.quantidade();
+        this.preco = quarto.getPreco();
         this.quarto = quarto;
         this.usuario = usuario;
     }
@@ -40,8 +38,7 @@ public class Reserva extends DefaultEntity {
     public void atualizarComDTO(ReservaDTO dto, Quarto quarto, Usuario usuario) {
         this.dataIncio = dto.dataI();
         this.dataFim = dto.dataF();
-        this.preco = dto.preco();
-        this.quantidade = dto.quantidade();
+        this.preco = quarto.getPreco();
         this.quarto = quarto;
         this.usuario = usuario;
     }
@@ -62,24 +59,12 @@ public class Reserva extends DefaultEntity {
         this.dataFim = dataFim;
     }
 
-    public Integer getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(Integer quantidade) {
-        this.quantidade = quantidade;
-    }
-
     public Usuario getUsuario() {
         return usuario;
     }
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-    }
-
-    public static Reserva valueOf(Long idReserva) {
-        return null;
     }
 
     public boolean temPagamento() {
