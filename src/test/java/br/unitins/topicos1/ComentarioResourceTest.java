@@ -7,6 +7,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 
@@ -44,20 +45,20 @@ public class ComentarioResourceTest {
                 List<TelefoneDTO> telefones = new ArrayList<TelefoneDTO>();
                 telefones.add(new TelefoneDTO("63", "5555-5555"));
 
-                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
-                                123);
+                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua", 123);
 
-                UsuarioDTO dtoUsuario = new UsuarioDTO(
-                                "Mark Zuckerberg Insert",
-                                "marquinho",
+                UsuarioDTO dtoInsert = new UsuarioDTO(
+                                "Mark Zuckerberg Update",
+                                "morkos",
                                 "333",
                                 1,
                                 telefones,
                                 endereco);
-                UsuarioResponseDTO usuarioCriado = usuarioService.insert(dtoUsuario);
+
+                UsuarioResponseDTO usuarioTest = usuarioService.insert(dtoInsert);
 
                 ComentarioDTO dto = new ComentarioDTO("Comentário de teste", LocalDateTime.now(),
-                                usuarioCriado.id());
+                                usuarioTest.id());
                 given()
                                 .contentType(ContentType.JSON)
                                 .body(dto)
@@ -70,31 +71,28 @@ public class ComentarioResourceTest {
 
         @Test
         public void testUpdate() {
-                List<TelefoneDTO> telefones = new ArrayList<TelefoneDTO>();
+                List<TelefoneDTO> telefones = new ArrayList<>();
                 telefones.add(new TelefoneDTO("63", "5555-5555"));
 
-                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
-                                123);
+                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua", 123);
+
+                String loginUnico = "usuario_" + UUID.randomUUID().toString();
 
                 UsuarioDTO dtoUsuario = new UsuarioDTO(
-                                "Mark Zuckerberg Insert",
-                                "oi",
-                                "333",
+                                "Mark Zuckerberg Update",
+                                loginUnico,
+                                "senha123",
                                 1,
                                 telefones,
                                 endereco);
+
                 UsuarioResponseDTO usuarioTest = usuarioService.insert(dtoUsuario);
 
-                ComentarioDTO dto = new ComentarioDTO("Comentário de teste", LocalDateTime.now(),
-                                usuarioTest.id());
-
+                ComentarioDTO dto = new ComentarioDTO("Comentário de teste", LocalDateTime.now(), usuarioTest.id());
                 ComentarioResponseDTO comentarioTest = comentarioService.insert(dto);
 
-                ComentarioDTO dtoUpdate = new ComentarioDTO(
-                                "Comentário Atualizado",
-                                LocalDateTime.now(),
+                ComentarioDTO dtoUpdate = new ComentarioDTO("Comentário Atualizado", LocalDateTime.now(),
                                 usuarioTest.id());
-
                 Long id = comentarioTest.id();
 
                 given()
@@ -102,7 +100,9 @@ public class ComentarioResourceTest {
                                 .body(dtoUpdate)
                                 .when().put("/comentarios/" + id)
                                 .then()
-                                .statusCode(204);
+                                .statusCode(200) // Verificar se o status é 200 OK
+                                .body("conteudo", is("Comentário Atualizado")); // Verificar se o conteúdo foi
+                                                                                // atualizado
         }
 
         @Test
@@ -114,15 +114,16 @@ public class ComentarioResourceTest {
                                 123);
 
                 UsuarioDTO dtoUsuario = new UsuarioDTO(
-                                "Mark Zuckerberg Insert",
-                                "marquinho",
+                                "Teste",
+                                "TestComentario",
                                 "333",
                                 1,
                                 telefones,
                                 endereco);
                 UsuarioResponseDTO usuarioTest = usuarioService.insert(dtoUsuario);
 
-                ComentarioDTO dto = new ComentarioDTO("Comentário de teste", LocalDateTime.now(),
+                ComentarioDTO dto = new ComentarioDTO("Comentário de teste",
+                                LocalDateTime.now(),
                                 usuarioTest.id());
 
                 ComentarioResponseDTO comentarioTest = comentarioService.insert(dto);

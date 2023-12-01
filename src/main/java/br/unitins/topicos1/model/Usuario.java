@@ -1,18 +1,14 @@
 package br.unitins.topicos1.model;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import br.unitins.topicos1.dto.EnderecoDTO;
-import br.unitins.topicos1.dto.TelefoneDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioDTO;
 import br.unitins.topicos1.service.hash.HashService;
-import jakarta.persistence.FetchType;
-
 import io.smallrye.common.constraint.NotNull;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
@@ -60,6 +56,7 @@ public class Usuario extends DefaultEntity {
     public void atualizarComDTO(UsuarioDTO dto, HashService hashService) {
         this.nome = dto.nome();
         this.login = dto.login();
+
         if (dto.senha() != null && !dto.senha().isEmpty()) {
             this.senha = hashService.getHashSenha(dto.senha());
         }

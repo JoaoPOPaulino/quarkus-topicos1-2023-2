@@ -3,10 +3,13 @@ package br.unitins.topicos1.service.usuario;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jboss.logging.Logger;
+
 import br.unitins.topicos1.dto.usuario.UsuarioDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
 import br.unitins.topicos1.model.Usuario;
 import br.unitins.topicos1.repository.UsuarioRepository;
+import br.unitins.topicos1.resource.UsuarioResource;
 import br.unitins.topicos1.service.hash.HashService;
 import br.unitins.topicos1.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -24,11 +27,15 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Inject
     HashService hashService;
 
+    private static final Logger LOGGER = Logger.getLogger(UsuarioResource.class.getName());
+
     @Override
     @Transactional
-    public UsuarioResponseDTO insert(@Valid UsuarioDTO dto) {
+    public UsuarioResponseDTO insert(@Valid UsuarioDTO dto)
 
+    {
         if (repository.findByLogin(dto.login()) != null) {
+            LOGGER.error("Tentativa de criar usuário com login existente: " + dto.login());
             throw new ValidationException("login", "Login já existe.");
         }
         Usuario novoUsuario = new Usuario(dto, hashService);

@@ -29,7 +29,6 @@ public class Comentario extends DefaultEntity {
 
 	public void atualizarComDto(ComentarioDTO dto) {
 		this.conteudo = dto.conteudo();
-		this.dataCriacao = dto.dataCriacao();
 	}
 
 	public String getConteudo() {

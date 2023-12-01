@@ -2,13 +2,13 @@ package br.unitins.topicos1.resource;
 
 import br.unitins.topicos1.dto.comentario.ComentarioDTO;
 import br.unitins.topicos1.dto.comentario.ComentarioResponseDTO;
-import br.unitins.topicos1.repository.ComentarioRepository;
 import br.unitins.topicos1.service.comentario.ComentarioService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
@@ -36,12 +36,13 @@ public class ComentarioResource {
     @PUT
     @Transactional
     @Path("/{id}")
-    public Response update(ComentarioDTO dto, @PathParam("id)") Long id) {
-        ComentarioResponseDTO dtoUpdate = service.update(dto, id);
-        if (dtoUpdate == null) {
+    public Response update(ComentarioDTO dto, @PathParam("id") Long id) {
+        try {
+            ComentarioResponseDTO dtoUpdate = service.update(dto, id);
+            return Response.ok(dtoUpdate).build();
+        } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.ok(dtoUpdate).build();
     }
 
     @DELETE

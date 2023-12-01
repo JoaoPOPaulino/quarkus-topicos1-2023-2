@@ -3,6 +3,7 @@ package br.unitins.topicos1.resource;
 import java.util.List;
 
 import org.eclipse.microprofile.jwt.JsonWebToken;
+import org.jboss.logging.Logger;
 
 import br.unitins.topicos1.dto.reserva.ReservaDTO;
 import br.unitins.topicos1.dto.reserva.ReservaResponseDTO;
@@ -33,9 +34,14 @@ public class ReservaResource {
     @Inject
     JsonWebToken jwt;
 
+    private static final Logger LOGGER = Logger.getLogger(UsuarioResource.class.getName());
+
     @POST
     public Response insert(@Valid ReservaDTO dto) {
 
+        LOGGER.info("Criar Reserva chamado com dataInicio: " + dto.dataI());
+
+        LOGGER.info("Reserva criada com sucesso");
         return Response.status(Status.CREATED).entity(service.insert(dto)).build();
     }
 
@@ -68,7 +74,7 @@ public class ReservaResource {
 
     @GET
     @Path("/historico")
-    public Response HistoricoReservas() {
+    public Response historicoReservas() {
         try {
             Long usuarioId = Long.parseLong(jwt.getSubject());
             List<ReservaResponseDTO> reservas = service.findReservaByUsuarioId(usuarioId);
