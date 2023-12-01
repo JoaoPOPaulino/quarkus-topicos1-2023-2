@@ -1,23 +1,14 @@
 package br.unitins.topicos1.service.pagamento;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import br.unitins.topicos1.dto.pagamento.PagamentoDTO;
 import br.unitins.topicos1.dto.pagamento.PagamentoResponseDTO;
-import br.unitins.topicos1.dto.reserva.ReservaResponseDTO;
-import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
 import br.unitins.topicos1.model.Pagamento;
 import br.unitins.topicos1.model.Reserva;
-import br.unitins.topicos1.model.TipoPagamento;
-import br.unitins.topicos1.model.Usuario;
 import br.unitins.topicos1.repository.PagamentoRepository;
 import br.unitins.topicos1.repository.ReservaRepository;
-import br.unitins.topicos1.service.reserva.ReservaService;
-import br.unitins.topicos1.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -36,11 +27,11 @@ public class PagamentoServiceImpl implements PagamentoService {
     @Override
     @Transactional
     public PagamentoResponseDTO insert(@Valid PagamentoDTO dto) {
-        Reserva reserva = reservaRepository.findById(dto.reserva().getId());
+        Reserva reserva = reservaRepository.findById(dto.idReserva());
         if (reserva == null) {
             throw new NotFoundException("Reserva não encontrada.");
         }
-        Pagamento pagamento = new Pagamento(dto);
+        Pagamento pagamento = new Pagamento(dto, reserva);
         pagamento.setReserva(reserva);
         repository.persist(pagamento);
         return PagamentoResponseDTO.valueOf(pagamento);
