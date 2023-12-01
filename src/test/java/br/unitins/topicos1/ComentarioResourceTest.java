@@ -100,9 +100,8 @@ public class ComentarioResourceTest {
                                 .body(dtoUpdate)
                                 .when().put("/comentarios/" + id)
                                 .then()
-                                .statusCode(200) // Verificar se o status é 200 OK
-                                .body("conteudo", is("Comentário Atualizado")); // Verificar se o conteúdo foi
-                                                                                // atualizado
+                                .statusCode(200)
+                                .body("conteudo", is("Comentário Atualizado"));
         }
 
         @Test

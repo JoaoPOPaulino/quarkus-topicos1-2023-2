@@ -10,7 +10,7 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class Reserva extends DefaultEntity {
 
-    private LocalDate dataIncio;
+    private LocalDate dataInicio;
     private LocalDate dataFim;
 
     @ManyToOne
@@ -28,7 +28,7 @@ public class Reserva extends DefaultEntity {
     }
 
     public Reserva(ReservaDTO dto, Quarto quarto, Usuario usuario) {
-        this.dataIncio = dto.dataI();
+        this.dataInicio = dto.dataI();
         this.dataFim = dto.dataF();
         this.preco = quarto.getPreco();
         this.quarto = quarto;
@@ -36,19 +36,19 @@ public class Reserva extends DefaultEntity {
     }
 
     public void atualizarComDTO(ReservaDTO dto, Quarto quarto, Usuario usuario) {
-        this.dataIncio = dto.dataI();
+        this.dataInicio = dto.dataI();
         this.dataFim = dto.dataF();
         this.preco = quarto.getPreco();
         this.quarto = quarto;
         this.usuario = usuario;
     }
 
-    public LocalDate getDataIncio() {
-        return dataIncio;
+    public LocalDate getdataInicio() {
+        return dataInicio;
     }
 
-    public void setDataIncio(LocalDate dataIncio) {
-        this.dataIncio = dataIncio;
+    public void setdataInicio(LocalDate dataInicio) {
+        this.dataInicio = dataInicio;
     }
 
     public LocalDate getDataFim() {

@@ -37,13 +37,13 @@ public class ReservaResourceTest {
         @Inject
         QuartoService quartoService;
 
-        // @Test
-        // public void testFindAll() {
-        // given()
-        // .when().get("/reservas")
-        // .then()
-        // .statusCode(200);
-        // }
+        @Test
+        public void testFindAll() {
+                given()
+                                .when().get("/reservas")
+                                .then()
+                                .statusCode(200);
+        }
 
         @Test
         public void testInsert() {
@@ -58,7 +58,7 @@ public class ReservaResourceTest {
                 QuartoDTO quartoTest = new QuartoDTO(1, 150.0, true, tipo);
                 QuartoResponseDTO quarto = quartoService.insert(quartoTest);
 
-                LocalDate dataInicio = LocalDate.now().plusDays(1);
+                LocalDate dataInicio = LocalDate.now();
                 LocalDate dataFim = dataInicio.plusDays(5);
                 ReservaDTO dto = new ReservaDTO(dataInicio, dataFim, quarto.id(), usuario.id());
 
