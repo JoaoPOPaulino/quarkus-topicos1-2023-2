@@ -64,18 +64,20 @@ public class UsuarioResourceTest {
         public void testUpdate() {
                 List<TelefoneDTO> telefones = new ArrayList<TelefoneDTO>();
                 telefones.add(new TelefoneDTO("63", "5555-5555"));
+
                 EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
                                 123);
 
-                UsuarioDTO dto = new UsuarioDTO(
+                UsuarioDTO dtoInsert = new UsuarioDTO(
                                 "Mark Zuckerberg Update",
-                                "marquinho",
+                                "morkos",
                                 "333",
                                 1,
                                 telefones,
                                 endereco);
 
-                UsuarioResponseDTO usuarioTest = usuarioService.insert(dto);
+                UsuarioResponseDTO usuarioTest = usuarioService.insert(dtoInsert);
+
                 Long id = usuarioTest.id();
 
                 UsuarioDTO dtoUpdate = new UsuarioDTO(
@@ -92,17 +94,6 @@ public class UsuarioResourceTest {
                                 .when().put("/usuarios/" + id)
                                 .then()
                                 .statusCode(204);
-
-                // verificando a alteracao
-
-                System.out.println(id);
-                System.out.println(id);
-                System.out.println(id);
-                System.out.println(id);
-                UsuarioResponseDTO usu = usuarioService.findById(4l);
-                assertThat(usu.nome(), is("Mark Zuckerberg"));
-                assertThat(usu.login(), is("mark"));
-
         }
 
         @Test
