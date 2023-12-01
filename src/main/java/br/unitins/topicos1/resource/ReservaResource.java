@@ -39,7 +39,7 @@ public class ReservaResource {
     @POST
     public Response insert(@Valid ReservaDTO dto) {
 
-        LOGGER.info("Criar Reserva chamado com dataInicio: " + dto.dataI());
+        LOGGER.info("Criar Reserva chamado com dataInicio: " + dto.dataInicio());
 
         LOGGER.info("Reserva criada com sucesso");
         return Response.status(Status.CREATED).entity(service.insert(dto)).build();

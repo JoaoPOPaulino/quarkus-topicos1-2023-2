@@ -46,8 +46,10 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     @Transactional
     public UsuarioResponseDTO update(@Valid UsuarioDTO dto, Long id) {
+        LOGGER.info("Atualizando usuário com ID: " + id);
         Usuario usuario = repository.findById(id);
         if (usuario == null) {
+            LOGGER.error("Usuário não encontrado para o ID: " + id);
             throw new NotFoundException("Usuário não encontrado.");
         }
         usuario.atualizarComDTO(dto, hashService);

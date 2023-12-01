@@ -8,8 +8,8 @@ import br.unitins.topicos1.model.Reserva;
 
 public record ReservaResponseDTO(
         Long id,
-        LocalDate dataI,
-        LocalDate dataF,
+        LocalDate dataInicio,
+        LocalDate dataFim,
         Double preco,
         Quarto quarto,
         UsuarioResponseDTO usuario) {
@@ -17,7 +17,7 @@ public record ReservaResponseDTO(
     public static ReservaResponseDTO valueOf(Reserva reserva) {
         return new ReservaResponseDTO(
                 reserva.getId(),
-                reserva.getDataIncio(),
+                reserva.getDataInicio(),
                 reserva.getDataFim(),
                 reserva.getQuarto().getPreco(),
                 reserva.getQuarto(),

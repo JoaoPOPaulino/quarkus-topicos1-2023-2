@@ -7,7 +7,6 @@ import org.jboss.logging.Logger;
 
 import br.unitins.topicos1.dto.reserva.ReservaDTO;
 import br.unitins.topicos1.dto.reserva.ReservaResponseDTO;
-import br.unitins.topicos1.model.Pagamento;
 import br.unitins.topicos1.model.Quarto;
 import br.unitins.topicos1.model.Reserva;
 import br.unitins.topicos1.model.Usuario;
@@ -38,10 +37,8 @@ public class ReservaServiceImpl implements ReservaService {
     @Override
     @Transactional
     public ReservaResponseDTO insert(@Valid ReservaDTO dto) {
-        LOGGER.info("Inserindo reserva com dataInicio: " + dto.dataI());
         Quarto quarto = quartoRepository.findById(dto.idQuarto());
         Usuario usuario = usuarioRepository.findById(dto.idUsuario());
-
         if (quarto == null || usuario == null) {
             throw new IllegalArgumentException("Quarto ou Usuário não encontrado.");
         }
@@ -81,14 +78,6 @@ public class ReservaServiceImpl implements ReservaService {
         return reservas.stream()
                 .map(ReservaResponseDTO::valueOf)
                 .collect(Collectors.toList());
-    }
-
-    @Transactional
-    public void atualizarReservaComPagamento(Long idReserva, Pagamento pagamento) {
-        Reserva reserva = repository.findById(idReserva);
-        if (reserva == null) {
-            throw new NotFoundException("Reserva não encontrada.");
-        }
     }
 
     @Override

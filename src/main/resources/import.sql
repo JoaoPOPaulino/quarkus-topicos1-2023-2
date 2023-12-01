@@ -49,15 +49,16 @@ INSERT INTO comentario (conteudo, dataCriacao, id_usuarios) VALUES ('Comentário
 INSERT INTO comentario (conteudo, dataCriacao, id_usuarios) VALUES ('Comentário 3', '2023-09-03 12:00:00', 3);
 INSERT INTO comentario (conteudo, dataCriacao, id_usuarios) VALUES ('Comentário 4', '2023-09-04 13:00:00', 4);
 
--- Inserir dados de Reserva
-INSERT INTO reserva (dataIncio, dataFim, preco, quantidade, id_quarto, id_usuario) VALUES ('2023-09-10', '2023-09-15', 500.0, 2, 1, 1);
-INSERT INTO reserva (dataIncio, dataFim, preco, quantidade, id_quarto, id_usuario) VALUES ('2023-10-01', '2023-10-05', 600.0, 1, 2, 2);
-INSERT INTO reserva (dataIncio, dataFim, preco, quantidade, id_quarto, id_usuario) VALUES ('2023-10-10', '2023-10-15', 700.0, 1, 3, 3);
+-- Inserir dados de Reserva (corrigido)
+INSERT INTO reserva (dataInicio, dataFim, preco, quantidade, id_quarto, id_usuario) VALUES ('2023-09-10', '2023-09-15', 500.0, 1, 1);
+INSERT INTO reserva (dataInicio, dataFim, preco, quantidade, id_quarto, id_usuario) VALUES ('2023-10-01', '2023-10-05', 600.0, 2, 2);
+INSERT INTO reserva (dataInicio, dataFim, preco, quantidade, id_quarto, id_usuario) VALUES ('2023-10-10', '2023-10-15', 700.0, 3, 3);
 
 -- Inserir dados de Servico
-INSERT INTO servico (nome, descricao, horaInicio, horaFim) VALUES ('Serviço 1', 'Descrição 1', '08:00:00', '10:00:00');
-INSERT INTO servico (nome, descricao, horaInicio, horaFim) VALUES ('Serviço 2', 'Descrição 2', '10:00:00', '12:00:00');
-INSERT INTO servico (nome, descricao, horaInicio, horaFim) VALUES ('Serviço 3', 'Descrição 3', '12:00:00', '14:00:00');
+INSERT INTO servico (nome, descricao, horaInicio, horaFim) VALUES ('Serviço 1', 'Descrição 1', '08:00', '10:00');
+INSERT INTO servico (nome, descricao, horaInicio, horaFim) VALUES ('Serviço 2', 'Descrição 2', '10:00', '12:00');
+INSERT INTO servico (nome, descricao, horaInicio, horaFim) VALUES ('Serviço 3', 'Descrição 3', '12:00', '14:00');
+
 
 -- Inserir dados de Pagamento
 INSERT INTO pagamento (dataPagamento, valor, tipoPagamento, id_reserva) VALUES ('2023-09-05 15:00:00', 500.0, 1, 1);

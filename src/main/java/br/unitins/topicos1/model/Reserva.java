@@ -24,30 +24,29 @@ public class Reserva extends DefaultEntity {
     private Double preco;
 
     public Reserva() {
-
     }
 
     public Reserva(ReservaDTO dto, Quarto quarto, Usuario usuario) {
-        this.dataInicio = dto.dataI();
-        this.dataFim = dto.dataF();
+        this.dataInicio = dto.dataInicio();
+        this.dataFim = dto.dataFim();
         this.preco = quarto.getPreco();
         this.quarto = quarto;
         this.usuario = usuario;
     }
 
     public void atualizarComDTO(ReservaDTO dto, Quarto quarto, Usuario usuario) {
-        this.dataInicio = dto.dataI();
-        this.dataFim = dto.dataF();
+        this.dataInicio = dto.dataInicio();
+        this.dataFim = dto.dataFim();
         this.preco = quarto.getPreco();
         this.quarto = quarto;
         this.usuario = usuario;
     }
 
-    public LocalDate getdataInicio() {
+    public LocalDate getDataInicio() {
         return dataInicio;
     }
 
-    public void setdataInicio(LocalDate dataInicio) {
+    public void setDataInicio(LocalDate dataInicio) {
         this.dataInicio = dataInicio;
     }
 

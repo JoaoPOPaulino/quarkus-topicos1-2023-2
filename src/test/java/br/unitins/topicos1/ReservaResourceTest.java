@@ -3,6 +3,7 @@ package br.unitins.topicos1;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.*;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,20 +48,26 @@ public class ReservaResourceTest {
 
         @Test
         public void testInsert() {
-                List<TelefoneDTO> telefones = new ArrayList<>();
-                telefones.add(new TelefoneDTO("63", "5555-5555"));
-                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua", 123);
-                UsuarioDTO usuarioTest = new UsuarioDTO("Novo Usuário", "novoUsuario", "senha123", 1, telefones,
-                                endereco);
-                UsuarioResponseDTO usuario = usuarioService.insert(usuarioTest);
+                // List<TelefoneDTO> telefones = new ArrayList<>();
+                // telefones.add(new TelefoneDTO("63", "5555-5555"));
+                // EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
+                // 123);
+                // UsuarioDTO usuarioTest = new UsuarioDTO("Novo Usuário", "novoUsuario",
+                // "senha123", 1, telefones,
+                // endereco);
+                // UsuarioResponseDTO usuario = usuarioService.insert(usuarioTest);
 
-                TipoQuartoDTO tipo = new TipoQuartoDTO(1, "Casual");
-                QuartoDTO quartoTest = new QuartoDTO(1, 150.0, true, tipo);
-                QuartoResponseDTO quarto = quartoService.insert(quartoTest);
+                // TipoQuartoDTO tipo = new TipoQuartoDTO(1, "Casual");
+                // QuartoDTO quartoTest = new QuartoDTO(1, 150.0, true, tipo);
+                // QuartoResponseDTO quarto = quartoService.insert(quartoTest);
+
+                Long idQuarto = 1L;
+                Long idUsuario = 1L;
 
                 LocalDate dataInicio = LocalDate.now();
                 LocalDate dataFim = dataInicio.plusDays(5);
-                ReservaDTO dto = new ReservaDTO(dataInicio, dataFim, quarto.id(), usuario.id());
+                ReservaDTO dto = new ReservaDTO(dataInicio, dataFim, idQuarto,
+                                idUsuario);
 
                 given()
                                 .contentType(ContentType.JSON)
@@ -73,75 +80,52 @@ public class ReservaResourceTest {
                                 .body("preco", equalTo(150.0F));
         }
 
-        // @Test
-        // public void testUpdate() {
-        // List<TelefoneDTO> telefones = new ArrayList<>();
-        // telefones.add(new TelefoneDTO("63", "5555-5555"));
-        // EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
-        // 123);
-        // UsuarioDTO usuarioTest = new UsuarioDTO("Mark Zuckerberg Update", "ok",
-        // "senha123", 1,
-        // telefones, endereco);
+        @Test
+        public void testUpdate() {
 
-        // UsuarioResponseDTO usuario = usuarioService.insert(usuarioTest);
+                Long idQuarto = 1L;
+                Long idUsuario = 1L;
 
-        // TipoQuartoDTO tipo = new TipoQuartoDTO(1, "Casual");
+                LocalDate dataInicio = LocalDate.now();
+                LocalDate dataFim = dataInicio.plusDays(5);
+                ReservaDTO dtoInsert = new ReservaDTO(dataInicio, dataFim, idQuarto,
+                                idUsuario);
 
-        // QuartoDTO quartoTest = new QuartoDTO(1, 150.0, true, tipo);
+                ReservaResponseDTO reservaTest = reservaService.insert(dtoInsert);
+                Long id = reservaTest.id();
 
-        // QuartoResponseDTO quarto = quartoService.insert(quartoTest);
+                LocalDate newDataFim = dataFim.plusDays(3);
+                ReservaDTO dtoUpdate = new ReservaDTO(dataInicio, newDataFim, idQuarto,
+                                idUsuario);
+                given()
+                                .contentType(ContentType.JSON)
+                                .body(dtoUpdate)
+                                .when().put("/reservas/" + id)
+                                .then()
+                                .statusCode(204);
+        }
 
-        // LocalDate dataInicio = LocalDate.now();
-        // LocalDate dataFim = dataInicio.plusDays(5);
-        // ReservaDTO dtoInsert = new ReservaDTO(dataInicio, dataFim, quarto.id(),
-        // usuario.id());
+        @Test
+        public void testDelete() {
 
-        // ReservaResponseDTO reservaTest = reservaService.insert(dtoInsert);
-        // Long id = reservaTest.id();
+                Long idQuarto = 1L;
+                Long idUsuario = 1L;
 
-        // LocalDate newDataFim = dataFim.plusDays(3);
-        // ReservaDTO dtoUpdate = new ReservaDTO(newDataFim, dataFim, quarto.id(),
-        // usuario.id());
+                LocalDate dataInicio = LocalDate.now();
+                LocalDate dataFim = dataInicio.plusDays(5);
+                ReservaDTO dtoInsert = new ReservaDTO(dataInicio, dataFim, idQuarto,
+                                idUsuario);
+                ReservaResponseDTO reservaTest = reservaService.insert(dtoInsert);
 
-        // given()
-        // .contentType(ContentType.JSON)
-        // .body(dtoUpdate)
-        // .when().put("/reservas/" + id)
-        // .then()
-        // .statusCode(204);
-        // }
+                Long id = reservaTest.id();
+                given()
+                                .when().delete("/reservas/" + id)
+                                .then()
+                                .statusCode(204);
 
-        // @Test
-        // public void testDelete() {
-
-        // List<TelefoneDTO> telefones = new ArrayList<>();
-        // telefones.add(new TelefoneDTO("63", "5555-5555"));
-        // EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
-        // 123);
-        // UsuarioDTO usuarioTest = new UsuarioDTO("Mark Zuckerberg Delete",
-        // "marquinho", "333", 1, telefones,
-        // endereco);
-        // UsuarioResponseDTO usuario = usuarioService.insert(usuarioTest);
-
-        // TipoQuartoDTO tipo = new TipoQuartoDTO(1, "Casual");
-        // QuartoDTO quartoTest = new QuartoDTO(1, 150.0, true, tipo);
-        // QuartoResponseDTO quarto = quartoService.insert(quartoTest);
-
-        // LocalDate dataInicio = LocalDate.now();
-        // LocalDate dataFim = dataInicio.plusDays(5);
-        // ReservaDTO dtoInsert = new ReservaDTO(dataInicio, dataFim, quarto.id(),
-        // usuario.id());
-        // ReservaResponseDTO reservaTest = reservaService.insert(dtoInsert);
-
-        // Long id = reservaTest.id();
-        // given()
-        // .when().delete("/reservas/" + id)
-        // .then()
-        // .statusCode(204);
-
-        // given()
-        // .when().get("/reservas/" + id)
-        // .then()
-        // .statusCode(404);
-        // }
+                given()
+                                .when().get("/reservas/" + id)
+                                .then()
+                                .statusCode(404);
+        }
 }
