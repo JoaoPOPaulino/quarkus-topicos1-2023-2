@@ -26,7 +26,7 @@ public class Pagamento extends DefaultEntity {
         this.dataPagamento = dto.dataPagamento();
         this.reserva = reserva;
         if (this.reserva != null) {
-            this.valor = this.reserva.getQuarto().getPreco();
+            this.valor = this.reserva.getPreco();
         }
     }
 
@@ -34,9 +34,8 @@ public class Pagamento extends DefaultEntity {
         this.tipoPagamento = TipoPagamento.valueOf(dto.tipoPagamento().id());
         this.dataPagamento = dto.dataPagamento();
         if (this.reserva != null) {
-            this.valor = this.reserva.getQuarto().getPreco();
+            this.valor = this.reserva.getPreco();
         }
-
     }
 
     public TipoPagamento getTipoPagamento() {

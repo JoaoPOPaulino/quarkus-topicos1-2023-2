@@ -31,9 +31,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @Transactional
-    public UsuarioResponseDTO insert(@Valid UsuarioDTO dto)
-
-    {
+    public UsuarioResponseDTO insert(@Valid UsuarioDTO dto) {
         if (repository.findByLogin(dto.login()) != null) {
             LOGGER.error("Tentativa de criar usuário com login existente: " + dto.login());
             throw new ValidationException("login", "Login já existe.");

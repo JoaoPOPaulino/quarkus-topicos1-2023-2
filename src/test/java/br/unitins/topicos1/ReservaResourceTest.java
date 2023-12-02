@@ -1,24 +1,15 @@
 package br.unitins.topicos1;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.notNullValue;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import br.unitins.topicos1.dto.EnderecoDTO;
-import br.unitins.topicos1.dto.TelefoneDTO;
-import br.unitins.topicos1.dto.quarto.QuartoDTO;
-import br.unitins.topicos1.dto.quarto.QuartoResponseDTO;
 import br.unitins.topicos1.dto.reserva.ReservaDTO;
 import br.unitins.topicos1.dto.reserva.ReservaResponseDTO;
-import br.unitins.topicos1.dto.tipo.TipoQuartoDTO;
-import br.unitins.topicos1.dto.usuario.UsuarioDTO;
-import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
 import br.unitins.topicos1.service.quarto.QuartoService;
 import br.unitins.topicos1.service.reserva.ReservaService;
 import br.unitins.topicos1.service.usuario.UsuarioService;
