@@ -45,7 +45,8 @@ public class ComentarioResourceTest {
                 List<TelefoneDTO> telefones = new ArrayList<TelefoneDTO>();
                 telefones.add(new TelefoneDTO("63", "5555-5555"));
 
-                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua", 123);
+                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
+                                123);
 
                 UsuarioDTO dtoInsert = new UsuarioDTO(
                                 "Mark Zuckerberg Update",
@@ -57,7 +58,8 @@ public class ComentarioResourceTest {
 
                 UsuarioResponseDTO usuarioTest = usuarioService.insert(dtoInsert);
 
-                ComentarioDTO dto = new ComentarioDTO("Comentário de teste", LocalDateTime.now(),
+                ComentarioDTO dto = new ComentarioDTO("Comentário de teste",
+                                LocalDateTime.now(),
                                 usuarioTest.id());
                 given()
                                 .contentType(ContentType.JSON)
@@ -74,7 +76,8 @@ public class ComentarioResourceTest {
                 List<TelefoneDTO> telefones = new ArrayList<>();
                 telefones.add(new TelefoneDTO("63", "5555-5555"));
 
-                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua", 123);
+                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
+                                123);
 
                 String loginUnico = "usuario_" + UUID.randomUUID().toString();
 
@@ -88,10 +91,12 @@ public class ComentarioResourceTest {
 
                 UsuarioResponseDTO usuarioTest = usuarioService.insert(dtoUsuario);
 
-                ComentarioDTO dto = new ComentarioDTO("Comentário de teste", LocalDateTime.now(), usuarioTest.id());
+                ComentarioDTO dto = new ComentarioDTO("Comentário de teste",
+                                LocalDateTime.now(), usuarioTest.id());
                 ComentarioResponseDTO comentarioTest = comentarioService.insert(dto);
 
-                ComentarioDTO dtoUpdate = new ComentarioDTO("Comentário Atualizado", LocalDateTime.now(),
+                ComentarioDTO dtoUpdate = new ComentarioDTO("Comentário Atualizado",
+                                LocalDateTime.now(),
                                 usuarioTest.id());
                 Long id = comentarioTest.id();
 
@@ -132,6 +137,33 @@ public class ComentarioResourceTest {
                                 .when().delete("/comentarios/" + id)
                                 .then()
                                 .statusCode(204);
+        }
+
+        @Test
+        public void testFindComentariosByData() {
+                LocalDateTime dataTeste = LocalDateTime.now().minusDays(1);
+                given()
+                                .queryParam("data", dataTeste.toString())
+                                .when().get("/comentarios/data")
+                                .then()
+                                .statusCode(200);
+        }
+
+        @Test
+        public void testFindById() {
+                Long idUsuario = 1L;
+
+                ComentarioDTO dto = new ComentarioDTO("Comentário de teste",
+                                LocalDateTime.now(),
+                                idUsuario);
+
+                ComentarioResponseDTO comentario = comentarioService.insert(dto);
+                Long id = comentario.id();
+                given()
+                                .when().get("/comentarios/" + id)
+                                .then()
+                                .statusCode(200)
+                                .body("id", is(id.intValue()));
         }
 
 }

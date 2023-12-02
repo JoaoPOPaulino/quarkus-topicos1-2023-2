@@ -1,5 +1,7 @@
 package br.unitins.topicos1.service.comentario;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -69,6 +71,14 @@ public class ComentarioServiceImpl implements ComentarioService {
     public List<ComentarioResponseDTO> findAll() {
         return repository.listAll()
                 .stream()
+                .map(ComentarioResponseDTO::valueOf)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ComentarioResponseDTO> findComentariosByData(LocalDateTime data) {
+        List<Comentario> comentarios = repository.findComentariosByData(data);
+        return comentarios.stream()
                 .map(ComentarioResponseDTO::valueOf)
                 .collect(Collectors.toList());
     }

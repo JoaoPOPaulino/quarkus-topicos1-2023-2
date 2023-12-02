@@ -1,5 +1,6 @@
 package br.unitins.topicos1.service.comentario;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import br.unitins.topicos1.dto.comentario.ComentarioDTO;
@@ -16,4 +17,6 @@ public interface ComentarioService {
     ComentarioResponseDTO update(@Valid ComentarioDTO dto, Long id);
 
     void delete(Long id);
+
+    List<ComentarioResponseDTO> findComentariosByData(LocalDateTime data);
 }

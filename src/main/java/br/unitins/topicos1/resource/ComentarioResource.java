@@ -1,5 +1,9 @@
 package br.unitins.topicos1.resource;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+
 import org.jboss.logging.Logger;
 
 import br.unitins.topicos1.dto.comentario.ComentarioDTO;
@@ -74,6 +78,21 @@ public class ComentarioResource {
         }
         LOGGER.info("Comentário com ID: " + id + " encontrado com sucesso");
         return Response.ok(dto).build();
+    }
+
+    @GET
+    @Path("/data")
+    public Response findComentariosByData(@QueryParam("data") String dataStr) {
+        LOGGER.info("Buscando comentários pela data: " + dataStr);
+        try {
+            LocalDateTime data = LocalDateTime.parse(dataStr);
+            List<ComentarioResponseDTO> comentarios = service.findComentariosByData(data);
+            LOGGER.info("Comentários recuperados com sucesso para a data: " + dataStr);
+            return Response.ok(comentarios).build();
+        } catch (Exception e) {
+            LOGGER.error("Erro ao buscar comentários pela data: " + dataStr + " - " + e.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).entity("Data inválida ou formato incorreto").build();
+        }
     }
 
 }
