@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.pagamento.PagamentoDTO;
 import br.unitins.topicos1.dto.pagamento.PagamentoResponseDTO;
+import br.unitins.topicos1.model.TipoPagamento;
 import jakarta.validation.Valid;
 
 public interface PagamentoService {
@@ -16,4 +17,6 @@ public interface PagamentoService {
     PagamentoResponseDTO findById(Long id);
 
     List<PagamentoResponseDTO> findByAll();
+
+    List<PagamentoResponseDTO> findByTipoPagamento(TipoPagamento tipoPagamento);
 }

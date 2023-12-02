@@ -63,19 +63,23 @@ public class PagamentoResourceTest {
 
                 List<TelefoneDTO> telefones = new ArrayList<>();
                 telefones.add(new TelefoneDTO("63", "5555-5555"));
-                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua", 123);
-                UsuarioDTO usuarioDTO = new UsuarioDTO("Mark Zuckerberg Update", "marquinho", "333", 1, telefones,
+                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
+                                123);
+                UsuarioDTO usuarioDTO = new UsuarioDTO("Mark Zuckerberg Update", "GH",
+                                "333", 1, telefones,
                                 endereco);
-                UsuarioResponseDTO usuarioCriado = usuarioService.insert(usuarioDTO);
+                UsuarioResponseDTO usuarioInsert = usuarioService.insert(usuarioDTO);
 
                 LocalDate dataInicio = LocalDate.now();
                 LocalDate dataFim = dataInicio.plusDays(5);
-                ReservaDTO reservaDTO = new ReservaDTO(dataInicio, dataFim, quartoCriado.id(), usuarioCriado.id());
+                ReservaDTO reservaDTO = new ReservaDTO(dataInicio, dataFim,
+                                quartoCriado.id(), usuarioInsert.id());
                 ReservaResponseDTO reservaCriada = reservaService.insert(reservaDTO);
 
                 TipoPagamentoDTO tipoPagamento = new TipoPagamentoDTO(1, "Cartão de Crédito");
                 LocalDateTime dataPagamento = LocalDateTime.now();
-                PagamentoDTO pagamentoDTO = new PagamentoDTO(dataPagamento, reservaCriada.id(), tipoPagamento);
+                PagamentoDTO pagamentoDTO = new PagamentoDTO(dataPagamento,
+                                reservaCriada.id(), tipoPagamento);
 
                 given()
                                 .contentType(ContentType.JSON)
@@ -96,19 +100,23 @@ public class PagamentoResourceTest {
 
                 List<TelefoneDTO> telefones = new ArrayList<>();
                 telefones.add(new TelefoneDTO("63", "5555-5555"));
-                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua", 123);
-                UsuarioDTO usuarioDTO = new UsuarioDTO("Mark Zuckerberg Update", "Marq", "333", 1, telefones,
+                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
+                                123);
+                UsuarioDTO usuarioDTO = new UsuarioDTO("Mark Zuckerberg Update", "Marq",
+                                "333", 1, telefones,
                                 endereco);
                 UsuarioResponseDTO usuarioUpdate = usuarioService.insert(usuarioDTO);
 
                 LocalDate dataInicio = LocalDate.now();
                 LocalDate dataFim = dataInicio.plusDays(5);
-                ReservaDTO reservaDTO = new ReservaDTO(dataInicio, dataFim, quartoCriado.id(), usuarioUpdate.id());
+                ReservaDTO reservaDTO = new ReservaDTO(dataInicio, dataFim,
+                                quartoCriado.id(), usuarioUpdate.id());
                 ReservaResponseDTO reservaCriada = reservaService.insert(reservaDTO);
 
                 TipoPagamentoDTO tipoPagamento = new TipoPagamentoDTO(1, "Cartão de Crédito");
                 LocalDateTime dataPagamento = LocalDateTime.now();
-                PagamentoDTO pagamentoDTO = new PagamentoDTO(dataPagamento, reservaCriada.id(), tipoPagamento);
+                PagamentoDTO pagamentoDTO = new PagamentoDTO(dataPagamento,
+                                reservaCriada.id(), tipoPagamento);
 
                 PagamentoResponseDTO pagamentoTest = pagamentoService.insert(pagamentoDTO);
 
@@ -117,7 +125,8 @@ public class PagamentoResourceTest {
                 TipoPagamentoDTO novoTipoPagamento = new TipoPagamentoDTO(2, "Dinheiro");
                 LocalDateTime novaDataPagamento = LocalDateTime.now().plusHours(1);
 
-                PagamentoDTO pagamentoAtualizado = new PagamentoDTO(novaDataPagamento, pagamentoDTO.idReserva(),
+                PagamentoDTO pagamentoAtualizado = new PagamentoDTO(novaDataPagamento,
+                                pagamentoDTO.idReserva(),
                                 novoTipoPagamento);
 
                 given()
@@ -136,19 +145,23 @@ public class PagamentoResourceTest {
 
                 List<TelefoneDTO> telefones = new ArrayList<>();
                 telefones.add(new TelefoneDTO("63", "5555-5555"));
-                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua", 123);
-                UsuarioDTO usuarioDTO = new UsuarioDTO("Mark Zuckerberg Delete", "MarkD", "333", 1, telefones,
+                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
+                                123);
+                UsuarioDTO usuarioDTO = new UsuarioDTO("Mark Zuckerberg Delete", "MarkD",
+                                "333", 1, telefones,
                                 endereco);
                 UsuarioResponseDTO usuarioCriado = usuarioService.insert(usuarioDTO);
 
                 LocalDate dataInicio = LocalDate.now();
                 LocalDate dataFim = dataInicio.plusDays(5);
-                ReservaDTO reservaDTO = new ReservaDTO(dataInicio, dataFim, quartoCriado.id(), usuarioCriado.id());
+                ReservaDTO reservaDTO = new ReservaDTO(dataInicio, dataFim,
+                                quartoCriado.id(), usuarioCriado.id());
                 ReservaResponseDTO reservaCriada = reservaService.insert(reservaDTO);
 
                 TipoPagamentoDTO tipoPagamento = new TipoPagamentoDTO(1, "Cartão de Crédito");
                 LocalDateTime dataPagamento = LocalDateTime.now();
-                PagamentoDTO pagamentoDTO = new PagamentoDTO(dataPagamento, reservaCriada.id(), tipoPagamento);
+                PagamentoDTO pagamentoDTO = new PagamentoDTO(dataPagamento,
+                                reservaCriada.id(), tipoPagamento);
                 PagamentoResponseDTO pagamentoCriado = pagamentoService.insert(pagamentoDTO);
 
                 Long id = pagamentoCriado.id();
@@ -162,4 +175,41 @@ public class PagamentoResourceTest {
                                 .then()
                                 .statusCode(404);
         }
+
+        @Test
+        public void testFindById() {
+                TipoQuartoDTO tipoQuarto = new TipoQuartoDTO(1, "Casual");
+                QuartoDTO quartoDTO = new QuartoDTO(1, 150.0, true, tipoQuarto);
+                QuartoResponseDTO quartoCriado = quartoService.insert(quartoDTO);
+
+                List<TelefoneDTO> telefones = new ArrayList<>();
+                telefones.add(new TelefoneDTO("63", "5555-5555"));
+                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
+                                123);
+                UsuarioDTO usuarioDTO = new UsuarioDTO("Mark Zuckerberg Update", "marquinho",
+                                "333", 1, telefones,
+                                endereco);
+                UsuarioResponseDTO usuarioCriado = usuarioService.insert(usuarioDTO);
+
+                LocalDate dataInicio = LocalDate.now();
+                LocalDate dataFim = dataInicio.plusDays(5);
+                ReservaDTO reservaDTO = new ReservaDTO(dataInicio, dataFim,
+                                quartoCriado.id(), usuarioCriado.id());
+                ReservaResponseDTO reservaCriada = reservaService.insert(reservaDTO);
+
+                TipoPagamentoDTO tipoPagamento = new TipoPagamentoDTO(1, "Cartão de Crédito");
+                LocalDateTime dataPagamento = LocalDateTime.now();
+                PagamentoDTO pagamentoDTO = new PagamentoDTO(dataPagamento,
+                                reservaCriada.id(), tipoPagamento);
+
+                PagamentoResponseDTO pagamentoCriado = pagamentoService.insert(pagamentoDTO);
+                Long id = pagamentoCriado.id();
+
+                given()
+                                .when().get("/pagamentos/" + id)
+                                .then()
+                                .statusCode(200)
+                                .body("id", equalTo(id.intValue()));
+        }
+
 }

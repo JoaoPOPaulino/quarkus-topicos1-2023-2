@@ -2,11 +2,13 @@ package br.unitins.topicos1.service.pagamento;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import br.unitins.topicos1.dto.pagamento.PagamentoDTO;
 import br.unitins.topicos1.dto.pagamento.PagamentoResponseDTO;
 import br.unitins.topicos1.model.Pagamento;
 import br.unitins.topicos1.model.Reserva;
+import br.unitins.topicos1.model.TipoPagamento;
 import br.unitins.topicos1.repository.PagamentoRepository;
 import br.unitins.topicos1.repository.ReservaRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -77,5 +79,13 @@ public class PagamentoServiceImpl implements PagamentoService {
             dtos.add(PagamentoResponseDTO.valueOf(pagamento));
         }
         return dtos;
+    }
+
+    @Override
+    public List<PagamentoResponseDTO> findByTipoPagamento(TipoPagamento tipoPagamento) {
+        List<Pagamento> pagamentos = repository.findByTipoPagamento(tipoPagamento);
+        return pagamentos.stream()
+                .map(PagamentoResponseDTO::valueOf)
+                .collect(Collectors.toList());
     }
 }

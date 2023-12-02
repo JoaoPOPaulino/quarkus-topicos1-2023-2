@@ -1,74 +1,82 @@
 @startuml Hotel
 
 class Usuario {
-  - nome: String
-  - login: String
-  - senha: String
-  - listaTelefone: List<Telefone>
-  - endereco: Endereco
-  - reservas: List<Reserva>
-}
-
-class Telefone {
-  - codigoArea: String
-  - numero: String
-}
-
-class Endereco {
-  - estado: String
-  - cidade: String
-  - quadra: String
-  - rua: String
-  - numero: String
+    - id: Long
+    - login: String
+    - senha: String
 }
 
 class Reserva {
-  - dataInicio: LocalDate
-  - dataFinal: LocalDate
-  - pagamento: Pagamento
-}
-
-class Pagamento {
-  - tipoPagamento: TipoPagamento
-  - valor: double
+    - id: Long
+    - dataReserva: LocalDateTime
 }
 
 class Quarto {
-  - numero: int
-  - tipo: TipoQuarto
-  - preco: double
-  - disponivel: Boolean
+    - id: Long
+    - tipoQuarto: TipoQuarto
+    - nomeImagem: String
 }
 
-class QuartoDescricao {
-  - descricao: String
-  - quartoHotel: Quarto
+class Pagamento {
+    - id: Long
+    - valor: Double
+    - dataPagamento: LocalDateTime
+    - tipoPagamento: TipoPagamento
 }
 
-enum TipoQuarto {
-  SIMPLES,
-  CASAL,
-  LUXO,
-  PRESIDENCIAL
+class Comentario {
+    - id: Long
+    - conteudo: String
+    - dataComentario: LocalDateTime
+}
+
+class Servico {
+    - id: Long
+    - nome: String
+    - descricao: String
+    - preco: Double
+}
+
+class Endereco {
+    - id: Long
+    - logradouro: String
+    - numero: String
+    - complemento: String
+    - cidade: String
+    - estado: String
+    - cep: String
+}
+
+class Perfil {
+    - id: Long
+    - nome: String
 }
 
 enum TipoPagamento {
-  CARTAO_CREDITO,
-  CARTAO_DEBITO,
-  PIX,
-  TRANSFERENCIA
+    - id: Long
+    - descricao: String
 }
 
-Usuario "1" --o "0..*" Telefone
-Usuario "1" --o "1" Endereco
-Usuario "1" --o "0..*" Reserva
-Reserva "1" --o "1" Quarto
-Reserva "1" --o "0..1" Pagamento
-Reserva "1" --o "1" Usuario
-Pagamento "1" --o "1" Reserva
-Quarto "1" --o "1..*" QuartoDescricao
-Quarto "1" --o "0..*" Reserva
-Quarto ..> TipoQuarto
-Pagamento ..> TipoPagamento
+enum TipoQuarto {
+    - id: Long
+    - descricao: String
+}
+
+class Telefone {
+    - id: Long
+    - numero: String
+}
+
+Usuario "1" --> "*" Reserva
+Reserva "1" --> "1" Quarto
+Reserva "1" --> "1" Pagamento
+Usuario "*" --> "*" Comentario
+Usuario "1" --> "*" Telefone
+Usuario "1" --> "1" Endereco
+Usuario "*" --> "*" Perfil
+Quarto "1" --> "1" TipoQuarto
+Pagamento "1" --> TipoPagamento
+
+
 
 @enduml

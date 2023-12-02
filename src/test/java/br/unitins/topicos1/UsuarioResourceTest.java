@@ -105,4 +105,15 @@ public class UsuarioResourceTest {
                                 .then()
                                 .statusCode(204);
         }
+
+        @Test
+        public void testFindById() {
+                Long id = 1L;
+                given()
+                                .when()
+                                .get("/usuarios/" + id)
+                                .then()
+                                .statusCode(200)
+                                .body("id", is(id.intValue()));
+        }
 }

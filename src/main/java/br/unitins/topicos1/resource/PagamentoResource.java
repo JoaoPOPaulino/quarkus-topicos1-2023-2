@@ -3,6 +3,7 @@ package br.unitins.topicos1.resource;
 import org.jboss.logging.Logger;
 
 import br.unitins.topicos1.dto.pagamento.PagamentoDTO;
+import br.unitins.topicos1.model.TipoPagamento;
 import br.unitins.topicos1.service.pagamento.PagamentoService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -65,4 +66,15 @@ public class PagamentoResource {
         LOGGER.info("Pagamentos recuperados com sucesso");
         return response;
     }
+
+    @GET
+    @Path("/search/tipoPagamento/{tipoPagamento}")
+    public Response findByTipoPagamento(@PathParam("tipoPagamento") TipoPagamento tipoPagamento) {
+        LOGGER.info("Buscando pagamentos pelo tipo: " + tipoPagamento);
+        Response response = response = Response.ok(service.findByTipoPagamento(tipoPagamento)).build();
+
+        LOGGER.info("Pagamento do tipo: " + tipoPagamento + " recuperados com sucesso");
+        return response;
+    }
+
 }
