@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import org.junit.jupiter.api.Test;
 
@@ -31,8 +32,8 @@ public class ServicoResourceTest {
 
         @Test
         public void testInsert() {
-                LocalDateTime horaInicio = LocalDateTime.of(2023, 1, 1, 8, 0);
-                LocalDateTime horaFim = LocalDateTime.of(2023, 1, 1, 11, 30);
+                LocalTime horaInicio = LocalTime.of(7, 30);
+                LocalTime horaFim = LocalTime.of(10, 45);
 
                 ServicoDTO dto = new ServicoDTO(
                                 "Café da Manhã",
@@ -54,8 +55,9 @@ public class ServicoResourceTest {
 
         @Test
         public void testUpdate() {
-                LocalDateTime horaInicio = LocalDateTime.of(2023, 1, 1, 8, 0);
-                LocalDateTime horaFim = LocalDateTime.of(2023, 1, 1, 11, 30);
+                LocalTime horaInicio = LocalTime.of(7, 30);
+                LocalTime horaFim = LocalTime.of(10, 45);
+
                 ServicoDTO dtoInsert = new ServicoDTO(
                                 "Café da Manhã",
                                 "Descrição Original",
@@ -65,8 +67,9 @@ public class ServicoResourceTest {
                 ServicoResponseDTO servicoTest = servicoService.insert(dtoInsert);
                 Long id = servicoTest.id();
 
-                LocalDateTime horaInicioUpdate = LocalDateTime.of(2023, 1, 1, 8, 0);
-                LocalDateTime horaFimUpdate = LocalDateTime.of(2023, 1, 1, 11, 0);
+                LocalTime horaInicioUpdate = LocalTime.of(8, 30);
+                LocalTime horaFimUpdate = LocalTime.of(11, 00);
+
                 ServicoDTO dtoUpdate = new ServicoDTO(
                                 "Café da Manhã Atualizado",
                                 "Descrição Atualizada",
@@ -83,8 +86,9 @@ public class ServicoResourceTest {
 
         @Test
         void testDelete() {
-                LocalDateTime horaInicio = LocalDateTime.of(2023, 1, 1, 8, 0);
-                LocalDateTime horaFim = LocalDateTime.of(2023, 1, 1, 11, 30);
+
+                LocalTime horaInicio = LocalTime.of(8, 30);
+                LocalTime horaFim = LocalTime.of(11, 00);
 
                 ServicoDTO dto = new ServicoDTO(
                                 "Café da Manhã",

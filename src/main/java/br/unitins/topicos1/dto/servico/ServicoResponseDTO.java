@@ -1,6 +1,7 @@
 package br.unitins.topicos1.dto.servico;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import br.unitins.topicos1.model.Servico;
 
@@ -8,8 +9,8 @@ public record ServicoResponseDTO(
         Long id,
         String nome,
         String descricao,
-        LocalDateTime horaInicio,
-        LocalDateTime horaFim) {
+        LocalTime horaInicio,
+        LocalTime horaFim) {
     public static ServicoResponseDTO valueOf(Servico servico) {
         return new ServicoResponseDTO(
                 servico.getId(),

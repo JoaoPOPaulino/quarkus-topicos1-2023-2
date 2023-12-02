@@ -1,5 +1,6 @@
 package br.unitins.topicos1;
 
+import static org.hamcrest.Matchers.*;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -39,18 +40,6 @@ public class ReservaResourceTest {
 
         @Test
         public void testInsert() {
-                // List<TelefoneDTO> telefones = new ArrayList<>();
-                // telefones.add(new TelefoneDTO("63", "5555-5555"));
-                // EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
-                // 123);
-                // UsuarioDTO usuarioTest = new UsuarioDTO("Novo Usuário", "novoUsuario",
-                // "senha123", 1, telefones,
-                // endereco);
-                // UsuarioResponseDTO usuario = usuarioService.insert(usuarioTest);
-
-                // TipoQuartoDTO tipo = new TipoQuartoDTO(1, "Casual");
-                // QuartoDTO quartoTest = new QuartoDTO(1, 150.0, true, tipo);
-                // QuartoResponseDTO quarto = quartoService.insert(quartoTest);
 
                 Long idQuarto = 1L;
                 Long idUsuario = 1L;
@@ -120,3 +109,13 @@ public class ReservaResourceTest {
                                 .statusCode(404);
         }
 }
+
+// @Test
+// public void testHistoricoReservas() {
+// given()
+// .auth().preemptive()
+// .oauth2("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c")
+// .when().get("/reservas/historico")
+// .then()
+// .statusCode(200);
+// }

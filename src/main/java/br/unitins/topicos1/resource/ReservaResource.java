@@ -8,7 +8,10 @@ import org.jboss.logging.Logger;
 import br.unitins.topicos1.dto.reserva.ReservaDTO;
 import br.unitins.topicos1.dto.reserva.ReservaResponseDTO;
 import br.unitins.topicos1.service.reserva.ReservaService;
+import io.smallrye.jwt.build.JwtException;
 import jakarta.inject.Inject;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.PersistenceException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
@@ -84,15 +87,28 @@ public class ReservaResource {
     @GET
     @Path("/historico")
     public Response historicoReservas() {
-        LOGGER.info("Buscando histórico de reservas do usuário");
         try {
             Long usuarioId = Long.parseLong(jwt.getSubject());
             List<ReservaResponseDTO> reservas = service.findReservaByUsuarioId(usuarioId);
-            LOGGER.info("Histórico de reservas do usuário recuperado com sucesso");
             return Response.ok(reservas).build();
         } catch (NumberFormatException e) {
-            LOGGER.error("Erro ao recuperar histórico de reservas: Usuário não autorizado");
-            return Response.status(Response.Status.UNAUTHORIZED).entity("Usuário não autorizado.").build();
+            LOGGER.error("Erro na conversão do ID do usuário: " + e.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).entity("Formato de ID inválido.").build();
+        } catch (JwtException e) {
+            LOGGER.error("Erro no token JWT: " + e.getMessage());
+            return Response.status(Response.Status.UNAUTHORIZED).entity("Token inválido ou expirado.").build();
+        } catch (NoResultException e) {
+            LOGGER.error("Nenhum resultado encontrado: " + e.getMessage());
+            return Response.status(Response.Status.NOT_FOUND).entity("Histórico de reservas não encontrado.").build();
+        } catch (PersistenceException e) {
+            LOGGER.error("Erro de acesso ao banco de dados: " + e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Erro no servidor.").build();
+        } catch (SecurityException e) {
+            LOGGER.error("Acesso negado: " + e.getMessage());
+            return Response.status(Response.Status.FORBIDDEN).entity("Acesso negado.").build();
+        } catch (Exception e) {
+            LOGGER.error("Erro inesperado: " + e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Erro interno do servidor.").build();
         }
     }
 }
