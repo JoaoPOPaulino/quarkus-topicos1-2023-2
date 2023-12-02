@@ -29,10 +29,10 @@ INSERT INTO usuario (nome, login, senha, perfil) VALUES ('jp', 'jp', 'jp', 2);
 
 
 -- Inserir dados de Quarto
-INSERT INTO quarto (numero, preco, disponivel) VALUES (101, 150.0, true);
-INSERT INTO quarto (numero, preco, disponivel) VALUES (102, 200.0, true);
-INSERT INTO quarto (numero, preco, disponivel) VALUES (103, 300.0, false);
-INSERT INTO quarto (numero, preco, disponivel) VALUES (104, 450.0, true);
+INSERT INTO quarto (numero, tipoQuarto, preco, disponivel) VALUES (101, 1, 150.0, true);
+INSERT INTO quarto (numero, tipoQuarto, preco, disponivel) VALUES (102, 2, 200.0, true);
+INSERT INTO quarto (numero, tipoQuarto, preco, disponivel) VALUES (103, 3, 300.0, false);
+INSERT INTO quarto (numero, tipoQuarto, preco, disponivel) VALUES (104, 4, 450.0, true);
 
 -- Inserir Telefone no Usuario
 INSERT INTO usuario_telefone(id_usuario, id_telefone) VALUES(1, 1);

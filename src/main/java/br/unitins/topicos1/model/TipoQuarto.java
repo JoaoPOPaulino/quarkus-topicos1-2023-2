@@ -1,7 +1,7 @@
 package br.unitins.topicos1.model;
 
 public enum TipoQuarto {
-    CASUAL(1, "Casul"),
+    CASUAL(1, "Casual"),
     LUXO(2, "Luxo"),
     PRSIDENCIAL(3, "Presidencial"),
     VIP(4, "Vip");

@@ -34,25 +34,18 @@ public class AuthResource {
 
     @POST
     public Response login(@Valid LoginDTO dto) {
-
         LOG.info("Iniciando autenticação.");
         String hashSenha = hashService.getHashSenha(dto.senha());
-        LOG.info("Hash da senha gerada.");
-
-        LOG.debug(hashSenha);
-
         UsuarioResponseDTO result = service.findByLoginAndSenha(dto.login(), hashSenha);
 
         if (result != null) {
             LOG.info("Login e senha corretos.");
-        } else
-            LOG.info("Login e senha incorretos.");
-
-        String token = jwtService.generateJwt(result);
-
-        LOG.info("Finalizando o processo de login.");
-
-        return Response.ok().header("Authorization", token).build();
+            String token = jwtService.generateJwt(result);
+            LOG.info("Token JWT gerado com sucesso.");
+            return Response.ok().header("Authorization", "Bearer " + token).build();
+        } else {
+            LOG.warn("Login e senha incorretos.");
+            return Response.status(Response.Status.UNAUTHORIZED).entity("Login ou senha incorretos").build();
+        }
     }
-
 }

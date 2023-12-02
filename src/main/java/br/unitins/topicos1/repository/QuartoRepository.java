@@ -10,8 +10,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class QuartoRepository implements PanacheRepository<Quarto> {
 
-    public List<Quarto> findByTipo(TipoQuarto tipo) {
-        return find("tipo", tipo).list();
+    public List<Quarto> findByTipo(TipoQuarto tipoQuarto) {
+        return find("tipoQuarto", tipoQuarto).list();
     }
 
 }

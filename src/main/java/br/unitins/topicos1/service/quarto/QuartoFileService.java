@@ -10,11 +10,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import org.jboss.logging.Logger;
+
+import br.unitins.topicos1.resource.UsuarioResource;
 import br.unitins.topicos1.service.FileService;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class QuartoFileService implements FileService {
+    private static final Logger LOGGER = Logger.getLogger(UsuarioResource.class.getName());
 
     private final String PATH_USER = System.getProperty("user.home") +
             File.separator + "quarkus" +
@@ -28,6 +32,7 @@ public class QuartoFileService implements FileService {
 
     @Override
     public String salvar(String nomeArquivo, byte[] arquivo) throws IOException {
+        LOGGER.info("Iniciando processo de salvamento do arquivo.");
         verificarTamanhoImagem(arquivo);
         verificarTipoImagem(nomeArquivo);
 
@@ -50,6 +55,7 @@ public class QuartoFileService implements FileService {
             fos.write(arquivo);
         }
 
+        LOGGER.info("Arquivo salvo com sucesso: " + novoNomeArquivo);
         return filePath.toFile().getName();
     }
 
@@ -67,8 +73,8 @@ public class QuartoFileService implements FileService {
 
     private void verificarTipoImagem(String nomeArquivo) throws IOException {
         String mimeType = Files.probeContentType(Paths.get(nomeArquivo));
-        if (!SUPPORTED_MIME_TYPES.contains(mimeType)) {
-            throw new IOException("Tipo de imagem não suportada.");
+        if (mimeType == null || !SUPPORTED_MIME_TYPES.contains(mimeType)) {
+            throw new IOException("Tipo de imagem não suportada ou não reconhecida.");
         }
     }
 }

@@ -94,23 +94,21 @@ public class QuartoResource {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response salvarImagemQuarto(@PathParam("id") Long id, @MultipartForm QuartoImageForm form) {
         LOGGER.info("Iniciando upload de imagem para o quarto com ID: " + id);
-        String nomeImagem;
         try {
-            nomeImagem = fileService.salvar(form.getNomeImagem(), form.getImagem());
+            String nomeImagem = fileService.salvar(form.getNomeImagem(), form.getImagem());
+            QuartoResponseDTO response = service.updateNomeImagem(id, nomeImagem);
+
+            if (response == null) {
+                LOGGER.warn("Quarto com ID: " + id + " não encontrado.");
+                return Response.status(Status.NOT_FOUND).entity("Quarto não encontrado").build();
+            }
+
+            LOGGER.info("Imagem atualizada com sucesso para o quarto com ID: " + id);
+            return Response.ok(response).build();
         } catch (IOException e) {
             LOGGER.error("Erro ao salvar imagem: " + e.getMessage());
-            Error error = new Error("406", e.getMessage());
-            return Response.status(Status.CONFLICT).entity(error).build();
+            return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
-
-        QuartoResponseDTO response = service.updateNomeImagem(id, nomeImagem);
-        if (response == null) {
-            LOGGER.warn("Quarto com ID: " + id + " não encontrado para atualização da imagem");
-            return Response.status(Status.NOT_FOUND).entity("Quarto não encontrado").build();
-        }
-
-        LOGGER.info("Imagem atualizada com sucesso para o quarto com ID: " + id);
-        return Response.ok(response).build();
     }
 
     @GET
