@@ -19,7 +19,6 @@ public class JwtServiceImpl implements JwtService {
         Instant now = Instant.now();
         Instant expiryDate = now.plus(EXPIRATION_TIME);
 
-        // exemplo para teste
         Set<String> roles = new HashSet<String>();
 
         roles.add(dto.perfil().getLabel());

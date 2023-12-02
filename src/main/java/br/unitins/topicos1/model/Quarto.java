@@ -1,11 +1,7 @@
 package br.unitins.topicos1.model;
 
-import java.util.List;
-
 import br.unitins.topicos1.dto.quarto.QuartoDTO;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
 
 @Entity
 public class Quarto extends DefaultEntity {
