@@ -1,17 +1,12 @@
 package br.unitins.topicos1.resource;
 
+import org.jboss.logging.Logger;
+
 import br.unitins.topicos1.dto.pagamento.PagamentoDTO;
 import br.unitins.topicos1.service.pagamento.PagamentoService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.DELETE;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.PUT;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
@@ -24,16 +19,23 @@ public class PagamentoResource {
     @Inject
     PagamentoService service;
 
+    private static final Logger LOGGER = Logger.getLogger(PagamentoResource.class.getName());
+
     @POST
     public Response insert(PagamentoDTO dto) {
-        return Response.status(Status.CREATED).entity(service.insert(dto)).build();
+        LOGGER.info("Inserindo novo pagamento");
+        Response response = Response.status(Status.CREATED).entity(service.insert(dto)).build();
+        LOGGER.info("Pagamento inserido com sucesso");
+        return response;
     }
 
     @PUT
     @Transactional
     @Path("/{id}")
     public Response update(PagamentoDTO dto, @PathParam("id") Long id) {
+        LOGGER.info("Atualizando pagamento com ID: " + id);
         service.update(dto, id);
+        LOGGER.info("Pagamento com ID: " + id + " atualizado com sucesso");
         return Response.noContent().build();
     }
 
@@ -41,18 +43,26 @@ public class PagamentoResource {
     @Transactional
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id) {
+        LOGGER.info("Excluindo pagamento com ID: " + id);
         service.delete(id);
+        LOGGER.info("Pagamento com ID: " + id + " excluído com sucesso");
         return Response.noContent().build();
     }
 
     @GET
     @Path("/{id}")
     public Response findById(@PathParam("id") Long id) {
-        return Response.ok(service.findById(id)).build();
+        LOGGER.info("Buscando pagamento com ID: " + id);
+        Response response = Response.ok(service.findById(id)).build();
+        LOGGER.info("Pagamento com ID: " + id + " encontrado com sucesso");
+        return response;
     }
 
     @GET
     public Response findAll() {
-        return Response.ok(service.findByAll()).build();
+        LOGGER.info("Buscando todos os pagamentos");
+        Response response = Response.ok(service.findByAll()).build();
+        LOGGER.info("Pagamentos recuperados com sucesso");
+        return response;
     }
 }

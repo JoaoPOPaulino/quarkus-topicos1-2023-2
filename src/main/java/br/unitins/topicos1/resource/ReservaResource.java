@@ -34,22 +34,23 @@ public class ReservaResource {
     @Inject
     JsonWebToken jwt;
 
-    private static final Logger LOGGER = Logger.getLogger(UsuarioResource.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ReservaResource.class.getName());
 
     @POST
     public Response insert(@Valid ReservaDTO dto) {
-
-        LOGGER.info("Criar Reserva chamado com dataInicio: " + dto.dataInicio());
-
+        LOGGER.info("Iniciando a criação de uma nova reserva com data de início: " + dto.dataInicio());
+        Response response = Response.status(Status.CREATED).entity(service.insert(dto)).build();
         LOGGER.info("Reserva criada com sucesso");
-        return Response.status(Status.CREATED).entity(service.insert(dto)).build();
+        return response;
     }
 
     @PUT
     @Transactional
     @Path("/{id}")
     public Response update(@Valid ReservaDTO dto, @PathParam("id") Long id) {
+        LOGGER.info("Iniciando atualização da reserva com ID: " + id);
         service.update(dto, id);
+        LOGGER.info("Reserva com ID: " + id + " atualizada com sucesso");
         return Response.noContent().build();
     }
 
@@ -57,29 +58,40 @@ public class ReservaResource {
     @Transactional
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id) {
+        LOGGER.info("Iniciando exclusão da reserva com ID: " + id);
         service.delete(id);
+        LOGGER.info("Reserva com ID: " + id + " excluída com sucesso");
         return Response.noContent().build();
     }
 
     @GET
     public Response findAll() {
-        return Response.ok(service.findByAll()).build();
+        LOGGER.info("Buscando todas as reservas");
+        Response response = Response.ok(service.findByAll()).build();
+        LOGGER.info("Reservas recuperadas com sucesso");
+        return response;
     }
 
     @GET
     @Path("/{id}")
     public Response findById(@PathParam("id") Long id) {
-        return Response.ok(service.findById(id)).build();
+        LOGGER.info("Buscando reserva com ID: " + id);
+        Response response = Response.ok(service.findById(id)).build();
+        LOGGER.info("Reserva com ID: " + id + " encontrada com sucesso");
+        return response;
     }
 
     @GET
     @Path("/historico")
     public Response historicoReservas() {
+        LOGGER.info("Buscando histórico de reservas do usuário");
         try {
             Long usuarioId = Long.parseLong(jwt.getSubject());
             List<ReservaResponseDTO> reservas = service.findReservaByUsuarioId(usuarioId);
+            LOGGER.info("Histórico de reservas do usuário recuperado com sucesso");
             return Response.ok(reservas).build();
         } catch (NumberFormatException e) {
+            LOGGER.error("Erro ao recuperar histórico de reservas: Usuário não autorizado");
             return Response.status(Response.Status.UNAUTHORIZED).entity("Usuário não autorizado.").build();
         }
     }

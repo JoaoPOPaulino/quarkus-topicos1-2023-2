@@ -30,15 +30,19 @@ public class UsuarioResource {
 
     @POST
     public Response insert(UsuarioDTO dto) {
-        LOGGER.info("Inserindo novo usuário");
-        return Response.status(Status.CREATED).entity(service.insert(dto)).build();
+        LOGGER.info("Iniciando inserção de novo usuário");
+        Response response = Response.status(Status.CREATED).entity(service.insert(dto)).build();
+        LOGGER.info("Usuário inserido com sucesso");
+        return response;
     }
 
     @PUT
     @Transactional
     @Path("/{id}")
     public Response update(UsuarioDTO dto, @PathParam("id") Long id) {
+        LOGGER.info("Iniciando atualização do usuário com ID: " + id);
         service.update(dto, id);
+        LOGGER.info("Usuário com ID: " + id + " atualizado com sucesso");
         return Response.noContent().build();
     }
 
@@ -46,24 +50,35 @@ public class UsuarioResource {
     @Transactional
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id) {
+        LOGGER.info("Iniciando remoção do usuário com ID: " + id);
         service.delete(id);
+        LOGGER.info("Usuário com ID: " + id + " removido com sucesso");
         return Response.noContent().build();
     }
 
     @GET
     public Response findAll() {
-        return Response.ok(service.findByAll()).build();
+        LOGGER.info("Buscando todos os usuários");
+        Response response = Response.ok(service.findByAll()).build();
+        LOGGER.info("Usuários recuperados com sucesso");
+        return response;
     }
 
     @GET
     @Path("/{id}")
     public Response findById(@PathParam("id") Long id) {
-        return Response.ok(service.findById(id)).build();
+        LOGGER.info("Buscando usuário com ID: " + id);
+        Response response = Response.ok(service.findById(id)).build();
+        LOGGER.info("Usuário com ID: " + id + " recuperado com sucesso");
+        return response;
     }
 
     @GET
     @Path("/search/nome/{nome}")
     public Response findByNome(@PathParam("nome") String nome) {
-        return Response.ok(service.findByNome(nome)).build();
+        LOGGER.info("Buscando usuário pelo nome: " + nome);
+        Response response = Response.ok(service.findByNome(nome)).build();
+        LOGGER.info("Usuários com nome: " + nome + " recuperados com sucesso");
+        return response;
     }
 }
