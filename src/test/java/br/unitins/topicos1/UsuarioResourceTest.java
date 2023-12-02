@@ -3,6 +3,7 @@ package br.unitins.topicos1;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,33 +66,18 @@ public class UsuarioResourceTest {
                 List<TelefoneDTO> telefones = new ArrayList<TelefoneDTO>();
                 telefones.add(new TelefoneDTO("63", "5555-5555"));
 
-                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
-                                123);
+                UsuarioDTO novoUsuario = new UsuarioDTO(
+                                "Usuário Teste", "usuario_teste", "senha123", 1, telefones,
+                                new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua", 123));
+                UsuarioResponseDTO usuarioInserido = usuarioService.insert(novoUsuario);
 
-                UsuarioDTO dtoInsert = new UsuarioDTO(
-                                "Mark Zuckerberg Update",
-                                "morkos",
-                                "333",
-                                1,
-                                telefones,
-                                endereco);
-
-                UsuarioResponseDTO usuarioTest = usuarioService.insert(dtoInsert);
-
-                Long id = usuarioTest.id();
-
-                UsuarioDTO dtoUpdate = new UsuarioDTO(
-                                "Mark Zuckerberg",
-                                "mark",
-                                "555",
-                                1,
-                                telefones,
-                                endereco);
-
+                UsuarioDTO usuarioAtualizado = new UsuarioDTO(
+                                "Usuário Teste Atualizado", "usuario_teste", "senha123", 1, new ArrayList<>(),
+                                new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua", 123));
                 given()
                                 .contentType(ContentType.JSON)
-                                .body(dtoUpdate)
-                                .when().put("/usuarios/" + id)
+                                .body(usuarioAtualizado)
+                                .when().put("/usuarios/" + usuarioInserido.id())
                                 .then()
                                 .statusCode(204);
         }
