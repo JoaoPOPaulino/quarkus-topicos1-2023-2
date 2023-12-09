@@ -51,6 +51,7 @@ public class ComentarioResourceTest {
                 UsuarioDTO dtoInsert = new UsuarioDTO(
                                 "Mark Zuckerberg Update",
                                 "morkos",
+                                "mark@zuckerberg.com",
                                 "333",
                                 1,
                                 telefones,
@@ -84,6 +85,7 @@ public class ComentarioResourceTest {
                 UsuarioDTO dtoUsuario = new UsuarioDTO(
                                 "Mark Zuckerberg Update",
                                 loginUnico,
+                                loginUnico + "@zuckerberg.com",
                                 "senha123",
                                 1,
                                 telefones,
@@ -120,6 +122,7 @@ public class ComentarioResourceTest {
                 UsuarioDTO dtoUsuario = new UsuarioDTO(
                                 "Teste",
                                 "TestComentario",
+                                "teste@hotmail.com",
                                 "333",
                                 1,
                                 telefones,

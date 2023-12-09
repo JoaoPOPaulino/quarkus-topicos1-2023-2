@@ -1,6 +1,5 @@
 package br.unitins.topicos1.model;
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import br.unitins.topicos1.dto.servico.ServicoDTO;

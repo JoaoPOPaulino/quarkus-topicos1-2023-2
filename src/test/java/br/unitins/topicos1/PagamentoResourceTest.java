@@ -65,7 +65,7 @@ public class PagamentoResourceTest {
                 telefones.add(new TelefoneDTO("63", "5555-5555"));
                 EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
                                 123);
-                UsuarioDTO usuarioDTO = new UsuarioDTO("Mark Zuckerberg Update", "GH",
+                UsuarioDTO usuarioDTO = new UsuarioDTO("Mark Zuckerberg Update", "GH", "gh@hotmail.com",
                                 "333", 1, telefones,
                                 endereco);
                 UsuarioResponseDTO usuarioInsert = usuarioService.insert(usuarioDTO);
@@ -102,7 +102,7 @@ public class PagamentoResourceTest {
                 telefones.add(new TelefoneDTO("63", "5555-5555"));
                 EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
                                 123);
-                UsuarioDTO usuarioDTO = new UsuarioDTO("Mark Zuckerberg Update", "Marq",
+                UsuarioDTO usuarioDTO = new UsuarioDTO("Mark Zuckerberg Update", "Marq", "marq@hotmail.com",
                                 "333", 1, telefones,
                                 endereco);
                 UsuarioResponseDTO usuarioUpdate = usuarioService.insert(usuarioDTO);
@@ -147,7 +147,7 @@ public class PagamentoResourceTest {
                 telefones.add(new TelefoneDTO("63", "5555-5555"));
                 EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
                                 123);
-                UsuarioDTO usuarioDTO = new UsuarioDTO("Mark Zuckerberg Delete", "MarkD",
+                UsuarioDTO usuarioDTO = new UsuarioDTO("Mark Zuckerberg Delete", "MarkD", "marqd@hotmail.com",
                                 "333", 1, telefones,
                                 endereco);
                 UsuarioResponseDTO usuarioCriado = usuarioService.insert(usuarioDTO);
@@ -186,7 +186,7 @@ public class PagamentoResourceTest {
                 telefones.add(new TelefoneDTO("63", "5555-5555"));
                 EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
                                 123);
-                UsuarioDTO usuarioDTO = new UsuarioDTO("Mark Zuckerberg Update", "marquinho",
+                UsuarioDTO usuarioDTO = new UsuarioDTO("Mark Zuckerberg Update", "marquinho", "marquinho@hotmail.com",
                                 "333", 1, telefones,
                                 endereco);
                 UsuarioResponseDTO usuarioCriado = usuarioService.insert(usuarioDTO);

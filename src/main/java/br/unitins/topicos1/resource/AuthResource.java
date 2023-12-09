@@ -36,6 +36,7 @@ public class AuthResource {
     public Response login(@Valid LoginDTO dto) {
         LOG.info("Iniciando autenticação.");
         String hashSenha = hashService.getHashSenha(dto.senha());
+
         UsuarioResponseDTO result = service.findByLoginAndSenha(dto.login(), hashSenha);
 
         if (result != null) {

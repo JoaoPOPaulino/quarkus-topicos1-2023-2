@@ -3,8 +3,6 @@ package br.unitins.topicos1.service.reserva;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.jboss.logging.Logger;
-
 import br.unitins.topicos1.dto.reserva.ReservaDTO;
 import br.unitins.topicos1.dto.reserva.ReservaResponseDTO;
 import br.unitins.topicos1.model.Quarto;
@@ -13,7 +11,6 @@ import br.unitins.topicos1.model.Usuario;
 import br.unitins.topicos1.repository.QuartoRepository;
 import br.unitins.topicos1.repository.ReservaRepository;
 import br.unitins.topicos1.repository.UsuarioRepository;
-import br.unitins.topicos1.resource.UsuarioResource;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -31,8 +28,6 @@ public class ReservaServiceImpl implements ReservaService {
 
     @Inject
     UsuarioRepository usuarioRepository;
-
-    private static final Logger LOGGER = Logger.getLogger(UsuarioResource.class.getName());
 
     @Override
     @Transactional

@@ -1,6 +1,5 @@
 package br.unitins.topicos1.service.comentario;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;

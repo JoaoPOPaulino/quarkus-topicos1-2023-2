@@ -6,17 +6,25 @@ import java.io.IOException;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
-import br.unitins.topicos1.application.Error;
 import br.unitins.topicos1.dto.quarto.QuartoDTO;
 import br.unitins.topicos1.dto.quarto.QuartoResponseDTO;
 import br.unitins.topicos1.form.QuartoImageForm;
 import br.unitins.topicos1.model.TipoQuarto;
 import br.unitins.topicos1.service.quarto.QuartoFileService;
 import br.unitins.topicos1.service.quarto.QuartoService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.PATCH;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.ResponseBuilder;
@@ -36,6 +44,7 @@ public class QuartoResource {
     private static final Logger LOGGER = Logger.getLogger(QuartoResource.class.getName());
 
     @POST
+    @RolesAllowed({ "Admin" })
     public Response insert(@Valid QuartoDTO dto) {
         LOGGER.info("Iniciando inserção de novo quarto");
         Response response = Response.status(Response.Status.CREATED).entity(service.insert(dto)).build();
@@ -44,8 +53,8 @@ public class QuartoResource {
     }
 
     @PUT
-    @Transactional
     @Path("/{id}")
+    @RolesAllowed({ "Admin" })
     public Response update(@Valid QuartoDTO dto, @PathParam("id") Long id) {
         LOGGER.info("Iniciando atualização do quarto com ID: " + id);
         service.update(dto, id);
@@ -54,8 +63,8 @@ public class QuartoResource {
     }
 
     @DELETE
-    @Transactional
     @Path("/{id}")
+    @RolesAllowed({ "Admin" })
     public Response delete(@PathParam("id") Long id) {
         LOGGER.info("Iniciando exclusão do quarto com ID: " + id);
         service.delete(id);
@@ -64,6 +73,7 @@ public class QuartoResource {
     }
 
     @GET
+    @RolesAllowed({ "User", "Admin" })
     public Response findAll() {
         LOGGER.info("Buscando todos os quartos");
         Response response = Response.ok(service.findAll()).build();
@@ -73,6 +83,7 @@ public class QuartoResource {
 
     @GET
     @Path("/{id}")
+    @RolesAllowed({ "Admin" })
     public Response findById(@PathParam("id") Long id) {
         LOGGER.info("Buscando quarto com ID: " + id);
         QuartoResponseDTO response = service.findById(id);
@@ -82,6 +93,7 @@ public class QuartoResource {
 
     @GET
     @Path("/search/tipoQuarto/{tipoQuarto}")
+    @RolesAllowed({ "User", "Admin" })
     public Response findByTipo(@PathParam("tipoQuarto") TipoQuarto tipoQuarto) {
         LOGGER.info("Buscando quartos do tipo: " + tipoQuarto);
         Response response = Response.ok(service.findByTipo(tipoQuarto)).build();
@@ -91,6 +103,7 @@ public class QuartoResource {
 
     @PATCH
     @Path("{id}/upload/imagem")
+    @RolesAllowed({ "Admin" })
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response salvarImagemQuarto(@PathParam("id") Long id, @MultipartForm QuartoImageForm form) {
         LOGGER.info("Iniciando upload de imagem para o quarto com ID: " + id);
@@ -113,6 +126,7 @@ public class QuartoResource {
 
     @GET
     @Path("/download/imagem/{nomeImagem}")
+    @RolesAllowed({ "Admin" })
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response download(@PathParam("nomeImagem") String nomeImagem) {
         LOGGER.info("Iniciando download da imagem: " + nomeImagem);
