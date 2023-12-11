@@ -39,6 +39,7 @@ public class UsuarioResource {
     }
 
     @PUT
+    @Transactional
     @Path("/{id}")
     @RolesAllowed({ "User", "Admin" })
     public Response update(UsuarioDTO dto, @PathParam("id") Long id) {
@@ -49,6 +50,7 @@ public class UsuarioResource {
     }
 
     @DELETE
+    @Transactional
     @Path("/{id}")
     @RolesAllowed({ "Admin" })
     public Response delete(@PathParam("id") Long id) {

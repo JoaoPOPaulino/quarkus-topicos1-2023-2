@@ -16,15 +16,7 @@ import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.DELETE;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.PATCH;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.PUT;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.ResponseBuilder;
@@ -53,6 +45,7 @@ public class QuartoResource {
     }
 
     @PUT
+    @Transactional
     @Path("/{id}")
     @RolesAllowed({ "Admin" })
     public Response update(@Valid QuartoDTO dto, @PathParam("id") Long id) {
@@ -63,6 +56,7 @@ public class QuartoResource {
     }
 
     @DELETE
+    @Transactional
     @Path("/{id}")
     @RolesAllowed({ "Admin" })
     public Response delete(@PathParam("id") Long id) {
@@ -103,8 +97,8 @@ public class QuartoResource {
 
     @PATCH
     @Path("{id}/upload/imagem")
-    @RolesAllowed({ "Admin" })
     @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @RolesAllowed({ "Admin" })
     public Response salvarImagemQuarto(@PathParam("id") Long id, @MultipartForm QuartoImageForm form) {
         LOGGER.info("Iniciando upload de imagem para o quarto com ID: " + id);
         try {
@@ -126,8 +120,8 @@ public class QuartoResource {
 
     @GET
     @Path("/download/imagem/{nomeImagem}")
-    @RolesAllowed({ "Admin" })
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @RolesAllowed({ "Admin" })
     public Response download(@PathParam("nomeImagem") String nomeImagem) {
         LOGGER.info("Iniciando download da imagem: " + nomeImagem);
         File file = fileService.obter(nomeImagem);

@@ -39,6 +39,7 @@ public class ServiceResource {
     }
 
     @PUT
+    @Transactional
     @Path("/{id}")
     @RolesAllowed({ "Admin" })
     public Response update(ServicoDTO dto, @PathParam("id") Long id) {
@@ -49,6 +50,7 @@ public class ServiceResource {
     }
 
     @DELETE
+    @Transactional
     @Path("/{id}")
     @RolesAllowed({ "Admin" })
     public Response delete(@PathParam("id") Long id) {

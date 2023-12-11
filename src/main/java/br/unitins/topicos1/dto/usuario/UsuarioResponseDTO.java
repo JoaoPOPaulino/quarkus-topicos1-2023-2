@@ -12,6 +12,7 @@ public record UsuarioResponseDTO(
                 String nome,
                 String email,
                 String login,
+                String senha,
                 Perfil perfil,
                 List<TelefoneDTO> listaTelefone,
                 Endereco endereco) {
@@ -21,6 +22,7 @@ public record UsuarioResponseDTO(
                                 usuario.getNome(),
                                 usuario.getEmail(),
                                 usuario.getLogin(),
+                                usuario.getSenha(),
                                 usuario.getPerfil(),
                                 usuario.getListaTelefone()
                                                 .stream()

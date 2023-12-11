@@ -39,8 +39,8 @@ public class Usuario extends DefaultEntity {
 
     public Usuario(UsuarioDTO dto, HashService hashService) {
         this.nome = dto.nome();
+        this.email = dto.email();
         this.login = dto.login();
-        this.login = dto.email();
         this.senha = hashService.getHashSenha(dto.senha());
         this.perfil = Perfil.valueOf(dto.idPerfil());
 
@@ -57,8 +57,8 @@ public class Usuario extends DefaultEntity {
 
     public void atualizarComDTO(UsuarioDTO dto, HashService hashService) {
         this.nome = dto.nome();
+        this.email = dto.email();
         this.login = dto.login();
-        this.login = dto.email();
 
         if (dto.senha() != null && !dto.senha().isEmpty()) {
             this.senha = hashService.getHashSenha(dto.senha());
