@@ -2,7 +2,7 @@ package br.unitins.topicos1.dto.usuario;
 
 import java.util.List;
 
-import br.unitins.topicos1.dto.TelefoneDTO;
+import br.unitins.topicos1.dto.Telefone.TelefoneDTO;
 import br.unitins.topicos1.model.Endereco;
 import br.unitins.topicos1.model.Perfil;
 import br.unitins.topicos1.model.Usuario;

@@ -2,6 +2,9 @@ package br.unitins.topicos1.service.usuario;
 
 import java.util.List;
 
+import br.unitins.topicos1.dto.EnderecoDTO;
+import br.unitins.topicos1.dto.Telefone.TelefoneDTO;
+import br.unitins.topicos1.dto.Telefone.TelefoneUpdateDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
 import jakarta.validation.Valid;
@@ -23,5 +26,19 @@ public interface UsuarioService {
     UsuarioResponseDTO findByLoginAndSenha(String login, String senha);
 
     UsuarioResponseDTO findByLogin(String login);
+
+    UsuarioResponseDTO updateNome(@Valid UsuarioDTO dto, Long id);
+
+    UsuarioResponseDTO updateLogin(@Valid UsuarioDTO dto, Long id);
+
+    UsuarioResponseDTO updateEmail(@Valid UsuarioDTO dto, Long id);
+
+    UsuarioResponseDTO updateSenha(@Valid UsuarioDTO dto, Long id);
+
+    UsuarioResponseDTO insertTelefone(@Valid TelefoneDTO dto, Long id);
+
+    UsuarioResponseDTO updateTelefone(@Valid TelefoneUpdateDTO dto, Long id);
+
+    UsuarioResponseDTO updateEndereco(@Valid EnderecoDTO dto, Long id);
 
 }

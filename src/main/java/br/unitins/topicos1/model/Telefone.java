@@ -1,6 +1,6 @@
 package br.unitins.topicos1.model;
 
-import br.unitins.topicos1.dto.TelefoneDTO;
+import br.unitins.topicos1.dto.Telefone.TelefoneDTO;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
