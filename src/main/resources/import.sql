@@ -8,10 +8,12 @@
 -- Inserir dados de Telefone
 INSERT INTO telefone (codigoArea, numero) VALUES ('63', '5555-5555');
 INSERT INTO telefone (codigoArea, numero) VALUES ('55', '1234-5678');
+INSERT INTO telefone (codigoArea, numero) VALUES ('45', '2222-2222');
 
 -- Inserir dados de Endereco
 INSERT INTO endereco (estado, cidade, quadra, rua, numero) VALUES ('Estado1', 'Cidade1', 'Quadra1', 'Rua1', 123);
 INSERT INTO endereco (estado, cidade, quadra, rua, numero) VALUES ('Estado2', 'Cidade2', 'Quadra2', 'Rua2', 456);
+INSERT INTO endereco (estado, cidade, quadra, rua, numero) VALUES ('Estado3', 'Cidade3', 'Quadra3', 'Rua3', 770);
 
 
 -- Inserir dados de Usuario
@@ -21,6 +23,7 @@ INSERT INTO endereco (estado, cidade, quadra, rua, numero) VALUES ('Estado2', 'C
 
 INSERT INTO usuario (nome, email, login, perfil, senha) VALUES ('Elon Musk', 'musk@gmail.com', 'elon', 2, 'DzdKfFtHned4y7fLASqK0gH9EqUAMZgn6HuhapPc6l0ycYnZ/AZB2mFjbV5ADHvCpr8u3Vm8SkIIJ55gmKQDdA==');
 INSERT INTO usuario (nome, email, login, perfil, senha) VALUES ('Bill Gates', 'gates@gmail.com', 'bill', 1, 'cQa5YaODDHhULIAmdDvDQ/YyU9jAzqqhz1hzmFU7LB1CHLRrUEgu9r/O5cyup6ghql/1J5J60tVChoWwa5XL6Q==');
+INSERT INTO usuario (nome, email, login, perfil, senha) VALUES ('Jp', 'jp@gmail.com', 'jp', 2, 'jp');
 
 -- Inserir dados de Quarto
 INSERT INTO quarto (numero, tipoQuarto, preco, disponivel) VALUES (101, 1, 150.0, true);
@@ -31,10 +34,12 @@ INSERT INTO quarto (numero, tipoQuarto, preco, disponivel) VALUES (104, 4, 450.0
 -- Inserir Telefone no Usuario
 INSERT INTO usuario_telefone(id_usuario, id_telefone) VALUES(1, 1);
 INSERT INTO usuario_telefone(id_usuario, id_telefone) VALUES(2, 2);
+INSERT INTO usuario_telefone(id_usuario, id_telefone) VALUES(3, 3);
 
 -- Inserir Endereco no Usuario
 INSERT INTO usuario_endereco(id_usuario, id_endereco) VALUES(1, 1);
 INSERT INTO usuario_endereco(id_usuario, id_endereco) VALUES(2, 2);
+INSERT INTO usuario_endereco(id_usuario, id_endereco) VALUES(3, 3);
 
 -- Inserções de Comentário
 INSERT INTO comentario (conteudo, dataCriacao, id_usuarios) VALUES ('Comentário 1', '2023-09-01 10:00:00', 1);
