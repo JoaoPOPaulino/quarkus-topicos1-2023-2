@@ -4,7 +4,6 @@ import org.jboss.logging.Logger;
 
 import br.unitins.topicos1.dto.usuario.UsuarioDTO;
 import br.unitins.topicos1.service.usuario.UsuarioService;
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
@@ -27,7 +26,6 @@ public class UsuarioResource {
 
     @POST
     @Transactional
-    @RolesAllowed({ "Admin" })
     public Response novoUsuario(UsuarioDTO dto) {
         LOGGER.info("Iniciando inserção de novo usuário");
         Response response = Response.status(Status.CREATED).entity(service.insert(dto)).build();

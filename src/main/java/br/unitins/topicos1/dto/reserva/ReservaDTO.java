@@ -5,12 +5,16 @@ import java.time.LocalDate;
 import br.unitins.topicos1.model.Reserva;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 public record ReservaDTO(
                 @FutureOrPresent(message = "A data de início da reserva deve ser igual ou posterior à data atual") @NotNull(message = "A data de início não pode ser nula.") LocalDate dataInicio,
+
                 @FutureOrPresent(message = "A data do final da reserva deve ser igual ou posterior à data atual") @NotNull(message = "A data de fim não pode ser nula.") LocalDate dataFim,
-                @NotNull(message = "O idQuarto não pode ser nulo.") Long idQuarto,
-                @NotNull(message = "O idUsuario não pode ser nulo.") Long idUsuario) {
+
+                @NotNull(message = "O idQuarto não pode ser nulo.") @Positive(message = "O idQuarto deve ser um número positivo.") Long idQuarto,
+
+                @NotNull(message = "O idUsuario não pode ser nulo.") @Positive(message = "O idUsuario deve ser um número positivo.") Long idUsuario) {
         public static ReservaDTO valueOf(Reserva reserva) {
                 return new ReservaDTO(
                                 reserva.getDataInicio(),
