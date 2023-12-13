@@ -14,7 +14,7 @@ public interface UsuarioService {
 
     UsuarioResponseDTO insert(@Valid UsuarioDTO dto);
 
-    UsuarioResponseDTO insertNovo(@Valid NovoUsuarioDTO dto);
+    NovoUsuarioDTO insertNovo(@Valid NovoUsuarioDTO dto);
 
     UsuarioResponseDTO update(@Valid UsuarioDTO dto, Long id);
 

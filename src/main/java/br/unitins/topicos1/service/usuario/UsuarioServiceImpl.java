@@ -207,7 +207,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public UsuarioResponseDTO insertNovo(@Valid NovoUsuarioDTO dto) {
+    public NovoUsuarioDTO insertNovo(@Valid NovoUsuarioDTO dto) {
         if (repository.findByLogin(dto.login()) != null) {
             throw new ValidationException("login", "Login já existe.");
         }
@@ -218,7 +218,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         novoUsuario.setSenha(dto.senha());
         novoUsuario.setPerfil(Perfil.USER);
         repository.persist(novoUsuario);
-        return UsuarioResponseDTO.valueOf(novoUsuario);
+        return NovoUsuarioDTO.valueOf(novoUsuario);
     }
 
     @Override
