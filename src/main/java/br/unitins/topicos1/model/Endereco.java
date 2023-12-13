@@ -1,6 +1,6 @@
 package br.unitins.topicos1.model;
 
-import br.unitins.topicos1.dto.EnderecoDTO;
+import br.unitins.topicos1.dto.endereco.EnderecoDTO;
 import jakarta.persistence.Entity;
 
 @Entity

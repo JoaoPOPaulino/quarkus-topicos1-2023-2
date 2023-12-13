@@ -26,7 +26,7 @@ public class UsuarioResource {
 
     @POST
     @Transactional
-    public Response novoUsuario(UsuarioDTO dto) {
+    public Response insert(UsuarioDTO dto) {
         LOGGER.info("Iniciando inserção de novo usuário");
         Response response = Response.status(Status.CREATED).entity(service.insert(dto)).build();
         LOGGER.info("Usuário inserido com sucesso");

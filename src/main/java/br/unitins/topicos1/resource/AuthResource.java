@@ -2,7 +2,7 @@ package br.unitins.topicos1.resource;
 
 import org.jboss.logging.Logger;
 
-import br.unitins.topicos1.dto.LoginDTO;
+import br.unitins.topicos1.dto.login.LoginDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
 import br.unitins.topicos1.model.Perfil;
 import br.unitins.topicos1.service.hash.HashService;

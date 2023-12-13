@@ -3,12 +3,14 @@ package br.unitins.topicos1.service.usuario;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jboss.logging.Logger;
-
-import br.unitins.topicos1.dto.EnderecoDTO;
 import br.unitins.topicos1.dto.Telefone.TelefoneDTO;
 import br.unitins.topicos1.dto.Telefone.TelefoneUpdateDTO;
-import br.unitins.topicos1.dto.usuario.NovoUsuarioDTO;
+import br.unitins.topicos1.dto.email.EmailUpdateDTO;
+import br.unitins.topicos1.dto.endereco.EnderecoDTO;
+import br.unitins.topicos1.dto.endereco.EnderecoUpdateDTO;
+import br.unitins.topicos1.dto.login.LoginUpdateDTO;
+import br.unitins.topicos1.dto.login.SenhaUpdateDTO;
+import br.unitins.topicos1.dto.nome.NomeUpdateDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
 import br.unitins.topicos1.model.Endereco;
@@ -16,7 +18,6 @@ import br.unitins.topicos1.model.Perfil;
 import br.unitins.topicos1.model.Telefone;
 import br.unitins.topicos1.model.Usuario;
 import br.unitins.topicos1.repository.UsuarioRepository;
-import br.unitins.topicos1.resource.UsuarioResource;
 import br.unitins.topicos1.service.hash.HashService;
 import br.unitins.topicos1.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -118,7 +119,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @Transactional
-    public UsuarioResponseDTO updateNome(UsuarioDTO dto, Long id) {
+    public UsuarioResponseDTO updateNome(NomeUpdateDTO dto, Long id) {
         Usuario usuario = repository.findById(id);
         usuario.setNome(dto.nome());
         return UsuarioResponseDTO.valueOf(usuario);
@@ -126,7 +127,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @Transactional
-    public UsuarioResponseDTO updateLogin(UsuarioDTO dto, Long id) {
+    public UsuarioResponseDTO updateLogin(LoginUpdateDTO dto, Long id) {
         Usuario usuario = repository.findById(id);
         if (repository.findByLogin(dto.login()) != null) {
             throw new ValidationException("login", "Login já existe.");
@@ -137,7 +138,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @Transactional
-    public UsuarioResponseDTO updateEmail(UsuarioDTO dto, Long id) {
+    public UsuarioResponseDTO updateEmail(EmailUpdateDTO dto, Long id) {
         Usuario usuario = repository.findById(id);
         usuario.setEmail(dto.email());
         return UsuarioResponseDTO.valueOf(usuario);
@@ -145,14 +146,14 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @Transactional
-    public UsuarioResponseDTO updateSenha(UsuarioDTO dto, Long id) {
+    public UsuarioResponseDTO updateSenha(SenhaUpdateDTO dto, Long id) {
         Usuario usuario = repository.findById(id);
 
         if (hashService.getHashSenha(dto.senha()).equals(usuario.getSenha())) {
             usuario.setSenha(hashService.getHashSenha(dto.senha()));
             return UsuarioResponseDTO.valueOf(usuario);
         } else {
-            throw new ValidationException("updateSenha", "Favor inserir a senha antiga correta.");
+            throw new ValidationException("updateSenha", "Senha antiga inválida.");
         }
     }
 
@@ -190,7 +191,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public UsuarioResponseDTO updateEndereco(@Valid EnderecoDTO dto, Long id) {
+    @Transactional
+    public UsuarioResponseDTO updateEndereco(@Valid EnderecoUpdateDTO dto, Long id) {
         Usuario usuario = repository.findById(id);
 
         if (usuario.getEndereco() != null) {
@@ -207,21 +209,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public NovoUsuarioDTO insertNovo(@Valid NovoUsuarioDTO dto) {
-        if (repository.findByLogin(dto.login()) != null) {
-            throw new ValidationException("login", "Login já existe.");
-        }
-        Usuario novoUsuario = new Usuario();
-        novoUsuario.setNome(dto.nome());
-        novoUsuario.setLogin(dto.login());
-        novoUsuario.setEmail(dto.email());
-        novoUsuario.setSenha(dto.senha());
-        novoUsuario.setPerfil(Perfil.USER);
-        repository.persist(novoUsuario);
-        return NovoUsuarioDTO.valueOf(novoUsuario);
-    }
-
-    @Override
+    @Transactional
     public UsuarioResponseDTO updatePerfil(long id, Integer perfilId) {
         Usuario usuario = repository.findById(id);
 

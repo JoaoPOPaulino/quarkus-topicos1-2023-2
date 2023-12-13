@@ -3,9 +3,15 @@ package br.unitins.topicos1.resource;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import br.unitins.topicos1.dto.EnderecoDTO;
+
 import br.unitins.topicos1.dto.Telefone.TelefoneDTO;
 import br.unitins.topicos1.dto.Telefone.TelefoneUpdateDTO;
+import br.unitins.topicos1.dto.email.EmailUpdateDTO;
+import br.unitins.topicos1.dto.endereco.EnderecoDTO;
+import br.unitins.topicos1.dto.endereco.EnderecoUpdateDTO;
+import br.unitins.topicos1.dto.login.LoginUpdateDTO;
+import br.unitins.topicos1.dto.login.SenhaUpdateDTO;
+import br.unitins.topicos1.dto.nome.NomeUpdateDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
 import br.unitins.topicos1.service.usuario.UsuarioService;
@@ -48,72 +54,89 @@ public class UsuarioLogadoResource {
 
     @PATCH
     @RolesAllowed({ "User", "Admin" })
-    @Path("patch/nome/")
-    public Response updateNome(@Valid UsuarioDTO dto) {
+    @Path("update/nome/")
+    public Response updateNome(@Valid NomeUpdateDTO dto) {
         String login = jwt.getSubject();
-        logger.info("Atualizando nome do usuário: {}", login);
+        logger.info("Atualizando nome do usuário: {}" + login);
         Long idUsuario = service.findByLogin(login).id();
+        logger.info("Atualizado com sucesso.");
         return Response.status(200).entity(service.updateNome(dto, idUsuario)).build();
     }
 
     @PATCH
     @RolesAllowed({ "User", "Admin" })
-    @Path("patch/login/")
-    public Response updateLogin(@Valid UsuarioDTO dto) {
+    @Path("update/login/")
+    public Response updateLogin(@Valid LoginUpdateDTO dto) {
         String login = jwt.getSubject();
-        logger.info("Atualizando login do usuário: {}", login);
+        logger.info("Atualizando login do usuário: {}" + login);
         Long idUsuario = service.findByLogin(login).id();
+        logger.info("Atualizado com sucesso.");
         return Response.status(200).entity(service.updateLogin(dto, idUsuario)).build();
     }
 
     @PATCH
     @RolesAllowed({ "User", "Admin" })
-    @Path("patch/email/")
-    public Response updateEmail(@Valid UsuarioDTO dto) {
+    @Path("update/email/")
+    public Response updateEmail(@Valid EmailUpdateDTO dto) {
         String login = jwt.getSubject();
-        logger.info("Atualizando email do usuário: {}", login);
+        logger.info("Atualizando email do usuário: {}" + login);
         Long idUsuario = service.findByLogin(login).id();
+        logger.info("Atualizado com sucesso.");
         return Response.status(200).entity(service.updateEmail(dto, idUsuario)).build();
     }
 
     @PATCH
     @RolesAllowed({ "User", "Admin" })
-    @Path("patch/senha/")
-    public Response updateSenha(@Valid UsuarioDTO dto) {
+    @Path("update/senha/")
+    public Response updateSenha(@Valid SenhaUpdateDTO dto) {
         String login = jwt.getSubject();
-        logger.info("Atualizando senha do usuário: {}", login);
+        logger.info("Atualizando senha do usuário: {}" + login);
         Long idUsuario = service.findByLogin(login).id();
+        logger.info("Atualizado com sucesso.");
         return Response.status(200).entity(service.updateSenha(dto, idUsuario)).build();
     }
 
     @POST
     @RolesAllowed({ "User", "Admin" })
-    @Path("post/telefone/")
+    @Path("insert/telefone/")
     public Response insertTelefone(@Valid TelefoneDTO dto) {
         String login = jwt.getSubject();
-        logger.info("Inserindo novo telefone para o usuário: {}", login);
+        logger.info("Inserindo novo telefone para o usuário: {}" + login);
         Long idUsuario = service.findByLogin(login).id();
+        logger.info("Novo telefone inserido com sucesso.");
         return Response.status(200).entity(service.insertTelefone(dto, idUsuario)).build();
     }
 
     @PUT
     @RolesAllowed({ "User", "Admin" })
-    @Path("put/telefone/")
+    @Path("update/telefone/")
     public Response updateTelefone(@Valid TelefoneUpdateDTO dto) {
         String login = jwt.getSubject();
-        logger.info("Atualizando telefone do usuário: {}", login);
+        logger.info("Atualizando telefone do usuário: {}" + login);
         Long idUsuario = service.findByLogin(login).id();
+        logger.info("Atualizado com sucesso.");
         return Response.status(200).entity(service.updateTelefone(dto, idUsuario)).build();
     }
 
     @PUT
     @RolesAllowed({ "User", "Admin" })
-    @Path("put/endereco/")
-    public Response updateEndereco(@Valid EnderecoDTO dto) {
+    @Path("update/endereco/")
+    public Response updateEndereco(@Valid EnderecoUpdateDTO dto) {
         String login = jwt.getSubject();
         logger.info("Atualizando endereço do usuário: {}", login);
         Long idUsuario = service.findByLogin(login).id();
+        logger.info("Atualizado com sucesso.");
         return Response.status(200).entity(service.updateEndereco(dto, idUsuario)).build();
+    }
+
+    @DELETE
+    @RolesAllowed({ "User", "Admin" })
+    @Path("/delete/{id}")
+    public Response delete(@PathParam("id") Long id) {
+        logger.info("Deletando usuario do ID: {}" + id);
+        service.delete(id);
+        logger.info("Usuario deletado");
+        return Response.noContent().build();
     }
 
     @GET
@@ -128,7 +151,7 @@ public class UsuarioLogadoResource {
     @Path("/search/usuario/nome")
     @RolesAllowed({ "Admin" })
     public Response findByNome(@PathParam("nome") String nome) {
-        logger.info("Buscando usuário por nome: {}", nome);
+        logger.info("Buscando usuário por nome: {}" + nome);
         return Response.ok(service.findByNome(nome)).build();
     }
 
@@ -136,7 +159,7 @@ public class UsuarioLogadoResource {
     @Path("/search/usuario/id")
     @RolesAllowed({ "Admin" })
     public Response findById(@PathParam("id") Long id) {
-        logger.info("Buscando usuário por ID: {}", id);
+        logger.info("Buscando usuário por ID: {}" + id);
         return Response.ok(service.findById(id)).build();
     }
 
@@ -144,7 +167,7 @@ public class UsuarioLogadoResource {
     @RolesAllowed({ "Admin" })
     @Path("/update/perfil/{id}/{perfilId}")
     public Response updatePerfil(@PathParam("id") Long id, @PathParam("perfilId") Integer perfilId) {
-        logger.info("Atualizando perfil do usuário com ID: {}", id);
+        logger.info("Atualizando perfil do usuário com ID: {}" + id);
         try {
             UsuarioResponseDTO updatedUser = service.updatePerfil(id, perfilId);
             return Response.status(Response.Status.OK).entity(updatedUser).build();
