@@ -28,7 +28,7 @@ public class UsuarioResource {
     @POST
     @Transactional
     @RolesAllowed({ "Admin" })
-    public Response insert(UsuarioDTO dto) {
+    public Response novoUsuario(UsuarioDTO dto) {
         LOGGER.info("Iniciando inserção de novo usuário");
         Response response = Response.status(Status.CREATED).entity(service.insert(dto)).build();
         LOGGER.info("Usuário inserido com sucesso");
