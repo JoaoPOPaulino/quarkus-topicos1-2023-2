@@ -37,7 +37,7 @@ public class HashServiceImpl implements HashService {
 
     public static void main(String[] args) {
         HashService service = new HashServiceImpl();
-        System.out.println(service.getHashSenha("jp"));
+        System.out.println(service.getHashSenha("123"));
 
     }
 

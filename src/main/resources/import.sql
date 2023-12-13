@@ -24,6 +24,7 @@ INSERT INTO endereco (estado, cidade, quadra, rua, numero) VALUES ('Estado3', 'C
 INSERT INTO usuario (nome, email, login, perfil, senha) VALUES ('Elon Musk', 'musk@gmail.com', 'elon', 2, 'DzdKfFtHned4y7fLASqK0gH9EqUAMZgn6HuhapPc6l0ycYnZ/AZB2mFjbV5ADHvCpr8u3Vm8SkIIJ55gmKQDdA==');
 INSERT INTO usuario (nome, email, login, perfil, senha) VALUES ('Bill Gates', 'gates@gmail.com', 'bill', 1, 'cQa5YaODDHhULIAmdDvDQ/YyU9jAzqqhz1hzmFU7LB1CHLRrUEgu9r/O5cyup6ghql/1J5J60tVChoWwa5XL6Q==');
 INSERT INTO usuario (nome, email, login, perfil, senha) VALUES ('Jp', 'jp@gmail.com', 'jp', 2, '/elVXPYoeb2It/Cg6js/l+qO2hMk5jzg3bRoM9TkzX5a8gVQkuspEmdxcFDO25IX+3fW20jJ9c7luw76KLEj8A==');
+
 -- Inserir dados de Quarto
 INSERT INTO quarto (numero, tipoQuarto, preco, disponivel) VALUES (101, 1, 150.0, true);
 INSERT INTO quarto (numero, tipoQuarto, preco, disponivel) VALUES (102, 2, 200.0, true);
@@ -56,3 +57,15 @@ INSERT INTO pagamento (dataPagamento, valor, tipoPagamento, id_reserva) VALUES (
 INSERT INTO servico (nome, descricao, horaInicio, horaFim) VALUES ('Serviço 1', 'Descrição 1', '08:00', '10:00');
 INSERT INTO servico (nome, descricao, horaInicio, horaFim) VALUES ('Serviço 2', 'Descrição 2', '10:00', '12:00');
 INSERT INTO servico (nome, descricao, horaInicio, horaFim) VALUES ('Serviço 3', 'Descrição 3', '12:00', '14:00');
+
+
+--senha: 123
+INSERT INTO usuario (nome, email, login, perfil, senha) VALUES ('Nome do Usuário', 'usuario@gmail.com', 'loginusuario', 1, 'yEaSZv1mx2Hf11tomtEAY3HUG2hrQS2ACE17U1PeCoA7PFIhHARbDredPke5UTKwvMVA+jod2rMVKSoDzm8p3Q==');
+
+INSERT INTO telefone (codigoArea, numero) VALUES ('61', '9999-9999');
+
+INSERT INTO endereco (estado, cidade, quadra, rua, numero) VALUES ('Estado4', 'Cidade4', 'Quadra4', 'Rua4', 789);
+
+INSERT INTO usuario_telefone(id_usuario, id_telefone) VALUES(4, 4);
+
+INSERT INTO usuario_endereco(id_usuario, id_endereco) VALUES(4, 4);
