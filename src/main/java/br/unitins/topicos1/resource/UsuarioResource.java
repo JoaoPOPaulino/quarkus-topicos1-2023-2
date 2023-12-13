@@ -4,16 +4,11 @@ import org.jboss.logging.Logger;
 
 import br.unitins.topicos1.dto.usuario.UsuarioDTO;
 import br.unitins.topicos1.service.usuario.UsuarioService;
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.DELETE;
-import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
-import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -30,7 +25,7 @@ public class UsuarioResource {
     UsuarioService service;
 
     @POST
-    @RolesAllowed({ "User", "Admin" })
+    @Transactional
     public Response insert(UsuarioDTO dto) {
         LOGGER.info("Iniciando inserção de novo usuário");
         Response response = Response.status(Status.CREATED).entity(service.insert(dto)).build();

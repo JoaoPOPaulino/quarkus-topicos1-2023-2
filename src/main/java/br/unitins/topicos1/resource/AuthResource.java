@@ -4,6 +4,7 @@ import org.jboss.logging.Logger;
 
 import br.unitins.topicos1.dto.LoginDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
+import br.unitins.topicos1.model.Perfil;
 import br.unitins.topicos1.service.hash.HashService;
 import br.unitins.topicos1.service.jwt.JwtService;
 import br.unitins.topicos1.service.usuario.UsuarioService;
@@ -37,7 +38,8 @@ public class AuthResource {
         LOG.info("Iniciando autenticação.");
         String hashSenha = hashService.getHashSenha(dto.senha());
 
-        UsuarioResponseDTO result = service.findByLoginAndSenha(dto.login(), hashSenha);
+        UsuarioResponseDTO result = service.findByLoginAndSenha(dto.login(),
+                hashSenha);
 
         if (result != null) {
             LOG.info("Login e senha corretos.");
@@ -49,4 +51,5 @@ public class AuthResource {
             return Response.status(Response.Status.UNAUTHORIZED).entity("Login ou senha incorretos").build();
         }
     }
+
 }

@@ -18,6 +18,7 @@ import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -44,7 +45,7 @@ public class UsuarioLogadoResource {
     }
 
     @PATCH
-    @RolesAllowed({ "User" })
+    @RolesAllowed({ "User", "Admin" })
     @Path("patch/nome/")
     public Response updateNome(@Valid UsuarioDTO dto) {
         String login = jwt.getSubject();
@@ -54,7 +55,7 @@ public class UsuarioLogadoResource {
     }
 
     @PATCH
-    @RolesAllowed({ "User" })
+    @RolesAllowed({ "User", "Admin" })
     @Path("patch/login/")
     public Response updateLogin(@Valid UsuarioDTO dto) {
         String login = jwt.getSubject();
@@ -64,7 +65,7 @@ public class UsuarioLogadoResource {
     }
 
     @PATCH
-    @RolesAllowed({ "User" })
+    @RolesAllowed({ "User", "Admin" })
     @Path("patch/email/")
     public Response updateEmail(@Valid UsuarioDTO dto) {
         String login = jwt.getSubject();
@@ -74,7 +75,7 @@ public class UsuarioLogadoResource {
     }
 
     @PATCH
-    @RolesAllowed({ "User" })
+    @RolesAllowed({ "User", "Admin" })
     @Path("patch/senha/")
     public Response updateSenha(@Valid UsuarioDTO dto) {
         String login = jwt.getSubject();
@@ -84,7 +85,7 @@ public class UsuarioLogadoResource {
     }
 
     @POST
-    @RolesAllowed({ "User" })
+    @RolesAllowed({ "User", "Admin" })
     @Path("post/telefone/")
     public Response insertTelefone(@Valid TelefoneDTO dto) {
         String login = jwt.getSubject();
@@ -94,7 +95,7 @@ public class UsuarioLogadoResource {
     }
 
     @PUT
-    @RolesAllowed({ "User", })
+    @RolesAllowed({ "User", "Admin" })
     @Path("put/telefone/")
     public Response updateTelefone(@Valid TelefoneUpdateDTO dto) {
         String login = jwt.getSubject();
@@ -104,7 +105,7 @@ public class UsuarioLogadoResource {
     }
 
     @PUT
-    @RolesAllowed({ "User" })
+    @RolesAllowed({ "User", "Admin" })
     @Path("put/endereco/")
     public Response updateEndereco(@Valid EnderecoDTO dto) {
         String login = jwt.getSubject();
@@ -114,7 +115,7 @@ public class UsuarioLogadoResource {
     }
 
     @DELETE
-    @RolesAllowed({ "User" })
+    @RolesAllowed({ "User", "Admin" })
     @Path("/delete/")
     public Response deleteCliente() {
         String login = jwt.getSubject();
@@ -122,6 +123,27 @@ public class UsuarioLogadoResource {
         Long idUsuario = service.findByLogin(login).id();
         service.delete(idUsuario);
         return Response.ok().build();
+    }
+
+    @GET
+    @Path("/search/usuario/all")
+    @RolesAllowed({ "Admin" })
+    public Response findByAll() {
+        return Response.ok(service.findByAll()).build();
+    }
+
+    @GET
+    @Path("/search/usuario/nome")
+    @RolesAllowed({ "Admin" })
+    public Response findByNome(@PathParam("nome") String nome) {
+        return Response.ok(service.findByNome(nome)).build();
+    }
+
+    @GET
+    @Path("/search/usuario/id")
+    @RolesAllowed({ "Admin" })
+    public Response findByNome(@PathParam("id") Long id) {
+        return Response.ok(service.findById(id)).build();
     }
 
 }
