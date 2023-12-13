@@ -5,6 +5,7 @@ import java.util.List;
 import br.unitins.topicos1.dto.EnderecoDTO;
 import br.unitins.topicos1.dto.Telefone.TelefoneDTO;
 import br.unitins.topicos1.dto.Telefone.TelefoneUpdateDTO;
+import br.unitins.topicos1.dto.usuario.NovoUsuarioDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
 import jakarta.validation.Valid;
@@ -12,6 +13,8 @@ import jakarta.validation.Valid;
 public interface UsuarioService {
 
     UsuarioResponseDTO insert(@Valid UsuarioDTO dto);
+
+    UsuarioResponseDTO insertNovo(@Valid NovoUsuarioDTO dto);
 
     UsuarioResponseDTO update(@Valid UsuarioDTO dto, Long id);
 
@@ -40,5 +43,7 @@ public interface UsuarioService {
     UsuarioResponseDTO updateTelefone(@Valid TelefoneUpdateDTO dto, Long id);
 
     UsuarioResponseDTO updateEndereco(@Valid EnderecoDTO dto, Long id);
+
+    UsuarioResponseDTO updatePerfil(long id, Integer perfil);
 
 }

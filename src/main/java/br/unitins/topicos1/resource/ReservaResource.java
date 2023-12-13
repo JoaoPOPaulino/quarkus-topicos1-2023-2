@@ -55,7 +55,7 @@ public class ReservaResource {
     @Path("/{id}")
     @RolesAllowed({ "User", "Admin" })
     public Response update(@Valid ReservaDTO dto, @PathParam("id") Long id) {
-        LOGGER.info("Iniciando atualização da reserva com ID: " + id);
+        LOGGER.info("Iniciando atualização da reserva com ID: {}" + id);
         service.update(dto, id);
         LOGGER.info("Reserva com ID: " + id + " atualizada com sucesso");
         return Response.noContent().build();
@@ -66,7 +66,7 @@ public class ReservaResource {
     @Path("/{id}")
     @RolesAllowed({ "User", "Admin" })
     public Response delete(@PathParam("id") Long id) {
-        LOGGER.info("Iniciando exclusão da reserva com ID: " + id);
+        LOGGER.info("Iniciando exclusão da reserva com ID: {}" + id);
         service.delete(id);
         LOGGER.info("Reserva com ID: " + id + " excluída com sucesso");
         return Response.noContent().build();
@@ -85,7 +85,7 @@ public class ReservaResource {
     @Path("/{id}")
     @RolesAllowed({ "Admin" })
     public Response findById(@PathParam("id") Long id) {
-        LOGGER.info("Buscando reserva com ID: " + id);
+        LOGGER.info("Buscando reserva com ID: {}" + id);
         Response response = Response.ok(service.findById(id)).build();
         LOGGER.info("Reserva com ID: " + id + " encontrada com sucesso");
         return response;

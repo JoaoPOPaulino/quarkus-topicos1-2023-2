@@ -8,9 +8,11 @@ import org.jboss.logging.Logger;
 import br.unitins.topicos1.dto.EnderecoDTO;
 import br.unitins.topicos1.dto.Telefone.TelefoneDTO;
 import br.unitins.topicos1.dto.Telefone.TelefoneUpdateDTO;
+import br.unitins.topicos1.dto.usuario.NovoUsuarioDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
 import br.unitins.topicos1.model.Endereco;
+import br.unitins.topicos1.model.Perfil;
 import br.unitins.topicos1.model.Telefone;
 import br.unitins.topicos1.model.Usuario;
 import br.unitins.topicos1.repository.UsuarioRepository;
@@ -32,13 +34,10 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Inject
     HashService hashService;
 
-    private static final Logger LOGGER = Logger.getLogger(UsuarioResource.class.getName());
-
     @Override
     @Transactional
     public UsuarioResponseDTO insert(@Valid UsuarioDTO dto) {
         if (repository.findByLogin(dto.login()) != null) {
-            LOGGER.error("Tentativa de criar usuário com login existente: " + dto.login());
             throw new ValidationException("login", "Login já existe.");
         }
         Usuario novoUsuario = new Usuario(dto, hashService);
@@ -49,20 +48,16 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     @Transactional
     public UsuarioResponseDTO update(@Valid UsuarioDTO dto, Long id) {
-        LOGGER.info("Iniciando atualização do usuário com ID: " + id);
         Usuario usuario = repository.findById(id);
         if (usuario == null) {
-            LOGGER.error("Usuário não encontrado para o ID: " + id);
             throw new NotFoundException("Usuário não encontrado.");
         }
         Usuario usuarioExistente = repository.findByLogin(dto.login());
         if (usuarioExistente != null && !usuarioExistente.getId().equals(id)) {
             throw new ValidationException("login", "Login já existe.");
         }
-        LOGGER.info("Usuário encontrado, atualizando...");
         usuario.atualizarComDTO(dto, hashService);
         repository.persist(usuario);
-        LOGGER.info("Usuário atualizado com sucesso");
         return UsuarioResponseDTO.valueOf(usuario);
     }
 
@@ -134,7 +129,6 @@ public class UsuarioServiceImpl implements UsuarioService {
     public UsuarioResponseDTO updateLogin(UsuarioDTO dto, Long id) {
         Usuario usuario = repository.findById(id);
         if (repository.findByLogin(dto.login()) != null) {
-            LOGGER.error("Tentativa de criar um login existente: " + dto.login());
             throw new ValidationException("login", "Login já existe.");
         }
         usuario.setLogin(dto.login());
@@ -209,6 +203,35 @@ public class UsuarioServiceImpl implements UsuarioService {
         } else {
             throw new NotFoundException("O usuário não possui nenhum endereço cadastrado.");
         }
+        return UsuarioResponseDTO.valueOf(usuario);
+    }
+
+    @Override
+    public UsuarioResponseDTO insertNovo(@Valid NovoUsuarioDTO dto) {
+        if (repository.findByLogin(dto.login()) != null) {
+            throw new ValidationException("login", "Login já existe.");
+        }
+        Usuario novoUsuario = new Usuario();
+        novoUsuario.setNome(dto.nome());
+        novoUsuario.setLogin(dto.login());
+        novoUsuario.setEmail(dto.email());
+        novoUsuario.setSenha(dto.senha());
+        novoUsuario.setPerfil(Perfil.USER);
+        repository.persist(novoUsuario);
+        return UsuarioResponseDTO.valueOf(novoUsuario);
+    }
+
+    @Override
+    public UsuarioResponseDTO updatePerfil(long id, Integer perfilId) {
+        Usuario usuario = repository.findById(id);
+
+        if (usuario == null) {
+            throw new NotFoundException("Usuário não encontrado.");
+        }
+
+        Perfil novoPerfil = Perfil.valueOf(perfilId);
+        usuario.setPerfil(novoPerfil);
+        repository.persist(usuario);
         return UsuarioResponseDTO.valueOf(usuario);
     }
 

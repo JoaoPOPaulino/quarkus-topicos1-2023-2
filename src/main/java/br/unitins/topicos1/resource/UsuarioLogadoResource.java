@@ -7,6 +7,7 @@ import br.unitins.topicos1.dto.EnderecoDTO;
 import br.unitins.topicos1.dto.Telefone.TelefoneDTO;
 import br.unitins.topicos1.dto.Telefone.TelefoneUpdateDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioDTO;
+import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
 import br.unitins.topicos1.service.usuario.UsuarioService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
@@ -14,6 +15,7 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
@@ -114,21 +116,11 @@ public class UsuarioLogadoResource {
         return Response.status(200).entity(service.updateEndereco(dto, idUsuario)).build();
     }
 
-    @DELETE
-    @RolesAllowed({ "User", "Admin" })
-    @Path("/delete/")
-    public Response deleteCliente() {
-        String login = jwt.getSubject();
-        logger.info("Deletando usuário: {}", login);
-        Long idUsuario = service.findByLogin(login).id();
-        service.delete(idUsuario);
-        return Response.ok().build();
-    }
-
     @GET
     @Path("/search/usuario/all")
     @RolesAllowed({ "Admin" })
     public Response findByAll() {
+        logger.info("Buscando todos os usuários");
         return Response.ok(service.findByAll()).build();
     }
 
@@ -136,14 +128,36 @@ public class UsuarioLogadoResource {
     @Path("/search/usuario/nome")
     @RolesAllowed({ "Admin" })
     public Response findByNome(@PathParam("nome") String nome) {
+        logger.info("Buscando usuário por nome: {}", nome);
         return Response.ok(service.findByNome(nome)).build();
     }
 
     @GET
     @Path("/search/usuario/id")
     @RolesAllowed({ "Admin" })
-    public Response findByNome(@PathParam("id") Long id) {
+    public Response findById(@PathParam("id") Long id) {
+        logger.info("Buscando usuário por ID: {}", id);
         return Response.ok(service.findById(id)).build();
     }
 
+    @PUT
+    @RolesAllowed({ "Admin" })
+    @Path("/update/perfil/{id}/{perfilId}")
+    public Response updatePerfil(@PathParam("id") Long id, @PathParam("perfilId") Integer perfilId) {
+        logger.info("Atualizando perfil do usuário com ID: {}", id);
+        try {
+            UsuarioResponseDTO updatedUser = service.updatePerfil(id, perfilId);
+            return Response.status(Response.Status.OK).entity(updatedUser).build();
+        } catch (IllegalArgumentException e) {
+            logger.error("Erro ao atualizar perfil: {}", e.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).entity("Perfil inválido.").build();
+        } catch (NotFoundException e) {
+            logger.error("Erro ao atualizar perfil: {}", e.getMessage());
+            return Response.status(Response.Status.NOT_FOUND).entity("Usuário não encontrado.").build();
+        } catch (Exception e) {
+            logger.error("Erro ao atualizar perfil: {}", e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Erro interno ao atualizar perfil.")
+                    .build();
+        }
+    }
 }
