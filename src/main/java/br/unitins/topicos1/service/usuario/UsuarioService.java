@@ -5,7 +5,6 @@ import java.util.List;
 import br.unitins.topicos1.dto.Telefone.TelefoneDTO;
 import br.unitins.topicos1.dto.Telefone.TelefoneUpdateDTO;
 import br.unitins.topicos1.dto.email.EmailUpdateDTO;
-import br.unitins.topicos1.dto.endereco.EnderecoDTO;
 import br.unitins.topicos1.dto.endereco.EnderecoUpdateDTO;
 import br.unitins.topicos1.dto.login.LoginUpdateDTO;
 import br.unitins.topicos1.dto.login.SenhaUpdateDTO;

@@ -7,7 +7,10 @@ import org.jboss.logging.Logger;
 
 import br.unitins.topicos1.dto.reserva.ReservaDTO;
 import br.unitins.topicos1.dto.reserva.ReservaResponseDTO;
+import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
+import br.unitins.topicos1.model.Perfil;
 import br.unitins.topicos1.service.reserva.ReservaService;
+import br.unitins.topicos1.service.usuario.UsuarioService;
 import io.smallrye.jwt.build.JwtException;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
@@ -38,6 +41,9 @@ public class ReservaResource {
     @Inject
     JsonWebToken jwt;
 
+    @Inject
+    UsuarioService usuarioService;
+
     private static final Logger LOGGER = Logger.getLogger(ReservaResource.class.getName());
 
     @POST
@@ -62,14 +68,22 @@ public class ReservaResource {
     }
 
     @DELETE
-    @Transactional
-    @Path("/{id}")
     @RolesAllowed({ "User", "Admin" })
+    @Path("/delete/{id}")
     public Response delete(@PathParam("id") Long id) {
-        LOGGER.info("Iniciando exclusão da reserva com ID: {}" + id);
-        service.delete(id);
-        LOGGER.info("Reserva com ID: " + id + " excluída com sucesso");
-        return Response.noContent().build();
+        String loginUsuarioLogado = jwt.getSubject();
+        UsuarioResponseDTO usuarioLogado = usuarioService.findByLogin(loginUsuarioLogado);
+
+        if (usuarioLogado.perfil().equals(Perfil.ADMIN) || usuarioLogado.id().equals(id)) {
+            LOGGER.info("Deletando usuario do ID: {}" + id);
+            service.delete(id);
+            LOGGER.info("Usuario deletado");
+            return Response.noContent().build();
+        } else {
+            LOGGER.info("Tentativa de deletar conta de outro usuário: {}" + id);
+            return Response.status(Response.Status.FORBIDDEN)
+                    .entity("Acesso negado: não é permitido deletar a conta de outro usuário.").build();
+        }
     }
 
     @GET

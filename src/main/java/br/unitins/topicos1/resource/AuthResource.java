@@ -4,7 +4,6 @@ import org.jboss.logging.Logger;
 
 import br.unitins.topicos1.dto.login.LoginDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
-import br.unitins.topicos1.model.Perfil;
 import br.unitins.topicos1.service.hash.HashService;
 import br.unitins.topicos1.service.jwt.JwtService;
 import br.unitins.topicos1.service.usuario.UsuarioService;
