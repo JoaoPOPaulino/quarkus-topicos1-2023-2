@@ -33,47 +33,6 @@ public class Usuario extends DefaultEntity {
     public Usuario() {
     }
 
-    public Usuario(UsuarioDTO dto, HashService hashService) {
-        this.nome = dto.nome();
-        this.email = dto.email();
-        this.login = dto.login();
-        this.senha = hashService.getHashSenha(dto.senha());
-        this.perfil = Perfil.valueOf(dto.idPerfil());
-
-        if (dto.listaTelefone() != null && !dto.listaTelefone().isEmpty()) {
-            this.listaTelefone = dto.listaTelefone().stream()
-                    .map(Telefone::new)
-                    .collect(Collectors.toList());
-        }
-
-        if (dto.endereco() != null) {
-            this.endereco = new Endereco(dto.endereco());
-        }
-    }
-
-    public void atualizarComDTO(UsuarioDTO dto, HashService hashService) {
-        this.nome = dto.nome();
-        this.email = dto.email();
-        this.login = dto.login();
-
-        if (dto.senha() != null && !dto.senha().isEmpty()) {
-            this.senha = hashService.getHashSenha(dto.senha());
-        }
-        this.perfil = Perfil.valueOf(dto.idPerfil());
-
-        if (dto.listaTelefone() != null && !dto.listaTelefone().isEmpty()) {
-            this.listaTelefone = dto.listaTelefone().stream()
-                    .map(Telefone::new)
-                    .collect(Collectors.toList());
-        }
-
-        if (dto.endereco() != null)
-
-        {
-            this.endereco = new Endereco(dto.endereco());
-        }
-    }
-
     public String getNome() {
         return nome;
     }

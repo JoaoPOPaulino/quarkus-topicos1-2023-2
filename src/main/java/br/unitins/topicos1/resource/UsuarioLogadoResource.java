@@ -4,6 +4,7 @@ import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import br.unitins.topicos1.dto.usuario.EnderecoDTO;
 import br.unitins.topicos1.dto.usuario.TelefoneDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
 import br.unitins.topicos1.dto.usuario.usuarioUpdate.EmailUpdateDTO;
@@ -104,6 +105,17 @@ public class UsuarioLogadoResource {
         Long id = service.findByLogin(login).id();
         LOGGER.info("Novo telefone inserido com sucesso.");
         return Response.status(200).entity(service.insertTelefone(dto, id)).build();
+    }
+
+    @POST
+    @RolesAllowed({ "User", "Admin" })
+    @Path("/insert/telefone/")
+    public Response insertEndereco(@Valid EnderecoDTO dto) {
+        String login = jwt.getSubject();
+        LOGGER.info("Inserindo novo endereço para o usuário: {}" + login);
+        Long id = service.findByLogin(login).id();
+        LOGGER.info("Novo endereço inserido com sucesso.");
+        return Response.status(200).entity(service.insertEndereco(dto, id)).build();
     }
 
     @PATCH

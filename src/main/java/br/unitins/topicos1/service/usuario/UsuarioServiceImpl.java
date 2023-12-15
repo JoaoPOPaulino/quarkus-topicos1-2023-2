@@ -3,6 +3,7 @@ package br.unitins.topicos1.service.usuario;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.unitins.topicos1.dto.usuario.EnderecoDTO;
 import br.unitins.topicos1.dto.usuario.TelefoneDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
@@ -24,6 +25,7 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.NotFoundException;
+import jakarta.xml.bind.annotation.W3CDomHandler;
 
 @ApplicationScoped
 public class UsuarioServiceImpl implements UsuarioService {
@@ -40,25 +42,17 @@ public class UsuarioServiceImpl implements UsuarioService {
         if (repository.findByLogin(dto.login()) != null) {
             throw new ValidationException("login", "Login já existe.");
         }
-        Usuario novoUsuario = new Usuario(dto, hashService);
+        Usuario novoUsuario = new Usuario();
+        novoUsuario.setNome(dto.nome());
+        novoUsuario.setEmail(dto.email());
+        novoUsuario.setLogin(dto.login());
+        novoUsuario.setSenha(hashService.getHashSenha(dto.senha()));
+        novoUsuario.setPerfil(Perfil.USER);
+        novoUsuario.setListaTelefone(new ArrayList<>());
+        novoUsuario.setEndereco(new Endereco());
+
         repository.persist(novoUsuario);
         return UsuarioResponseDTO.valueOf(novoUsuario);
-    }
-
-    @Override
-    @Transactional
-    public UsuarioResponseDTO update(@Valid UsuarioDTO dto, Long id) {
-        Usuario usuario = repository.findById(id);
-        if (usuario == null) {
-            throw new NotFoundException("Usuário não encontrado.");
-        }
-        Usuario usuarioExistente = repository.findByLogin(dto.login());
-        if (usuarioExistente != null && !usuarioExistente.getId().equals(id)) {
-            throw new ValidationException("login", "Login já existe.");
-        }
-        usuario.atualizarComDTO(dto, hashService);
-        repository.persist(usuario);
-        return UsuarioResponseDTO.valueOf(usuario);
     }
 
     @Override
@@ -121,7 +115,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     public UsuarioResponseDTO updateNome(NomeUpdateDTO dto, Long id) {
         Usuario usuario = repository.findById(id);
         usuario.setNome(dto.nome());
+        repository.persist(usuario);
         return UsuarioResponseDTO.valueOf(usuario);
+
     }
 
     @Override
@@ -132,6 +128,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new ValidationException("login", "Login já existe.");
         }
         usuario.setLogin(dto.login());
+        repository.persist(usuario);
         return UsuarioResponseDTO.valueOf(usuario);
     }
 
@@ -140,6 +137,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     public UsuarioResponseDTO updateEmail(EmailUpdateDTO dto, Long id) {
         Usuario usuario = repository.findById(id);
         usuario.setEmail(dto.email());
+        repository.persist(usuario);
         return UsuarioResponseDTO.valueOf(usuario);
     }
 
@@ -150,6 +148,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         if (hashService.getHashSenha(dto.senha()).equals(usuario.getSenha())) {
             usuario.setSenha(hashService.getHashSenha(dto.senha()));
+            repository.persist(usuario);
             return UsuarioResponseDTO.valueOf(usuario);
         } else {
             throw new ValidationException("updateSenha", "Senha antiga inválida.");
@@ -167,7 +166,20 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.getListaTelefone().add(telefone);
 
         repository.persist(usuario);
+        return UsuarioResponseDTO.valueOf(usuario);
+    }
 
+    @Override
+    public UsuarioResponseDTO insertEndereco(@Valid EnderecoDTO dto, Long id) {
+        Usuario usuario = repository.findById(id);
+        Endereco endereco = new Endereco();
+        endereco.setEstado(dto.estado());
+        endereco.setCidade(dto.cidade());
+        endereco.setQuadra(dto.quadra());
+        endereco.setRua(dto.rua());
+        endereco.setRua(dto.rua());
+
+        repository.persist(usuario);
         return UsuarioResponseDTO.valueOf(usuario);
     }
 
@@ -185,7 +197,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         } else {
             throw new NotFoundException("O usuário não possui nenhum telefone cadastrado.");
         }
-
+        repository.persist(usuario);
         return UsuarioResponseDTO.valueOf(usuario);
     }
 
@@ -204,6 +216,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         } else {
             throw new NotFoundException("O usuário não possui nenhum endereço cadastrado.");
         }
+        repository.persist(usuario);
         return UsuarioResponseDTO.valueOf(usuario);
     }
 
