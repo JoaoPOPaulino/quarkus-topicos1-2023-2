@@ -22,10 +22,8 @@ public class JwtServiceImpl implements JwtService {
         Set<String> roles = new HashSet<>();
         roles.add(dto.perfil().getLabel());
 
-        String subject = String.valueOf(dto.id());
-
         return Jwt.issuer("unitins-jwt")
-                .subject(subject)
+                .subject(dto.login())
                 .groups(roles)
                 .expiresAt(expiryDate)
                 .sign();

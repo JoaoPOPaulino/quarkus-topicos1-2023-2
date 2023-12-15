@@ -54,45 +54,45 @@ public class UsuarioLogadoResource {
     @PATCH
     @RolesAllowed({ "User", "Admin" })
     @Path("/update/nome/")
-    public Response updateNome(@Valid NomeUpdateDTO dto) {
+    public Response updateNome(@Valid NomeUpdateDTO dto, Long idUsuario) {
         String login = jwt.getSubject();
         LOGGER.info("Atualizando nome do usuário: {}" + login);
-        Long idUsuario = service.findByLogin(login).id();
+        Long id = service.findByLogin(login).id();
         LOGGER.info("Atualizado com sucesso.");
-        return Response.status(200).entity(service.updateNome(dto, idUsuario)).build();
+        return Response.status(200).entity(service.updateNome(dto, id)).build();
     }
 
     @PATCH
     @RolesAllowed({ "User", "Admin" })
     @Path("/update/login/")
-    public Response updateLogin(@Valid LoginUpdateDTO dto) {
+    public Response updateLogin(@Valid LoginUpdateDTO dto, Long idUsuario) {
         String login = jwt.getSubject();
         LOGGER.info("Atualizando login do usuário: {}" + login);
-        Long idUsuario = service.findByLogin(login).id();
+        Long id = service.findByLogin(login).id();
         LOGGER.info("Atualizado com sucesso.");
-        return Response.status(200).entity(service.updateLogin(dto, idUsuario)).build();
+        return Response.status(200).entity(service.updateLogin(dto, id)).build();
     }
 
     @PATCH
     @RolesAllowed({ "User", "Admin" })
     @Path("/update/email/")
-    public Response updateEmail(@Valid EmailUpdateDTO dto) {
+    public Response updateEmail(@Valid EmailUpdateDTO dto, Long idUsuario) {
         String login = jwt.getSubject();
         LOGGER.info("Atualizando email do usuário: {}" + login);
-        Long idUsuario = service.findByLogin(login).id();
+        Long id = service.findByLogin(login).id();
         LOGGER.info("Atualizado com sucesso.");
-        return Response.status(200).entity(service.updateEmail(dto, idUsuario)).build();
+        return Response.status(200).entity(service.updateEmail(dto, id)).build();
     }
 
     @PATCH
     @RolesAllowed({ "User", "Admin" })
     @Path("/update/senha/")
-    public Response updateSenha(@Valid SenhaUpdateDTO dto) {
+    public Response updateSenha(@Valid SenhaUpdateDTO dto, Long idUsuario) {
         String login = jwt.getSubject();
         LOGGER.info("Atualizando senha do usuário: {}" + login);
-        Long idUsuario = service.findByLogin(login).id();
+        Long id = service.findByLogin(login).id();
         LOGGER.info("Atualizado com sucesso.");
-        return Response.status(200).entity(service.updateSenha(dto, idUsuario)).build();
+        return Response.status(200).entity(service.updateSenha(dto, id)).build();
     }
 
     @POST
@@ -101,31 +101,31 @@ public class UsuarioLogadoResource {
     public Response insertTelefone(@Valid TelefoneDTO dto) {
         String login = jwt.getSubject();
         LOGGER.info("Inserindo novo telefone para o usuário: {}" + login);
-        Long idUsuario = service.findByLogin(login).id();
+        Long id = service.findByLogin(login).id();
         LOGGER.info("Novo telefone inserido com sucesso.");
-        return Response.status(200).entity(service.insertTelefone(dto, idUsuario)).build();
+        return Response.status(200).entity(service.insertTelefone(dto, id)).build();
     }
 
     @PATCH
     @RolesAllowed({ "User", "Admin" })
     @Path("/update/telefone/")
-    public Response updateTelefone(@Valid TelefoneUpdateDTO dto) {
+    public Response updateTelefone(@Valid TelefoneUpdateDTO dto, Long idUsuario) {
         String login = jwt.getSubject();
         LOGGER.info("Atualizando telefone do usuário: {}" + login);
-        Long idUsuario = service.findByLogin(login).id();
+        Long id = service.findByLogin(login).id();
         LOGGER.info("Atualizado com sucesso.");
-        return Response.status(200).entity(service.updateTelefone(dto, idUsuario)).build();
+        return Response.status(200).entity(service.updateTelefone(dto, id)).build();
     }
 
     @PATCH
     @RolesAllowed({ "User", "Admin" })
     @Path("/update/endereco/")
-    public Response updateEndereco(@Valid EnderecoUpdateDTO dto) {
+    public Response updateEndereco(@Valid EnderecoUpdateDTO dto, Long idUsuario) {
         String login = jwt.getSubject();
         LOGGER.info("Atualizando endereço do usuário: {}" + login);
-        Long idUsuario = service.findByLogin(login).id();
+        Long id = service.findByLogin(login).id();
         LOGGER.info("Atualizado com sucesso.");
-        return Response.status(200).entity(service.updateEndereco(dto, idUsuario)).build();
+        return Response.status(200).entity(service.updateEndereco(dto, id)).build();
     }
 
     @DELETE
