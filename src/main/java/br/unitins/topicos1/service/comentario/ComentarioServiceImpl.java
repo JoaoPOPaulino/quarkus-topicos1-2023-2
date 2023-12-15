@@ -6,7 +6,10 @@ import java.util.stream.Collectors;
 
 import br.unitins.topicos1.dto.comentario.ComentarioDTO;
 import br.unitins.topicos1.dto.comentario.ComentarioResponseDTO;
+import br.unitins.topicos1.dto.usuario.UsuarioDTO;
+import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
 import br.unitins.topicos1.model.Comentario;
+import br.unitins.topicos1.model.Usuario;
 import br.unitins.topicos1.repository.ComentarioRepository;
 import br.unitins.topicos1.repository.UsuarioRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -25,15 +28,18 @@ public class ComentarioServiceImpl implements ComentarioService {
 
     @Override
     @Transactional
-    public ComentarioResponseDTO insert(@Valid ComentarioDTO dto) {
-        var usuario = usuarioRepository.findById(dto.idUsuario());
+    public ComentarioResponseDTO insert(ComentarioDTO dto, UsuarioResponseDTO usuarioLogado) {
+        Usuario usuario = usuarioRepository.findById(usuarioLogado.id());
         if (usuario == null) {
             throw new NotFoundException("Usuário não encontrado.");
         }
-        Comentario comentario = new Comentario(dto, usuario);
+
+        Comentario comentario = new Comentario();
+        comentario.setConteudo(dto.conteudo());
+        comentario.setDataCriacao(LocalDateTime.now());
+        comentario.setUsuario(usuario);
         repository.persist(comentario);
         return ComentarioResponseDTO.valueOf(comentario);
-
     }
 
     @Override

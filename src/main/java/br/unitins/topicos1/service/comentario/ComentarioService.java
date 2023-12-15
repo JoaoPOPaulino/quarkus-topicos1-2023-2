@@ -5,10 +5,11 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.comentario.ComentarioDTO;
 import br.unitins.topicos1.dto.comentario.ComentarioResponseDTO;
+import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
 import jakarta.validation.Valid;
 
 public interface ComentarioService {
-    ComentarioResponseDTO insert(@Valid ComentarioDTO dto);
+    ComentarioResponseDTO insert(@Valid ComentarioDTO dto, UsuarioResponseDTO usuario);
 
     List<ComentarioResponseDTO> findAll();
 

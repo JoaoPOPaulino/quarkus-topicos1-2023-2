@@ -59,9 +59,7 @@ public class ComentarioResourceTest {
 
                 UsuarioResponseDTO usuarioTest = usuarioService.insert(dtoInsert);
 
-                ComentarioDTO dto = new ComentarioDTO("Comentário de teste",
-                                LocalDateTime.now(),
-                                usuarioTest.id());
+                ComentarioDTO dto = new ComentarioDTO("Comentário de teste");
                 given()
                                 .contentType(ContentType.JSON)
                                 .body(dto)
@@ -93,13 +91,10 @@ public class ComentarioResourceTest {
 
                 UsuarioResponseDTO usuarioTest = usuarioService.insert(dtoUsuario);
 
-                ComentarioDTO dto = new ComentarioDTO("Comentário de teste",
-                                LocalDateTime.now(), usuarioTest.id());
-                ComentarioResponseDTO comentarioTest = comentarioService.insert(dto);
+                ComentarioDTO dto = new ComentarioDTO("Comentário de teste");
+                ComentarioResponseDTO comentarioTest = comentarioService.insert(dto, usuarioTest);
 
-                ComentarioDTO dtoUpdate = new ComentarioDTO("Comentário Atualizado",
-                                LocalDateTime.now(),
-                                usuarioTest.id());
+                ComentarioDTO dtoUpdate = new ComentarioDTO("Comentário Atualizado");
                 Long id = comentarioTest.id();
 
                 given()
@@ -129,11 +124,9 @@ public class ComentarioResourceTest {
                                 endereco);
                 UsuarioResponseDTO usuarioTest = usuarioService.insert(dtoUsuario);
 
-                ComentarioDTO dto = new ComentarioDTO("Comentário de teste",
-                                LocalDateTime.now(),
-                                usuarioTest.id());
+                ComentarioDTO dto = new ComentarioDTO("Comentário de teste");
 
-                ComentarioResponseDTO comentarioTest = comentarioService.insert(dto);
+                ComentarioResponseDTO comentarioTest = comentarioService.insert(dto, usuarioTest);
 
                 Long id = comentarioTest.id();
                 given()
@@ -154,13 +147,25 @@ public class ComentarioResourceTest {
 
         @Test
         public void testFindById() {
-                Long idUsuario = 1L;
+                List<TelefoneDTO> telefones = new ArrayList<TelefoneDTO>();
+                telefones.add(new TelefoneDTO("63", "5555-5555"));
 
-                ComentarioDTO dto = new ComentarioDTO("Comentário de teste",
-                                LocalDateTime.now(),
-                                idUsuario);
+                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
+                                123);
 
-                ComentarioResponseDTO comentario = comentarioService.insert(dto);
+                UsuarioDTO usuario = new UsuarioDTO(
+                                "Teste",
+                                "TestComentario",
+                                "teste.com",
+                                "333",
+                                1,
+                                telefones,
+                                endereco);
+                UsuarioResponseDTO usuarioTest = usuarioService.insert(usuario);
+
+                ComentarioDTO dto = new ComentarioDTO("Comentário de teste");
+
+                ComentarioResponseDTO comentario = comentarioService.insert(dto, usuarioTest);
                 Long id = comentario.id();
                 given()
                                 .when().get("/comentarios/" + id)

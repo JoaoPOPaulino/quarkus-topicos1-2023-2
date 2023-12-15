@@ -3,11 +3,16 @@ package br.unitins.topicos1.resource;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.logging.Logger;
 
 import br.unitins.topicos1.dto.comentario.ComentarioDTO;
 import br.unitins.topicos1.dto.comentario.ComentarioResponseDTO;
+import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
+import br.unitins.topicos1.model.Usuario;
 import br.unitins.topicos1.service.comentario.ComentarioService;
+import br.unitins.topicos1.service.jwt.JwtService;
+import br.unitins.topicos1.service.usuario.UsuarioService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -33,15 +38,28 @@ public class ComentarioResource {
     @Inject
     ComentarioService service;
 
+    @Inject
+    UsuarioService usuarioService;
+
+    @Inject
+    JsonWebToken jwt;
+
     private static final Logger LOGGER = Logger.getLogger(ComentarioResource.class.getName());
 
     @POST
     @RolesAllowed({ "User", "Admin" })
     public Response insert(ComentarioDTO dto) {
         LOGGER.info("Inserindo novo comentário");
-        Response response = Response.status(Status.CREATED).entity(service.insert(dto)).build();
+        String login = jwt.getSubject();
+        UsuarioResponseDTO usuarioLogado = usuarioService.findByLogin(login);
+
+        if (usuarioLogado == null) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+
+        ComentarioResponseDTO responseDTO = service.insert(dto, usuarioLogado);
         LOGGER.info("Comentário inserido com sucesso");
-        return response;
+        return Response.status(Status.CREATED).entity(responseDTO).build();
     }
 
     @PUT

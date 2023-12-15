@@ -21,12 +21,6 @@ public class Comentario extends DefaultEntity {
 
 	}
 
-	public Comentario(ComentarioDTO dto, Usuario usuario) {
-		this.conteudo = dto.conteudo();
-		this.dataCriacao = dto.dataCriacao();
-		this.usuario = usuario;
-	}
-
 	public void atualizarComDto(ComentarioDTO dto) {
 		this.conteudo = dto.conteudo();
 	}
