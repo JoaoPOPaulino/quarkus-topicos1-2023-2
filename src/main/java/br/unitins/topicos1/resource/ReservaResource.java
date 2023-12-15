@@ -87,6 +87,7 @@ public class ReservaResource {
     }
 
     @GET
+    @Path("/search/reserva/all")
     @RolesAllowed({ "Admin" })
     public Response findAll() {
         LOGGER.info("Buscando todas as reservas");
@@ -106,31 +107,24 @@ public class ReservaResource {
     }
 
     @GET
-    @Path("/search/historico/{historico}")
+    @Path("/search/historico/{usuarioId}")
     @RolesAllowed({ "User", "Admin" })
-    public Response historicoReservas() {
+    public Response historicoReservas(@PathParam("id") Long id) {
         try {
-            Long usuarioId = Long.parseLong(jwt.getSubject());
+            LOGGER.info("JWT Subject: " + jwt.getSubject());
+            Long usuarioIdAutenticado = Long.parseLong(jwt.getSubject());
+            boolean isAdmin = jwt.getGroups().contains("Admin");
+
+            Long usuarioId = isAdmin && id != null ? id : usuarioIdAutenticado;
+
             List<ReservaResponseDTO> reservas = service.findReservaByUsuarioId(usuarioId);
             return Response.ok(reservas).build();
         } catch (NumberFormatException e) {
             LOGGER.error("Erro na conversão do ID do usuário: " + e.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity("Formato de ID inválido.").build();
-        } catch (JwtException e) {
-            LOGGER.error("Erro no token JWT: " + e.getMessage());
-            return Response.status(Response.Status.UNAUTHORIZED).entity("Token inválido ou expirado.").build();
-        } catch (NoResultException e) {
-            LOGGER.error("Nenhum resultado encontrado: " + e.getMessage());
-            return Response.status(Response.Status.NOT_FOUND).entity("Histórico de reservas não encontrado.").build();
-        } catch (PersistenceException e) {
-            LOGGER.error("Erro de acesso ao banco de dados: " + e.getMessage());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Erro no servidor.").build();
-        } catch (SecurityException e) {
-            LOGGER.error("Acesso negado: " + e.getMessage());
-            return Response.status(Response.Status.FORBIDDEN).entity("Acesso negado.").build();
         } catch (Exception e) {
-            LOGGER.error("Erro inesperado: " + e.getMessage());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Erro interno do servidor.").build();
+            LOGGER.error("Erro: " + e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Erro no servidor.").build();
         }
     }
 }

@@ -2,15 +2,15 @@ package br.unitins.topicos1.service.usuario;
 
 import java.util.List;
 
-import br.unitins.topicos1.dto.Telefone.TelefoneDTO;
-import br.unitins.topicos1.dto.Telefone.TelefoneUpdateDTO;
-import br.unitins.topicos1.dto.email.EmailUpdateDTO;
-import br.unitins.topicos1.dto.endereco.EnderecoUpdateDTO;
-import br.unitins.topicos1.dto.login.LoginUpdateDTO;
-import br.unitins.topicos1.dto.login.SenhaUpdateDTO;
-import br.unitins.topicos1.dto.nome.NomeUpdateDTO;
+import br.unitins.topicos1.dto.usuario.TelefoneDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
+import br.unitins.topicos1.dto.usuario.usuarioUpdate.EmailUpdateDTO;
+import br.unitins.topicos1.dto.usuario.usuarioUpdate.EnderecoUpdateDTO;
+import br.unitins.topicos1.dto.usuario.usuarioUpdate.LoginUpdateDTO;
+import br.unitins.topicos1.dto.usuario.usuarioUpdate.NomeUpdateDTO;
+import br.unitins.topicos1.dto.usuario.usuarioUpdate.SenhaUpdateDTO;
+import br.unitins.topicos1.dto.usuario.usuarioUpdate.TelefoneUpdateDTO;
 import jakarta.validation.Valid;
 
 public interface UsuarioService {

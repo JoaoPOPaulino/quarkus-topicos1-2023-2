@@ -85,8 +85,8 @@ public class ReservaServiceImpl implements ReservaService {
     }
 
     @Override
-    public List<ReservaResponseDTO> findReservaByUsuarioId(Long usuarioId) {
-        List<Reserva> reservas = repository.findByUsuario(usuarioId);
+    public List<ReservaResponseDTO> findReservaByUsuarioId(Long id) {
+        List<Reserva> reservas = repository.findByUsuario(id);
         return reservas.stream()
                 .map(ReservaResponseDTO::valueOf)
                 .collect(Collectors.toList());

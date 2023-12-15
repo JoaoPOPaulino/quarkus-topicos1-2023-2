@@ -1,9 +1,9 @@
-package br.unitins.topicos1.dto.email;
+package br.unitins.topicos1.dto.usuario.usuarioUpdate;
 
 import jakarta.validation.constraints.NotBlank;
 
 public record EmailUpdateDTO(
-                @NotBlank(message = "O campo email não pode ser nulo.") String email) {
+        @NotBlank(message = "O campo email não pode ser nulo.") String email) {
 }
 
 // @Pattern(regexp =

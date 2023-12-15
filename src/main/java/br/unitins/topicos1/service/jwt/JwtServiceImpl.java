@@ -19,15 +19,15 @@ public class JwtServiceImpl implements JwtService {
         Instant now = Instant.now();
         Instant expiryDate = now.plus(EXPIRATION_TIME);
 
-        Set<String> roles = new HashSet<String>();
-
+        Set<String> roles = new HashSet<>();
         roles.add(dto.perfil().getLabel());
 
+        String subject = String.valueOf(dto.id());
+
         return Jwt.issuer("unitins-jwt")
-                .subject(dto.login())
+                .subject(subject)
                 .groups(roles)
                 .expiresAt(expiryDate)
                 .sign();
     }
-
 }

@@ -18,6 +18,6 @@ public interface ReservaService {
 
     List<ReservaResponseDTO> findByAll();
 
-    List<ReservaResponseDTO> findReservaByUsuarioId(Long usuarioId);
+    List<ReservaResponseDTO> findReservaByUsuarioId(Long id);
 
 }

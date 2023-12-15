@@ -9,8 +9,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import br.unitins.topicos1.dto.Telefone.TelefoneDTO;
-import br.unitins.topicos1.dto.endereco.EnderecoDTO;
+import br.unitins.topicos1.dto.usuario.EnderecoDTO;
+import br.unitins.topicos1.dto.usuario.TelefoneDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
 import br.unitins.topicos1.service.usuario.UsuarioService;

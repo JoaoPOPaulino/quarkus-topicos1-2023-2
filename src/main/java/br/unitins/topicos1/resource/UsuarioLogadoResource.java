@@ -4,14 +4,14 @@ import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.unitins.topicos1.dto.Telefone.TelefoneDTO;
-import br.unitins.topicos1.dto.Telefone.TelefoneUpdateDTO;
-import br.unitins.topicos1.dto.email.EmailUpdateDTO;
-import br.unitins.topicos1.dto.endereco.EnderecoUpdateDTO;
-import br.unitins.topicos1.dto.login.LoginUpdateDTO;
-import br.unitins.topicos1.dto.login.SenhaUpdateDTO;
-import br.unitins.topicos1.dto.nome.NomeUpdateDTO;
+import br.unitins.topicos1.dto.usuario.TelefoneDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
+import br.unitins.topicos1.dto.usuario.usuarioUpdate.EmailUpdateDTO;
+import br.unitins.topicos1.dto.usuario.usuarioUpdate.EnderecoUpdateDTO;
+import br.unitins.topicos1.dto.usuario.usuarioUpdate.LoginUpdateDTO;
+import br.unitins.topicos1.dto.usuario.usuarioUpdate.NomeUpdateDTO;
+import br.unitins.topicos1.dto.usuario.usuarioUpdate.SenhaUpdateDTO;
+import br.unitins.topicos1.dto.usuario.usuarioUpdate.TelefoneUpdateDTO;
 import br.unitins.topicos1.model.Perfil;
 import br.unitins.topicos1.service.usuario.UsuarioService;
 import jakarta.annotation.security.RolesAllowed;
@@ -106,7 +106,7 @@ public class UsuarioLogadoResource {
         return Response.status(200).entity(service.insertTelefone(dto, idUsuario)).build();
     }
 
-    @PUT
+    @PATCH
     @RolesAllowed({ "User", "Admin" })
     @Path("update/telefone/")
     public Response updateTelefone(@Valid TelefoneUpdateDTO dto) {
@@ -117,7 +117,7 @@ public class UsuarioLogadoResource {
         return Response.status(200).entity(service.updateTelefone(dto, idUsuario)).build();
     }
 
-    @PUT
+    @PATCH
     @RolesAllowed({ "User", "Admin" })
     @Path("update/endereco/")
     public Response updateEndereco(@Valid EnderecoUpdateDTO dto) {

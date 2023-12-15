@@ -46,8 +46,8 @@ INSERT INTO comentario (conteudo, dataCriacao, id_usuarios) VALUES ('Comentário
 INSERT INTO comentario (conteudo, dataCriacao, id_usuarios) VALUES ('Comentário 2', '2023-09-02 11:00:00', 2);
 
 -- Inserções de Reserva
-INSERT INTO reserva (dataInicio, dataFim, preco, id_quarto, id_usuario) VALUES ('2023-09-10', '2023-09-15', 500.0, 1, 1);
-INSERT INTO reserva (dataInicio, dataFim, preco, id_quarto, id_usuario) VALUES ('2023-10-01', '2023-10-05', 600.0, 2, 2);
+INSERT INTO reserva (dataInicio, dataFim, preco, id_quarto, id_usuario) VALUES ('2023-09-10', '2023-09-15', 150.0, 1, 1);
+INSERT INTO reserva (dataInicio, dataFim, preco, id_quarto, id_usuario) VALUES ('2023-10-01', '2023-10-05', 200.0, 2, 2);
 
 -- Inserções de Pagamento
 INSERT INTO pagamento (dataPagamento, valor, tipoPagamento, id_reserva) VALUES ('2023-09-05 15:00:00', 500.0, 1, 1);
@@ -69,3 +69,6 @@ INSERT INTO endereco (estado, cidade, quadra, rua, numero) VALUES ('Estado4', 'C
 INSERT INTO usuario_telefone(id_usuario, id_telefone) VALUES(4, 4);
 
 INSERT INTO usuario_endereco(id_usuario, id_endereco) VALUES(4, 4);
+
+INSERT INTO reserva (dataInicio, dataFim, preco, id_quarto, id_usuario) VALUES ('2023-11-01', '2023-11-05', 300.0, 3, 4);
+INSERT INTO pagamento (dataPagamento, valor, tipoPagamento, id_reserva) VALUES ('2023-11-01 13:00:00', 300.0, 1, 3);
