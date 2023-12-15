@@ -53,7 +53,7 @@ public class UsuarioLogadoResource {
 
     @PATCH
     @RolesAllowed({ "User", "Admin" })
-    @Path("update/nome/")
+    @Path("/update/nome/")
     public Response updateNome(@Valid NomeUpdateDTO dto) {
         String login = jwt.getSubject();
         LOGGER.info("Atualizando nome do usuário: {}" + login);
@@ -64,7 +64,7 @@ public class UsuarioLogadoResource {
 
     @PATCH
     @RolesAllowed({ "User", "Admin" })
-    @Path("update/login/")
+    @Path("/update/login/")
     public Response updateLogin(@Valid LoginUpdateDTO dto) {
         String login = jwt.getSubject();
         LOGGER.info("Atualizando login do usuário: {}" + login);
@@ -75,7 +75,7 @@ public class UsuarioLogadoResource {
 
     @PATCH
     @RolesAllowed({ "User", "Admin" })
-    @Path("update/email/")
+    @Path("/update/email/")
     public Response updateEmail(@Valid EmailUpdateDTO dto) {
         String login = jwt.getSubject();
         LOGGER.info("Atualizando email do usuário: {}" + login);
@@ -86,7 +86,7 @@ public class UsuarioLogadoResource {
 
     @PATCH
     @RolesAllowed({ "User", "Admin" })
-    @Path("update/senha/")
+    @Path("/update/senha/")
     public Response updateSenha(@Valid SenhaUpdateDTO dto) {
         String login = jwt.getSubject();
         LOGGER.info("Atualizando senha do usuário: {}" + login);
@@ -97,7 +97,7 @@ public class UsuarioLogadoResource {
 
     @POST
     @RolesAllowed({ "User", "Admin" })
-    @Path("insert/telefone/")
+    @Path("/insert/telefone/")
     public Response insertTelefone(@Valid TelefoneDTO dto) {
         String login = jwt.getSubject();
         LOGGER.info("Inserindo novo telefone para o usuário: {}" + login);
@@ -108,7 +108,7 @@ public class UsuarioLogadoResource {
 
     @PATCH
     @RolesAllowed({ "User", "Admin" })
-    @Path("update/telefone/")
+    @Path("/update/telefone/")
     public Response updateTelefone(@Valid TelefoneUpdateDTO dto) {
         String login = jwt.getSubject();
         LOGGER.info("Atualizando telefone do usuário: {}" + login);
@@ -119,7 +119,7 @@ public class UsuarioLogadoResource {
 
     @PATCH
     @RolesAllowed({ "User", "Admin" })
-    @Path("update/endereco/")
+    @Path("/update/endereco/")
     public Response updateEndereco(@Valid EnderecoUpdateDTO dto) {
         String login = jwt.getSubject();
         LOGGER.info("Atualizando endereço do usuário: {}" + login);
