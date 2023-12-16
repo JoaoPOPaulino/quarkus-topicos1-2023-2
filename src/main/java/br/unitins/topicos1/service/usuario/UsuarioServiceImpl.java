@@ -170,20 +170,28 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
+    @Transactional
     public UsuarioResponseDTO insertEndereco(@Valid EnderecoDTO dto, Long id) {
         Usuario usuario = repository.findById(id);
+
+        if (usuario == null) {
+            throw new NotFoundException("Usuário não encontrado.");
+        }
+
         Endereco endereco = new Endereco();
         endereco.setEstado(dto.estado());
         endereco.setCidade(dto.cidade());
         endereco.setQuadra(dto.quadra());
         endereco.setRua(dto.rua());
-        endereco.setRua(dto.rua());
+        endereco.setNumero(dto.numero());
 
+        usuario.setEndereco(endereco);
         repository.persist(usuario);
         return UsuarioResponseDTO.valueOf(usuario);
     }
 
     @Override
+    @Transactional
     public UsuarioResponseDTO updateTelefone(@Valid TelefoneUpdateDTO dto, Long id) {
         Usuario usuario = repository.findById(id);
 
