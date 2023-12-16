@@ -92,4 +92,11 @@ public class ReservaServiceImpl implements ReservaService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<ReservaResponseDTO> findReservaByUsuarioLogin(String login) {
+        List<Reserva> reservas = repository.findByUsuarioLogin(login);
+        return reservas.stream()
+                .map(ReservaResponseDTO::valueOf)
+                .collect(Collectors.toList());
+    }
 }

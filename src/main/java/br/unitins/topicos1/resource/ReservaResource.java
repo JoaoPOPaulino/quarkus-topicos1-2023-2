@@ -127,21 +127,20 @@ public class ReservaResource {
     }
 
     @GET
-    @Path("/search/historico/")
+    @Path("/search/historico")
     @RolesAllowed({ "User", "Admin" })
-    public Response historicoReservas(@PathParam("id") Long id) {
-        try {
-            LOGGER.info("JWT Subject: " + jwt.getSubject());
-            Long usuarioId = Long.parseLong(jwt.getSubject());
+    public Response historicoReservas() {
+        String login = jwt.getSubject(); // Obter login do usuário logado
+        LOGGER.info("Buscando histórico de reservas para o usuário: " + login);
 
-            List<ReservaResponseDTO> reservas = service.findReservaByUsuarioId(usuarioId);
+        try {
+            List<ReservaResponseDTO> reservas = service.findReservaByUsuarioLogin(login);
+            LOGGER.info("Histórico de reservas recuperado com sucesso para o usuário: " + login);
             return Response.ok(reservas).build();
-        } catch (NumberFormatException e) {
-            LOGGER.error("Erro na conversão do ID do usuário do JWT: " + e.getMessage());
-            return Response.status(Response.Status.BAD_REQUEST).entity("Erro ao processar ID do usuário.").build();
         } catch (Exception e) {
-            LOGGER.error("Erro interno: " + e.getMessage());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Erro no servidor.").build();
+            LOGGER.error("Erro ao buscar histórico de reservas para o usuário: " + login, e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Erro ao buscar histórico de reservas")
+                    .build();
         }
     }
 }

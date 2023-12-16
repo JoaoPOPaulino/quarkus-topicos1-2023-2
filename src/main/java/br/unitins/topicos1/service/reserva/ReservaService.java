@@ -20,4 +20,5 @@ public interface ReservaService {
 
     List<ReservaResponseDTO> findReservaByUsuarioId(Long id);
 
+    List<ReservaResponseDTO> findReservaByUsuarioLogin(String login);
 }

@@ -21,8 +21,8 @@ INSERT INTO endereco (estado, cidade, quadra, rua, numero) VALUES ('Estado3', 'C
 -- INSERT INTO usuario (nome, email, login, perfil, senha) VALUES ('Bill Gates', 'gates@gmail.com', 'bill',1, 'cQa5YaODDHhULIAmdDvDQ/YyU9jAzqqhz1hzmFU7LB1CHLRrUEgu9r/O5cyup6ghql/1J5J60tVChoWwa5XL6Q==');
 -- INSERT INTO usuario (nome, email, login, perfil, senha) VALUES ('jp', 'jp@hotmail.com', 'jp', 1, 'jp');
 
-INSERT INTO usuario (nome, email, login, perfil, senha) VALUES ('Elon Musk', 'musk@gmail.com', 'elon', 2, 'DzdKfFtHned4y7fLASqK0gH9EqUAMZgn6HuhapPc6l0ycYnZ/AZB2mFjbV5ADHvCpr8u3Vm8SkIIJ55gmKQDdA==');
-INSERT INTO usuario (nome, email, login, perfil, senha) VALUES ('Bill Gates', 'gates@gmail.com', 'bill', 1, 'cQa5YaODDHhULIAmdDvDQ/YyU9jAzqqhz1hzmFU7LB1CHLRrUEgu9r/O5cyup6ghql/1J5J60tVChoWwa5XL6Q==');
+INSERT INTO usuario (nome, email, login, perfil, senha) VALUES ('Elon Musk', 'musk@gmail.com', 'elon', 2, '7A4rDmvParZAe/oQ2f9zM2idQiFiGVpfU8o+w+GCntoc5O+XqzH0NTFnlaubqi3nO/0LDqOUBQDjIHH2y2DuRQ==');
+INSERT INTO usuario (nome, email, login, perfil, senha) VALUES ('Bill Gates', 'gates@gmail.com', 'bill', 1, 'P8z1/h2KMFy39obu14UmLS6vMbWowP68jU6uUrNqDPLGkwKiTk4bSg3bXiWTn10PSPX4r6WiuqOdUnXNyeu8mg==');
 INSERT INTO usuario (nome, email, login, perfil, senha) VALUES ('Jp', 'jp@gmail.com', 'jp', 2, '/elVXPYoeb2It/Cg6js/l+qO2hMk5jzg3bRoM9TkzX5a8gVQkuspEmdxcFDO25IX+3fW20jJ9c7luw76KLEj8A==');
 
 -- Inserir dados de Quarto
