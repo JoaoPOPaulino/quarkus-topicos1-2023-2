@@ -6,8 +6,6 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -19,8 +17,6 @@ import br.unitins.topicos1.dto.reserva.ReservaDTO;
 import br.unitins.topicos1.dto.reserva.ReservaResponseDTO;
 import br.unitins.topicos1.dto.tipo.TipoPagamentoDTO;
 import br.unitins.topicos1.dto.tipo.TipoQuartoDTO;
-import br.unitins.topicos1.dto.usuario.EnderecoDTO;
-import br.unitins.topicos1.dto.usuario.TelefoneDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
 import br.unitins.topicos1.service.pagamento.PagamentoService;
@@ -60,14 +56,8 @@ public class PagamentoResourceTest {
                 TipoQuartoDTO tipoQuarto = new TipoQuartoDTO(1, "Casual");
                 QuartoDTO quartoDTO = new QuartoDTO(1, 150.0, true, tipoQuarto);
                 QuartoResponseDTO quartoCriado = quartoService.insert(quartoDTO);
-
-                List<TelefoneDTO> telefones = new ArrayList<>();
-                telefones.add(new TelefoneDTO("63", "5555-5555"));
-                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
-                                123);
                 UsuarioDTO usuarioDTO = new UsuarioDTO("Mark Zuckerberg Update", "GH", "gh@hotmail.com",
-                                "333", 1, telefones,
-                                endereco);
+                                "333");
                 UsuarioResponseDTO usuarioInsert = usuarioService.insert(usuarioDTO);
 
                 LocalDate dataInicio = LocalDate.now();
@@ -98,13 +88,8 @@ public class PagamentoResourceTest {
                 QuartoDTO quartoDTO = new QuartoDTO(1, 150.0, true, tipoQuarto);
                 QuartoResponseDTO quartoCriado = quartoService.insert(quartoDTO);
 
-                List<TelefoneDTO> telefones = new ArrayList<>();
-                telefones.add(new TelefoneDTO("63", "5555-5555"));
-                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
-                                123);
                 UsuarioDTO usuarioDTO = new UsuarioDTO("Mark Zuckerberg Update", "Marq", "marq@hotmail.com",
-                                "333", 1, telefones,
-                                endereco);
+                                "333");
                 UsuarioResponseDTO usuarioUpdate = usuarioService.insert(usuarioDTO);
 
                 LocalDate dataInicio = LocalDate.now();
@@ -142,14 +127,8 @@ public class PagamentoResourceTest {
                 TipoQuartoDTO tipoQuarto = new TipoQuartoDTO(1, "Casual");
                 QuartoDTO quartoDTO = new QuartoDTO(1, 150.0, true, tipoQuarto);
                 QuartoResponseDTO quartoCriado = quartoService.insert(quartoDTO);
-
-                List<TelefoneDTO> telefones = new ArrayList<>();
-                telefones.add(new TelefoneDTO("63", "5555-5555"));
-                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
-                                123);
                 UsuarioDTO usuarioDTO = new UsuarioDTO("Mark Zuckerberg Delete", "MarkD", "marqd@hotmail.com",
-                                "333", 1, telefones,
-                                endereco);
+                                "333");
                 UsuarioResponseDTO usuarioCriado = usuarioService.insert(usuarioDTO);
 
                 LocalDate dataInicio = LocalDate.now();
@@ -181,14 +160,8 @@ public class PagamentoResourceTest {
                 TipoQuartoDTO tipoQuarto = new TipoQuartoDTO(1, "Casual");
                 QuartoDTO quartoDTO = new QuartoDTO(1, 150.0, true, tipoQuarto);
                 QuartoResponseDTO quartoCriado = quartoService.insert(quartoDTO);
-
-                List<TelefoneDTO> telefones = new ArrayList<>();
-                telefones.add(new TelefoneDTO("63", "5555-5555"));
-                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
-                                123);
                 UsuarioDTO usuarioDTO = new UsuarioDTO("Mark Zuckerberg Update", "marquinho", "marquinho@hotmail.com",
-                                "333", 1, telefones,
-                                endereco);
+                                "333");
                 UsuarioResponseDTO usuarioCriado = usuarioService.insert(usuarioDTO);
 
                 LocalDate dataInicio = LocalDate.now();

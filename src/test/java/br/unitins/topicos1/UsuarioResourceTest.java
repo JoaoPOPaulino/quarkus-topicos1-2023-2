@@ -4,13 +4,8 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 
-import br.unitins.topicos1.dto.usuario.EnderecoDTO;
-import br.unitins.topicos1.dto.usuario.TelefoneDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
 import br.unitins.topicos1.service.usuario.UsuarioService;
@@ -34,20 +29,11 @@ public class UsuarioResourceTest {
 
         @Test
         public void testInsert() {
-                List<TelefoneDTO> telefones = new ArrayList<TelefoneDTO>();
-                telefones.add(new TelefoneDTO("63", "5555-5555"));
-
-                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
-                                123);
-
                 UsuarioDTO dto = new UsuarioDTO(
                                 "Mark Zuckerberg Insert",
                                 "marquinho",
                                 "mark@zuckerberg.com",
-                                "333",
-                                1,
-                                telefones,
-                                endereco);
+                                "333");
 
                 given()
                                 .contentType(ContentType.JSON)
@@ -64,18 +50,12 @@ public class UsuarioResourceTest {
 
         @Test
         public void testUpdate() {
-                List<TelefoneDTO> telefones = new ArrayList<TelefoneDTO>();
-                telefones.add(new TelefoneDTO("63", "5555-5555"));
-
                 UsuarioDTO novoUsuario = new UsuarioDTO(
-                                "Usuário Teste", "usuario_teste", "usuario@hotmail.com", "senha123", 1, telefones,
-                                new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua", 123));
+                                "Usuário Teste", "usuario_teste", "usuario@hotmail.com", "senha123");
                 UsuarioResponseDTO usuarioInserido = usuarioService.insert(novoUsuario);
 
                 UsuarioDTO usuarioAtualizado = new UsuarioDTO(
-                                "Usuário Teste Atualizado", "usuario_teste", "usuario@hotmail.com", "senha123", 1,
-                                new ArrayList<>(),
-                                new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua", 123));
+                                "Usuário Teste Atualizado", "usuario_teste", "usuario@hotmail.com", "senha123");
                 given()
                                 .contentType(ContentType.JSON)
                                 .body(usuarioAtualizado)
@@ -86,20 +66,12 @@ public class UsuarioResourceTest {
 
         @Test
         void testDelete() {
-                List<TelefoneDTO> telefones = new ArrayList<TelefoneDTO>();
-                telefones.add(new TelefoneDTO("63", "5555-5555"));
-
-                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
-                                123);
 
                 UsuarioDTO dto = new UsuarioDTO(
                                 "Mark Zuckerberg Delete",
                                 "marquinho",
                                 "marquinho2hotmail.com",
-                                "333",
-                                1,
-                                telefones,
-                                endereco);
+                                "333");
 
                 UsuarioResponseDTO usuarioTest = usuarioService.insert(dto);
                 Long id = usuarioTest.id();

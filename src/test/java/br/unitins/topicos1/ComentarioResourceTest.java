@@ -5,16 +5,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 
 import br.unitins.topicos1.dto.comentario.ComentarioDTO;
 import br.unitins.topicos1.dto.comentario.ComentarioResponseDTO;
-import br.unitins.topicos1.dto.usuario.EnderecoDTO;
-import br.unitins.topicos1.dto.usuario.TelefoneDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioDTO;
 import br.unitins.topicos1.dto.usuario.UsuarioResponseDTO;
 import br.unitins.topicos1.service.comentario.ComentarioService;
@@ -42,20 +38,12 @@ public class ComentarioResourceTest {
 
         @Test
         public void testInsert() {
-                List<TelefoneDTO> telefones = new ArrayList<TelefoneDTO>();
-                telefones.add(new TelefoneDTO("63", "5555-5555"));
-
-                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
-                                123);
 
                 UsuarioDTO dtoInsert = new UsuarioDTO(
                                 "Mark Zuckerberg Update",
                                 "morkos",
                                 "mark@zuckerberg.com",
-                                "333",
-                                1,
-                                telefones,
-                                endereco);
+                                "333");
 
                 UsuarioResponseDTO usuarioTest = usuarioService.insert(dtoInsert);
 
@@ -72,11 +60,6 @@ public class ComentarioResourceTest {
 
         @Test
         public void testUpdate() {
-                List<TelefoneDTO> telefones = new ArrayList<>();
-                telefones.add(new TelefoneDTO("63", "5555-5555"));
-
-                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
-                                123);
 
                 String loginUnico = "usuario_" + UUID.randomUUID().toString();
 
@@ -84,10 +67,7 @@ public class ComentarioResourceTest {
                                 "Mark Zuckerberg Update",
                                 loginUnico,
                                 loginUnico + "@zuckerberg.com",
-                                "senha123",
-                                1,
-                                telefones,
-                                endereco);
+                                "senha123");
 
                 UsuarioResponseDTO usuarioTest = usuarioService.insert(dtoUsuario);
 
@@ -108,20 +88,12 @@ public class ComentarioResourceTest {
 
         @Test
         public void testDelete() {
-                List<TelefoneDTO> telefones = new ArrayList<TelefoneDTO>();
-                telefones.add(new TelefoneDTO("63", "5555-5555"));
-
-                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
-                                123);
 
                 UsuarioDTO dtoUsuario = new UsuarioDTO(
                                 "Teste",
                                 "TestComentario",
                                 "teste@hotmail.com",
-                                "333",
-                                1,
-                                telefones,
-                                endereco);
+                                "333");
                 UsuarioResponseDTO usuarioTest = usuarioService.insert(dtoUsuario);
 
                 ComentarioDTO dto = new ComentarioDTO("Comentário de teste");
@@ -147,20 +119,12 @@ public class ComentarioResourceTest {
 
         @Test
         public void testFindById() {
-                List<TelefoneDTO> telefones = new ArrayList<TelefoneDTO>();
-                telefones.add(new TelefoneDTO("63", "5555-5555"));
-
-                EnderecoDTO endereco = new EnderecoDTO("Estado", "Cidade", "Quadra", "Rua",
-                                123);
 
                 UsuarioDTO usuario = new UsuarioDTO(
                                 "Teste",
                                 "TestComentario",
                                 "teste.com",
-                                "333",
-                                1,
-                                telefones,
-                                endereco);
+                                "333");
                 UsuarioResponseDTO usuarioTest = usuarioService.insert(usuario);
 
                 ComentarioDTO dto = new ComentarioDTO("Comentário de teste");
