@@ -67,8 +67,7 @@ public class PagamentoResourceTest {
                 ReservaResponseDTO reservaCriada = reservaService.insert(reservaDTO);
 
                 TipoPagamentoDTO tipoPagamento = new TipoPagamentoDTO(1, "Cartão de Crédito");
-                LocalDateTime dataPagamento = LocalDateTime.now();
-                PagamentoDTO pagamentoDTO = new PagamentoDTO(dataPagamento,
+                PagamentoDTO pagamentoDTO = new PagamentoDTO(
                                 reservaCriada.id(), tipoPagamento);
 
                 given()
@@ -99,8 +98,7 @@ public class PagamentoResourceTest {
                 ReservaResponseDTO reservaCriada = reservaService.insert(reservaDTO);
 
                 TipoPagamentoDTO tipoPagamento = new TipoPagamentoDTO(1, "Cartão de Crédito");
-                LocalDateTime dataPagamento = LocalDateTime.now();
-                PagamentoDTO pagamentoDTO = new PagamentoDTO(dataPagamento,
+                PagamentoDTO pagamentoDTO = new PagamentoDTO(
                                 reservaCriada.id(), tipoPagamento);
 
                 PagamentoResponseDTO pagamentoTest = pagamentoService.insert(pagamentoDTO);
@@ -108,9 +106,8 @@ public class PagamentoResourceTest {
                 Long id = pagamentoTest.id();
 
                 TipoPagamentoDTO novoTipoPagamento = new TipoPagamentoDTO(2, "Dinheiro");
-                LocalDateTime novaDataPagamento = LocalDateTime.now().plusHours(1);
 
-                PagamentoDTO pagamentoAtualizado = new PagamentoDTO(novaDataPagamento,
+                PagamentoDTO pagamentoAtualizado = new PagamentoDTO(
                                 pagamentoDTO.idReserva(),
                                 novoTipoPagamento);
 
@@ -138,8 +135,7 @@ public class PagamentoResourceTest {
                 ReservaResponseDTO reservaCriada = reservaService.insert(reservaDTO);
 
                 TipoPagamentoDTO tipoPagamento = new TipoPagamentoDTO(1, "Cartão de Crédito");
-                LocalDateTime dataPagamento = LocalDateTime.now();
-                PagamentoDTO pagamentoDTO = new PagamentoDTO(dataPagamento,
+                PagamentoDTO pagamentoDTO = new PagamentoDTO(
                                 reservaCriada.id(), tipoPagamento);
                 PagamentoResponseDTO pagamentoCriado = pagamentoService.insert(pagamentoDTO);
 
@@ -171,8 +167,7 @@ public class PagamentoResourceTest {
                 ReservaResponseDTO reservaCriada = reservaService.insert(reservaDTO);
 
                 TipoPagamentoDTO tipoPagamento = new TipoPagamentoDTO(1, "Cartão de Crédito");
-                LocalDateTime dataPagamento = LocalDateTime.now();
-                PagamentoDTO pagamentoDTO = new PagamentoDTO(dataPagamento,
+                PagamentoDTO pagamentoDTO = new PagamentoDTO(
                                 reservaCriada.id(), tipoPagamento);
 
                 PagamentoResponseDTO pagamentoCriado = pagamentoService.insert(pagamentoDTO);

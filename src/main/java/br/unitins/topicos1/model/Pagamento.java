@@ -23,7 +23,7 @@ public class Pagamento extends DefaultEntity {
 
     public Pagamento(PagamentoDTO dto, Reserva reserva) {
         this.tipoPagamento = TipoPagamento.valueOf(dto.tipoPagamento().id());
-        this.dataPagamento = dto.dataPagamento();
+        this.dataPagamento = LocalDateTime.now();
         this.reserva = reserva;
         if (this.reserva != null) {
             this.valor = this.reserva.getPreco();
@@ -32,7 +32,7 @@ public class Pagamento extends DefaultEntity {
 
     public void atualizarComDto(PagamentoDTO dto) {
         this.tipoPagamento = TipoPagamento.valueOf(dto.tipoPagamento().id());
-        this.dataPagamento = dto.dataPagamento();
+        this.dataPagamento = LocalDateTime.now();
         if (this.reserva != null) {
             this.valor = this.reserva.getPreco();
         }

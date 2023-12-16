@@ -48,7 +48,7 @@ public class UsuarioLogadoResource {
     @RolesAllowed({ "User", "Admin" })
     public Response getUsuario() {
         String login = jwt.getSubject();
-        LOGGER.info("Obtendo usuário para login: {}" + login);
+        LOGGER.info("Obtendo usuário para login: " + login);
         return Response.ok(service.findByLogin(login)).build();
     }
 
@@ -57,7 +57,7 @@ public class UsuarioLogadoResource {
     @Path("/update/nome/")
     public Response updateNome(@Valid NomeUpdateDTO dto, Long idUsuario) {
         String login = jwt.getSubject();
-        LOGGER.info("Atualizando nome do usuário: {}" + login);
+        LOGGER.info("Atualizando nome do usuário: " + login);
         Long id = service.findByLogin(login).id();
         LOGGER.info("Atualizado com sucesso.");
         return Response.status(200).entity(service.updateNome(dto, id)).build();
@@ -68,7 +68,7 @@ public class UsuarioLogadoResource {
     @Path("/update/login/")
     public Response updateLogin(@Valid LoginUpdateDTO dto, Long idUsuario) {
         String login = jwt.getSubject();
-        LOGGER.info("Atualizando login do usuário: {}" + login);
+        LOGGER.info("Atualizando login do usuário: " + login);
         Long id = service.findByLogin(login).id();
         LOGGER.info("Atualizado com sucesso.");
         return Response.status(200).entity(service.updateLogin(dto, id)).build();
@@ -79,7 +79,7 @@ public class UsuarioLogadoResource {
     @Path("/update/email/")
     public Response updateEmail(@Valid EmailUpdateDTO dto, Long idUsuario) {
         String login = jwt.getSubject();
-        LOGGER.info("Atualizando email do usuário: {}" + login);
+        LOGGER.info("Atualizando email do usuário: " + login);
         Long id = service.findByLogin(login).id();
         LOGGER.info("Atualizado com sucesso.");
         return Response.status(200).entity(service.updateEmail(dto, id)).build();
@@ -90,7 +90,7 @@ public class UsuarioLogadoResource {
     @Path("/update/senha/")
     public Response updateSenha(@Valid SenhaUpdateDTO dto, Long idUsuario) {
         String login = jwt.getSubject();
-        LOGGER.info("Atualizando senha do usuário: {}" + login);
+        LOGGER.info("Atualizando senha do usuário: " + login);
         Long id = service.findByLogin(login).id();
         LOGGER.info("Atualizado com sucesso.");
         return Response.status(200).entity(service.updateSenha(dto, id)).build();
@@ -101,7 +101,7 @@ public class UsuarioLogadoResource {
     @Path("/insert/telefone/")
     public Response insertTelefone(@Valid TelefoneDTO dto) {
         String login = jwt.getSubject();
-        LOGGER.info("Inserindo novo telefone para o usuário: {}" + login);
+        LOGGER.info("Inserindo novo telefone para o usuário: " + login);
         Long id = service.findByLogin(login).id();
         LOGGER.info("Novo telefone inserido com sucesso.");
         return Response.status(200).entity(service.insertTelefone(dto, id)).build();
@@ -109,10 +109,10 @@ public class UsuarioLogadoResource {
 
     @POST
     @RolesAllowed({ "User", "Admin" })
-    @Path("/insert/telefone/")
+    @Path("/insert/endereco/")
     public Response insertEndereco(@Valid EnderecoDTO dto) {
         String login = jwt.getSubject();
-        LOGGER.info("Inserindo novo endereço para o usuário: {}" + login);
+        LOGGER.info("Inserindo novo endereço para o usuário: " + login);
         Long id = service.findByLogin(login).id();
         LOGGER.info("Novo endereço inserido com sucesso.");
         return Response.status(200).entity(service.insertEndereco(dto, id)).build();
@@ -123,7 +123,7 @@ public class UsuarioLogadoResource {
     @Path("/update/telefone/")
     public Response updateTelefone(@Valid TelefoneUpdateDTO dto, Long idUsuario) {
         String login = jwt.getSubject();
-        LOGGER.info("Atualizando telefone do usuário: {}" + login);
+        LOGGER.info("Atualizando telefone do usuário: " + login);
         Long id = service.findByLogin(login).id();
         LOGGER.info("Atualizado com sucesso.");
         return Response.status(200).entity(service.updateTelefone(dto, id)).build();
@@ -134,7 +134,7 @@ public class UsuarioLogadoResource {
     @Path("/update/endereco/")
     public Response updateEndereco(@Valid EnderecoUpdateDTO dto, Long idUsuario) {
         String login = jwt.getSubject();
-        LOGGER.info("Atualizando endereço do usuário: {}" + login);
+        LOGGER.info("Atualizando endereço do usuário: " + login);
         Long id = service.findByLogin(login).id();
         LOGGER.info("Atualizado com sucesso.");
         return Response.status(200).entity(service.updateEndereco(dto, id)).build();
@@ -148,12 +148,12 @@ public class UsuarioLogadoResource {
         UsuarioResponseDTO usuarioLogado = service.findByLogin(loginUsuarioLogado);
 
         if (usuarioLogado.perfil().equals(Perfil.ADMIN) || usuarioLogado.id().equals(id)) {
-            LOGGER.info("Deletando usuario do ID: {}", id);
+            LOGGER.info("Deletando usuario do ID: " + id);
             service.delete(id);
             LOGGER.info("Usuario deletado");
             return Response.noContent().build();
         } else {
-            LOGGER.info("Tentativa de deletar conta de outro usuário: {}", id);
+            LOGGER.info("Tentativa de deletar conta de outro usuário: " + id);
             return Response.status(Response.Status.FORBIDDEN)
                     .entity("Acesso negado: não é permitido deletar a conta de outro usuário.").build();
         }
@@ -171,7 +171,7 @@ public class UsuarioLogadoResource {
     @Path("/search/usuario/nome")
     @RolesAllowed({ "Admin" })
     public Response findByNome(@PathParam("nome") String nome) {
-        LOGGER.info("Buscando usuário por nome: {}" + nome);
+        LOGGER.info("Buscando usuário por nome: " + nome);
         return Response.ok(service.findByNome(nome)).build();
     }
 
@@ -179,7 +179,7 @@ public class UsuarioLogadoResource {
     @Path("/search/usuario/id")
     @RolesAllowed({ "Admin" })
     public Response findById(@PathParam("id") Long id) {
-        LOGGER.info("Buscando usuário por ID: {}" + id);
+        LOGGER.info("Buscando usuário por ID: " + id);
         return Response.ok(service.findById(id)).build();
     }
 
@@ -187,7 +187,7 @@ public class UsuarioLogadoResource {
     @RolesAllowed({ "Admin" })
     @Path("/update/perfil/{id}/{perfilId}")
     public Response updatePerfil(@PathParam("id") Long id, @PathParam("perfilId") Integer perfilId) {
-        LOGGER.info("Atualizando perfil do usuário com ID: {}" + id);
+        LOGGER.info("Atualizando perfil do usuário com ID: " + id);
         try {
             UsuarioResponseDTO updatedUser = service.updatePerfil(id, perfilId);
             return Response.status(Response.Status.OK).entity(updatedUser).build();

@@ -58,7 +58,7 @@ public class ReservaResource {
     @Path("/{id}")
     @RolesAllowed({ "User", "Admin" })
     public Response update(@Valid ReservaDTO dto, @PathParam("id") Long id) {
-        LOGGER.info("Iniciando atualização da reserva com ID: {}" + id);
+        LOGGER.info("Iniciando atualização da reserva com ID: " + id);
         service.update(dto, id);
         LOGGER.info("Reserva com ID: " + id + " atualizada com sucesso");
         return Response.noContent().build();
@@ -72,14 +72,14 @@ public class ReservaResource {
         UsuarioResponseDTO usuarioLogado = usuarioService.findByLogin(loginUsuarioLogado);
 
         if (usuarioLogado.perfil().equals(Perfil.ADMIN) || usuarioLogado.id().equals(id)) {
-            LOGGER.info("Deletando usuario do ID: {}" + id);
+            LOGGER.info("Deletando usuario do ID: " + id);
             service.delete(id);
             LOGGER.info("Usuario deletado");
             return Response.noContent().build();
         } else {
-            LOGGER.info("Tentativa de deletar conta de outro usuário: {}" + id);
+            LOGGER.info("Tentativa de deletar conta de outro usuário: " + id);
             return Response.status(Response.Status.FORBIDDEN)
-                    .entity("Acesso negado: não é permitido deletar a conta de outro usuário.").build();
+                    .entity("Acesso negado: não é permitido deletar a reserva de outro usuário.").build();
         }
     }
 
@@ -97,7 +97,7 @@ public class ReservaResource {
     @Path("/{id}")
     @RolesAllowed({ "Admin" })
     public Response findById(@PathParam("id") Long id) {
-        LOGGER.info("Buscando reserva com ID: {}" + id);
+        LOGGER.info("Buscando reserva com ID: " + id);
         Response response = Response.ok(service.findById(id)).build();
         LOGGER.info("Reserva com ID: " + id + " encontrada com sucesso");
         return response;
