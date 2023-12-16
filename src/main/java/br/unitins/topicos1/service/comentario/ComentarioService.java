@@ -15,9 +15,9 @@ public interface ComentarioService {
 
     ComentarioResponseDTO findById(Long id);
 
-    ComentarioResponseDTO update(@Valid ComentarioDTO dto, Long id);
+    ComentarioResponseDTO update(@Valid ComentarioDTO dto, Long id, UsuarioResponseDTO usuario);
 
-    void delete(Long id);
+    void delete(Long id, UsuarioResponseDTO usuario);
 
     List<ComentarioResponseDTO> findComentariosByData(LocalDateTime data);
 }

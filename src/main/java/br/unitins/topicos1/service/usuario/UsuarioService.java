@@ -30,19 +30,19 @@ public interface UsuarioService {
 
     UsuarioResponseDTO findByLogin(String login);
 
-    UsuarioResponseDTO updateNome(@Valid NomeUpdateDTO dto, Long id);
+    UsuarioResponseDTO updateNome(@Valid NomeUpdateDTO dto, String login);
 
     UsuarioResponseDTO updateLogin(@Valid LoginUpdateDTO dto, Long id);
 
     UsuarioResponseDTO updateEmail(@Valid EmailUpdateDTO dto, Long id);
 
-    UsuarioResponseDTO updateSenha(@Valid SenhaUpdateDTO dto, Long id);
+    UsuarioResponseDTO updateSenha(@Valid SenhaUpdateDTO dto, String login);
 
     UsuarioResponseDTO insertTelefone(@Valid TelefoneDTO dto, Long id);
 
     UsuarioResponseDTO insertEndereco(@Valid EnderecoDTO dto, Long id);
 
-    UsuarioResponseDTO updateTelefone(@Valid TelefoneUpdateDTO dto, Long id);
+    UsuarioResponseDTO updateTelefone(@Valid TelefoneUpdateDTO dto, String login);
 
     UsuarioResponseDTO updateEndereco(@Valid EnderecoUpdateDTO dto, Long id);
 

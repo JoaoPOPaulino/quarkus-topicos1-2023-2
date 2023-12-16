@@ -15,6 +15,7 @@ import br.unitins.topicos1.dto.usuario.usuarioUpdate.SenhaUpdateDTO;
 import br.unitins.topicos1.dto.usuario.usuarioUpdate.TelefoneUpdateDTO;
 import br.unitins.topicos1.model.Perfil;
 import br.unitins.topicos1.service.usuario.UsuarioService;
+import br.unitins.topicos1.validation.ValidationException;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -55,12 +56,18 @@ public class UsuarioLogadoResource {
     @PATCH
     @RolesAllowed({ "User", "Admin" })
     @Path("/update/nome/")
-    public Response updateNome(@Valid NomeUpdateDTO dto, Long idUsuario) {
+    public Response updateNome(@Valid NomeUpdateDTO dto) {
         String login = jwt.getSubject();
         LOGGER.info("Atualizando nome do usuário: " + login);
-        Long id = service.findByLogin(login).id();
-        LOGGER.info("Atualizado com sucesso.");
-        return Response.status(200).entity(service.updateNome(dto, id)).build();
+
+        try {
+            UsuarioResponseDTO updatedUser = service.updateNome(dto, login);
+            LOGGER.info("Nome atualizado com sucesso para o usuário: " + login);
+            return Response.status(200).entity(updatedUser).build();
+        } catch (NotFoundException e) {
+            LOGGER.error("Usuário não encontrado: " + login);
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 
     @PATCH
@@ -76,24 +83,22 @@ public class UsuarioLogadoResource {
 
     @PATCH
     @RolesAllowed({ "User", "Admin" })
-    @Path("/update/email/")
-    public Response updateEmail(@Valid EmailUpdateDTO dto, Long idUsuario) {
-        String login = jwt.getSubject();
-        LOGGER.info("Atualizando email do usuário: " + login);
-        Long id = service.findByLogin(login).id();
-        LOGGER.info("Atualizado com sucesso.");
-        return Response.status(200).entity(service.updateEmail(dto, id)).build();
-    }
-
-    @PATCH
-    @RolesAllowed({ "User", "Admin" })
     @Path("/update/senha/")
-    public Response updateSenha(@Valid SenhaUpdateDTO dto, Long idUsuario) {
+    public Response updateSenha(@Valid SenhaUpdateDTO dto) {
         String login = jwt.getSubject();
         LOGGER.info("Atualizando senha do usuário: " + login);
-        Long id = service.findByLogin(login).id();
-        LOGGER.info("Atualizado com sucesso.");
-        return Response.status(200).entity(service.updateSenha(dto, id)).build();
+
+        try {
+            UsuarioResponseDTO updatedUser = service.updateSenha(dto, login);
+            LOGGER.info("Senha atualizada com sucesso para o usuário: " + login);
+            return Response.status(200).entity(updatedUser).build();
+        } catch (NotFoundException e) {
+            LOGGER.error("Usuário não encontrado: " + login);
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (ValidationException e) {
+            LOGGER.error("Erro de validação: " + e.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
     }
 
     @POST
@@ -121,12 +126,18 @@ public class UsuarioLogadoResource {
     @PATCH
     @RolesAllowed({ "User", "Admin" })
     @Path("/update/telefone/")
-    public Response updateTelefone(@Valid TelefoneUpdateDTO dto, Long idUsuario) {
+    public Response updateTelefone(@Valid TelefoneUpdateDTO dto) {
         String login = jwt.getSubject();
         LOGGER.info("Atualizando telefone do usuário: " + login);
-        Long id = service.findByLogin(login).id();
-        LOGGER.info("Atualizado com sucesso.");
-        return Response.status(200).entity(service.updateTelefone(dto, id)).build();
+
+        try {
+            UsuarioResponseDTO updatedUser = service.updateTelefone(dto, login);
+            LOGGER.info("Telefone atualizado com sucesso para o usuário: " + login);
+            return Response.status(200).entity(updatedUser).build();
+        } catch (NotFoundException e) {
+            LOGGER.error("Erro ao atualizar telefone: " + e.getMessage());
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+        }
     }
 
     @PATCH
@@ -168,7 +179,7 @@ public class UsuarioLogadoResource {
     }
 
     @GET
-    @Path("/search/usuario/nome")
+    @Path("/search/usuario/nome/{nome}")
     @RolesAllowed({ "Admin" })
     public Response findByNome(@PathParam("nome") String nome) {
         LOGGER.info("Buscando usuário por nome: " + nome);
@@ -176,7 +187,7 @@ public class UsuarioLogadoResource {
     }
 
     @GET
-    @Path("/search/usuario/id")
+    @Path("/search/usuario/id/{id}")
     @RolesAllowed({ "Admin" })
     public Response findById(@PathParam("id") Long id) {
         LOGGER.info("Buscando usuário por ID: " + id);

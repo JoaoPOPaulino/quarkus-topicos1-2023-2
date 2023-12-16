@@ -75,7 +75,7 @@ public class PagamentoResource {
 
     @GET
     @Path("/search/tipoPagamento/{tipoPagamento}")
-    @RolesAllowed({ "User", "Admin" })
+    @RolesAllowed({ "Admin" })
     public Response findByTipoPagamento(@PathParam("tipoPagamento") TipoPagamento tipoPagamento) {
         LOGGER.info("Buscando pagamentos pelo tipo: " + tipoPagamento);
         Response response = Response.ok(service.findByTipoPagamento(tipoPagamento)).build();

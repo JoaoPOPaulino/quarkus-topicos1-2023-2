@@ -63,30 +63,47 @@ public class ComentarioResource {
     }
 
     @PUT
-    @Transactional
     @Path("/{id}")
     @RolesAllowed({ "User", "Admin" })
     public Response update(ComentarioDTO dto, @PathParam("id") Long id) {
         LOGGER.info("Atualizando comentário com ID: " + id);
         try {
-            ComentarioResponseDTO dtoUpdate = service.update(dto, id);
+            UsuarioResponseDTO usuarioLogado = usuarioService.findByLogin(jwt.getSubject());
+            if (usuarioLogado == null) {
+                return Response.status(Response.Status.UNAUTHORIZED).build();
+            }
+            ComentarioResponseDTO dtoUpdate = service.update(dto, id, usuarioLogado);
             LOGGER.info("Comentário com ID: " + id + " atualizado com sucesso");
             return Response.ok(dtoUpdate).build();
         } catch (NotFoundException e) {
             LOGGER.error("Comentário não encontrado para atualização com ID: " + id);
             return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (SecurityException e) {
+            LOGGER.error("Acesso negado para atualização do comentário com ID: " + id);
+            return Response.status(Response.Status.FORBIDDEN).build();
         }
     }
 
     @DELETE
-    @Transactional
     @Path("/{id}")
     @RolesAllowed({ "User", "Admin" })
     public Response delete(@PathParam("id") Long id) {
         LOGGER.info("Excluindo comentário com ID: " + id);
-        service.delete(id);
-        LOGGER.info("Comentário com ID: " + id + " excluído com sucesso");
-        return Response.noContent().build();
+        try {
+            UsuarioResponseDTO usuarioLogado = usuarioService.findByLogin(jwt.getSubject());
+            if (usuarioLogado == null) {
+                return Response.status(Response.Status.UNAUTHORIZED).build();
+            }
+            service.delete(id, usuarioLogado);
+            LOGGER.info("Comentário com ID: " + id + " excluído com sucesso");
+            return Response.noContent().build();
+        } catch (NotFoundException e) {
+            LOGGER.error("Comentário não encontrado para exclusão com ID: " + id);
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (SecurityException e) {
+            LOGGER.error("Acesso negado para exclusão do comentário com ID: " + id);
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
     }
 
     @GET
@@ -101,7 +118,7 @@ public class ComentarioResource {
     @GET
     @Path("/{id}")
     @RolesAllowed({ "Admin" })
-    public Response findById(@PathParam("id") Long id) {
+    public Response findById(@PathParam("id") Long id, UsuarioResponseDTO usuario) {
         LOGGER.info("Buscando comentário com ID: " + id);
         ComentarioResponseDTO dto = service.findById(id);
         if (dto == null) {

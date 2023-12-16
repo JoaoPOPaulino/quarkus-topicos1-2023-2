@@ -18,6 +18,7 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
@@ -54,14 +55,36 @@ public class ReservaResource {
     }
 
     @PUT
-    @Transactional
     @Path("/{id}")
     @RolesAllowed({ "User", "Admin" })
-    public Response update(@Valid ReservaDTO dto, @PathParam("id") Long id) {
-        LOGGER.info("Iniciando atualização da reserva com ID: " + id);
-        service.update(dto, id);
-        LOGGER.info("Reserva com ID: " + id + " atualizada com sucesso");
-        return Response.noContent().build();
+    public Response update(ReservaDTO dto, @PathParam("id") Long id) {
+        LOGGER.info("Atualizando reserva com ID: " + id);
+        try {
+            Long usuarioIdLogado = Long.parseLong(jwt.getSubject());
+            boolean isAdmin = jwt.getGroups().contains("Admin");
+
+            ReservaResponseDTO reservaExistente = service.findById(id);
+            if (reservaExistente == null) {
+                throw new NotFoundException("Reserva não encontrada.");
+            }
+
+            if (!isAdmin && !reservaExistente.id().equals(usuarioIdLogado)) {
+                throw new SecurityException("Acesso negado. Você só pode atualizar suas próprias reservas.");
+            }
+
+            ReservaResponseDTO dtoAtualizado = service.update(dto, id);
+            LOGGER.info("Reserva com ID: " + id + " atualizada com sucesso");
+            return Response.ok(dtoAtualizado).build();
+        } catch (SecurityException e) {
+            LOGGER.error("Acesso negado: " + e.getMessage());
+            return Response.status(Response.Status.FORBIDDEN).build();
+        } catch (NotFoundException e) {
+            LOGGER.error("Reserva não encontrada para atualização com ID: " + id);
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } catch (Exception e) {
+            LOGGER.error("Erro ao atualizar reserva: " + e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @DELETE
@@ -104,23 +127,20 @@ public class ReservaResource {
     }
 
     @GET
-    @Path("/search/historico/{usuarioId}")
+    @Path("/search/historico/")
     @RolesAllowed({ "User", "Admin" })
     public Response historicoReservas(@PathParam("id") Long id) {
         try {
             LOGGER.info("JWT Subject: " + jwt.getSubject());
-            Long usuarioIdAutenticado = Long.parseLong(jwt.getSubject());
-            boolean isAdmin = jwt.getGroups().contains("Admin");
-
-            Long usuarioId = isAdmin && id != null ? id : usuarioIdAutenticado;
+            Long usuarioId = Long.parseLong(jwt.getSubject());
 
             List<ReservaResponseDTO> reservas = service.findReservaByUsuarioId(usuarioId);
             return Response.ok(reservas).build();
         } catch (NumberFormatException e) {
-            LOGGER.error("Erro na conversão do ID do usuário: " + e.getMessage());
-            return Response.status(Response.Status.BAD_REQUEST).entity("Formato de ID inválido.").build();
+            LOGGER.error("Erro na conversão do ID do usuário do JWT: " + e.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).entity("Erro ao processar ID do usuário.").build();
         } catch (Exception e) {
-            LOGGER.error("Erro: " + e.getMessage());
+            LOGGER.error("Erro interno: " + e.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Erro no servidor.").build();
         }
     }

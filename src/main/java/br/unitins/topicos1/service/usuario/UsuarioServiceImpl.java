@@ -20,12 +20,14 @@ import br.unitins.topicos1.model.Usuario;
 import br.unitins.topicos1.repository.UsuarioRepository;
 import br.unitins.topicos1.service.hash.HashService;
 import br.unitins.topicos1.validation.ValidationException;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.NotFoundException;
-import jakarta.xml.bind.annotation.W3CDomHandler;
+import jakarta.ws.rs.PATCH;
+import jakarta.ws.rs.Path;
 
 @ApplicationScoped
 public class UsuarioServiceImpl implements UsuarioService {
@@ -112,12 +114,16 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @Transactional
-    public UsuarioResponseDTO updateNome(NomeUpdateDTO dto, Long id) {
-        Usuario usuario = repository.findById(id);
+    public UsuarioResponseDTO updateNome(NomeUpdateDTO dto, String login) {
+        Usuario usuario = repository.findByLogin(login);
+
+        if (usuario == null) {
+            throw new NotFoundException("Usuário não encontrado.");
+        }
+
         usuario.setNome(dto.nome());
         repository.persist(usuario);
         return UsuarioResponseDTO.valueOf(usuario);
-
     }
 
     @Override
@@ -143,11 +149,15 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @Transactional
-    public UsuarioResponseDTO updateSenha(SenhaUpdateDTO dto, Long id) {
-        Usuario usuario = repository.findById(id);
+    public UsuarioResponseDTO updateSenha(SenhaUpdateDTO dto, String login) {
+        Usuario usuario = repository.findByLogin(login);
+
+        if (usuario == null) {
+            throw new NotFoundException("Usuário não encontrado.");
+        }
 
         if (hashService.getHashSenha(dto.senha()).equals(usuario.getSenha())) {
-            usuario.setSenha(hashService.getHashSenha(dto.senha()));
+            usuario.setSenha(hashService.getHashSenha(dto.novaSenha()));
             repository.persist(usuario);
             return UsuarioResponseDTO.valueOf(usuario);
         } else {
@@ -192,19 +202,29 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @Transactional
-    public UsuarioResponseDTO updateTelefone(@Valid TelefoneUpdateDTO dto, Long id) {
-        Usuario usuario = repository.findById(id);
+    public UsuarioResponseDTO updateTelefone(@Valid TelefoneUpdateDTO dto, String login) {
+        Usuario usuario = repository.findByLogin(login);
 
-        if (usuario.getListaTelefone() != null || !usuario.getListaTelefone().isEmpty()) {
+        if (usuario == null) {
+            throw new NotFoundException("Usuário não encontrado.");
+        }
+
+        boolean telefoneEncontrado = false;
+        if (usuario.getListaTelefone() != null) {
             for (Telefone t : usuario.getListaTelefone()) {
-                if (t.getId() == dto.id()) {
+                if (t.getId().equals(dto.id())) {
                     t.setCodigoArea(dto.codigoArea());
                     t.setNumero(dto.numero());
+                    telefoneEncontrado = true;
+                    break;
                 }
             }
-        } else {
-            throw new NotFoundException("O usuário não possui nenhum telefone cadastrado.");
         }
+
+        if (!telefoneEncontrado) {
+            throw new NotFoundException("Telefone não encontrado.");
+        }
+
         repository.persist(usuario);
         return UsuarioResponseDTO.valueOf(usuario);
     }
@@ -213,17 +233,21 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Transactional
     public UsuarioResponseDTO updateEndereco(@Valid EnderecoUpdateDTO dto, Long id) {
         Usuario usuario = repository.findById(id);
+        if (usuario == null) {
+            throw new NotFoundException("Usuário não encontrado.");
+        }
 
-        if (usuario.getEndereco() != null) {
-            Endereco novoEndereco = new Endereco();
-            novoEndereco.setCidade(dto.cidade());
-            novoEndereco.setEstado(dto.estado());
-            novoEndereco.setQuadra(dto.quadra());
-            novoEndereco.setRua(dto.rua());
-            novoEndereco.setNumero(dto.numero());
-        } else {
+        Endereco endereco = usuario.getEndereco();
+        if (endereco == null) {
             throw new NotFoundException("O usuário não possui nenhum endereço cadastrado.");
         }
+
+        endereco.setCidade(dto.cidade());
+        endereco.setEstado(dto.estado());
+        endereco.setQuadra(dto.quadra());
+        endereco.setRua(dto.rua());
+        endereco.setNumero(dto.numero());
+
         repository.persist(usuario);
         return UsuarioResponseDTO.valueOf(usuario);
     }

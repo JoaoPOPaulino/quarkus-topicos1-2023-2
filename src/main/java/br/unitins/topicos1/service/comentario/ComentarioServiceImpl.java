@@ -44,10 +44,15 @@ public class ComentarioServiceImpl implements ComentarioService {
 
     @Override
     @Transactional
-    public ComentarioResponseDTO update(@Valid ComentarioDTO dto, Long id) {
+    public ComentarioResponseDTO update(@Valid ComentarioDTO dto, Long id, UsuarioResponseDTO usuarioLogado) {
         var comentario = repository.findById(id);
         if (comentario == null) {
             throw new NotFoundException("Comentário não encontrado.");
+        }
+
+        // Verifica se o usuário é o autor do comentário ou se é um ADMIN
+        if (!comentario.getUsuario().getId().equals(usuarioLogado.id()) && !usuarioLogado.perfil().equals("ADMIN")) {
+            throw new SecurityException("Acesso negado: você não tem permissão para atualizar este comentário.");
         }
 
         comentario.atualizarComDto(dto);
@@ -57,19 +62,18 @@ public class ComentarioServiceImpl implements ComentarioService {
 
     @Override
     @Transactional
-    public void delete(Long id) {
-        if (!repository.deleteById(id)) {
-            throw new NotFoundException("Comentário não encontrado.");
-        }
-    }
-
-    @Override
-    public ComentarioResponseDTO findById(Long id) {
-        Comentario comentario = repository.findById(id);
+    public void delete(Long id, UsuarioResponseDTO usuarioLogado) {
+        var comentario = repository.findById(id);
         if (comentario == null) {
             throw new NotFoundException("Comentário não encontrado.");
         }
-        return ComentarioResponseDTO.valueOf(comentario);
+
+        // Verifica se o usuário é o autor do comentário ou se é um ADMIN
+        if (!comentario.getUsuario().getId().equals(usuarioLogado.id()) && !usuarioLogado.perfil().equals("ADMIN")) {
+            throw new SecurityException("Acesso negado: você não tem permissão para excluir este comentário.");
+        }
+
+        repository.deleteById(id);
     }
 
     @Override
@@ -88,4 +92,12 @@ public class ComentarioServiceImpl implements ComentarioService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public ComentarioResponseDTO findById(Long id) {
+        Comentario comentario = repository.findById(id);
+        if (comentario == null) {
+            throw new NotFoundException("Comentário não encontrado.");
+        }
+        return ComentarioResponseDTO.valueOf(comentario);
+    }
 }
